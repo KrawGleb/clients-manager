@@ -6,7 +6,12 @@
         xmlns:local="clr-namespace:ClientsManager.App.Views"
         mc:Ignorable="d"
         Title="ShellView" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top" FontSize="16">
+            <MenuItem Header="_Файл">
+                <MenuItem Header="Экспортировать"></MenuItem>
+                <MenuItem Header="Импортировать"></MenuItem>
+            </MenuItem>
+        </Menu>
+    </DockPanel>
 </Window>
