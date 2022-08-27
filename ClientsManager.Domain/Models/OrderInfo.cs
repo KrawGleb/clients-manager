@@ -27,6 +27,9 @@ namespace ClientsManager.Domain.Models
         [MaxLength(30)]
         public string CarModel { get; set; }
 
+        [MaxLength(40)]
+        public string CarNumber { get; set; }
+
         [MaxLength(500)]
         public string? Description { get; set; }
 

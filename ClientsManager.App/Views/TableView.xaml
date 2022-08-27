@@ -11,45 +11,84 @@
              xmlns:converters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf">
     <Grid>
         <DataGrid 
-            x:Name="dgClients" 
+            x:Name="dgOrders" 
             Grid.Row="0"
+            IsReadOnly="True"
             AutoGenerateColumns="False"
             Margin="10">
 
             <DataGrid.Columns>
                 <DataGridTextColumn 
                     Header="№"
+                    Binding="{Binding Path=Id}"
                     MinWidth="36"/>
 
                 <DataGridTextColumn 
                     Header="ФИО"
+                    Binding="{Binding Path=FullName}"
                     MinWidth="120"
                     Width="*"/>
 
                 <DataGridTextColumn 
                     Header="Телефон"
+                    Binding="{Binding Path=PhoneNumber}"
                     MinWidth="100"
                     Width="*"/>
 
                 <DataGridTextColumn 
                     Header="Марка машины"
+                    Binding="{Binding Path=CarModel}"
                     MinWidth="100"
                     Width="*"/>
 
                 <DataGridTextColumn 
                     Header="Номер машины"
+                    Binding="{Binding Path=CarNumber}"
                     MinWidth="100"
                     Width="*"/>
 
                 <DataGridTextColumn 
                     Header="Описание"
+                    Binding="{Binding Path=Description}"
                     MinWidth="150"
                     Width="*"/>
 
                 <DataGridTextColumn 
                     Header="Стоимость"
+                    Binding="{Binding Path=Price}"
                     MinWidth="50"
                     Width="*"/>
+                
+                
+                <!-- 
+                <DataGridTextColumn 
+                    Header="Услуга"
+                    Binding="{Binding Path=OrderType}"
+                    MinWidth="50"
+                    Width="*"/>
+                -->
+
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Style="{StaticResource MaterialDesignIconButton}" >
+                                    <materialDesign:PackIcon 
+                                            Kind="TrashCan"
+                                            Foreground="Red"/>
+                                </Button>
+                                
+                                <Button Style="{StaticResource MaterialDesignIconButton}">
+                                    <materialDesign:PackIcon 
+                                        Kind="NotebookEdit"
+                                        Foreground="#4287f5"/>
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                        
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                
             </DataGrid.Columns>
         </DataGrid>
 
