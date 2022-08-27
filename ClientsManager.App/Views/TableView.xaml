@@ -4,65 +4,64 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ClientsManager.App.Views"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" Background="White"
-             d:DesignHeight="425" d:DesignWidth="800">
+             d:DesignHeight="425" d:DesignWidth="800"
+             xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+             xmlns:converters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf">
     <Grid>
-        <!--<Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>-->
-
         <DataGrid 
             x:Name="dgClients" 
             Grid.Row="0"
             AutoGenerateColumns="False"
             Margin="10">
-            
+
             <DataGrid.Columns>
                 <DataGridTextColumn 
                     Header="№"
                     MinWidth="36"/>
-                
+
                 <DataGridTextColumn 
                     Header="ФИО"
                     MinWidth="120"
                     Width="*"/>
-                
+
                 <DataGridTextColumn 
                     Header="Телефон"
                     MinWidth="100"
                     Width="*"/>
-                
+
                 <DataGridTextColumn 
                     Header="Марка машины"
                     MinWidth="100"
                     Width="*"/>
-                
+
                 <DataGridTextColumn 
                     Header="Номер машины"
                     MinWidth="100"
                     Width="*"/>
-                
+
                 <DataGridTextColumn 
                     Header="Описание"
                     MinWidth="150"
                     Width="*"/>
-                
+
                 <DataGridTextColumn 
                     Header="Стоимость"
                     MinWidth="50"
                     Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
+
+        <Button 
+            Style="{StaticResource RoundedButton}"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Margin="18">
+            <materialDesign:PackIcon 
+                Kind="Plus"
+                Height="25"
+                Width="25"/>
+        </Button>
     </Grid>
 </UserControl>
