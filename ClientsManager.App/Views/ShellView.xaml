@@ -13,5 +13,8 @@
                 <MenuItem Header="Импортировать"></MenuItem>
             </MenuItem>
         </Menu>
+        <Grid>
+            <ContentControl x:Name="ActiveItem"></ContentControl>
+        </Grid>
     </DockPanel>
 </Window>

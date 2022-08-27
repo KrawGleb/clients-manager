@@ -1,5 +1,17 @@
-﻿namespace ClientsManager.App.ViewModels;
+﻿using Caliburn.Micro;
+using System.Threading;
+using System.Threading.Tasks;
 
-public class ShellViewModel
+namespace ClientsManager.App.ViewModels;
+
+public class ShellViewModel : Conductor<object>
 {
+    private readonly TableViewModel _tableVM;
+
+    public ShellViewModel(TableViewModel tableVM)
+    {
+        _tableVM = tableVM;
+
+        Task.WaitAll(ActivateItemAsync(_tableVM, CancellationToken.None));
+    }
 }
