@@ -96,7 +96,7 @@
 
         <materialDesign:DialogHost 
             x:Name="AddOrderDialog"
-            CloseOnClickAway="True">
+            CloseOnClickAway="False">
             
             <materialDesign:DialogHost.DialogContent>
                 <Grid>

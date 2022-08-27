@@ -21,6 +21,7 @@ namespace ClientsManager.App.Views;
 public partial class TableView : UserControl
 {
     private readonly List<OrderInfoModel> _orderInfos = new();
+
     public TableView()
     {
         InitializeComponent();
