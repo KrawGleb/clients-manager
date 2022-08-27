@@ -24,17 +24,15 @@ namespace ClientsManager.App.Views.Dialogs;
 /// </summary>
 public partial class AddOrderDialogView : UserControl
 {
-    private readonly IEnumsHelper _enumsHelper; 
 
-    public AddOrderDialogView(IEnumsHelper enumsHelper)
-    {
-        _enumsHelper = enumsHelper;
-
+    public AddOrderDialogView()
+    {    
         InitializeComponent();
     }
 
     private void Save_Click(object sender, RoutedEventArgs e)
     {
+        // TODO: OrderType
         var orderInfo = new OrderInfo()
         {
             FirstName = FirstName.Text,
@@ -43,7 +41,6 @@ public partial class AddOrderDialogView : UserControl
             PhoneNumber = PhoneNumber.Text,
             CarModel = CarModel.Text,
             CarNumber = CarNumber.Text,
-            OrderType = _enumsHelper.ConvertStringToOrderType(Type.Text),
             Price = Convert.ToDecimal(Price.Text ?? "0"),
             Description = Description.Text,
         };
