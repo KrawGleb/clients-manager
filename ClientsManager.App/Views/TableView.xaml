@@ -7,7 +7,7 @@
              mc:Ignorable="d" Background="White"
              d:DesignHeight="425" d:DesignWidth="800">
     <Grid>
-        <Grid.ColumnDefinitions>
+        <!--<Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
@@ -20,6 +20,49 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+        </Grid.RowDefinitions>-->
+
+        <DataGrid 
+            x:Name="dgClients" 
+            Grid.Row="0"
+            AutoGenerateColumns="False"
+            Margin="10">
+            
+            <DataGrid.Columns>
+                <DataGridTextColumn 
+                    Header="№"
+                    MinWidth="36"/>
+                
+                <DataGridTextColumn 
+                    Header="ФИО"
+                    MinWidth="120"
+                    Width="*"/>
+                
+                <DataGridTextColumn 
+                    Header="Телефон"
+                    MinWidth="100"
+                    Width="*"/>
+                
+                <DataGridTextColumn 
+                    Header="Марка машины"
+                    MinWidth="100"
+                    Width="*"/>
+                
+                <DataGridTextColumn 
+                    Header="Номер машины"
+                    MinWidth="100"
+                    Width="*"/>
+                
+                <DataGridTextColumn 
+                    Header="Описание"
+                    MinWidth="150"
+                    Width="*"/>
+                
+                <DataGridTextColumn 
+                    Header="Стоимость"
+                    MinWidth="50"
+                    Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>
