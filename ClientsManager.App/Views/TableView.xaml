@@ -16,6 +16,8 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Dialogs/AddOrderDialogView.xaml"/>
+                <ResourceDictionary Source="Dialogs/EditOrderDialogView.xaml"/>
+                <ResourceDictionary Source="Dialogs/WarningMessageDialogView.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -85,12 +87,21 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
+                                <!--Delete button-->
                                 <Button Style="{StaticResource MaterialDesignIconButton}" >
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <cal:ActionMessage MethodName="DeleteOrder">
+                                                <cal:Parameter Value="{Binding}"/>
+                                            </cal:ActionMessage>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
                                     <materialDesign:PackIcon 
                                             Kind="TrashCan"
                                             Foreground="Red"/>
                                 </Button>
 
+                                <!--Edit button-->
                                 <Button Style="{StaticResource MaterialDesignIconButton}">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
@@ -113,9 +124,10 @@
         </DataGrid>
 
         <materialDesign:DialogHost 
-            Identifier="AddOrderDialog"
+            Identifier="Dialog"
             CloseOnClickAway="False">
 
+            <!--Add button-->
             <Button 
             x:Name="ShowAddOrderDialog"
             Style="{StaticResource RoundedButton}"

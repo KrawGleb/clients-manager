@@ -8,7 +8,7 @@ public class ShellViewModel : Conductor<object>
 {
     private readonly TableViewModel _tableVM;
 
-    public ShellViewModel(TableViewModel tableVM, AddOrderDialogViewModel addOrderDialogVM)
+    public ShellViewModel(TableViewModel tableVM)
     {
         _tableVM = tableVM;
 
