@@ -1,5 +1,7 @@
 ﻿using Caliburn.Micro;
 using ClientsManager.Domain.Enums;
+using System;
+using System.ComponentModel;
 
 namespace ClientsManager.App.ViewModels.Dialogs;
 
@@ -14,4 +16,5 @@ public class AddOrderDialogViewModel
     public string? Price { get; set; }
     public string? Description { get; set; }
     public OrderType OrderType { get; set; }
+
 }
