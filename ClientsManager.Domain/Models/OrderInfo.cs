@@ -1,9 +1,9 @@
 ﻿using ClientsManager.Domain.Enums;
-using System.ComponentModel.DataAnnotations;
+using ClientsManager.Domain.Models.Interfaces;
 
 namespace ClientsManager.Domain.Models
 {
-    public class OrderInfo
+    public class OrderInfo : IEntity
     {
         public int Id { get; set; }
         public string FirstName { get; set; }

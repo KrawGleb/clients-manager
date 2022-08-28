@@ -68,8 +68,7 @@ public class ApplicationDbContext : DbContext
         modelBuilder
             .Entity<OrderInfo>()
             .Property(o => o.Price)
-            .HasColumnType("decimal(15, 4)")
-            .IsRequired(false);
+            .HasColumnType("decimal(15, 4)");
 
         modelBuilder
             .Entity<OrderInfo>()
