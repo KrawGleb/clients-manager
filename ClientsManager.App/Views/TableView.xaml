@@ -3,13 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:ClientsManager.App.Views"
              xmlns:vm="clr-namespace:ClientsManager.App.ViewModels"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" Background="White"
              d:DesignHeight="425" d:DesignWidth="800"
              xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
-             xmlns:converters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf">
+             xmlns:converters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf"
+             xmlns:cal="http://www.caliburnproject.org">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -25,9 +27,10 @@
             IsReadOnly="True"
             AutoGenerateColumns="False"
             Margin="10">
-
+            
             <DataGrid.Columns>
                 <DataGridTextColumn 
+                    x:Name="Id"
                     Header="№"
                     Binding="{Binding Path=Id}"
                     MinWidth="36"/>
@@ -76,6 +79,7 @@
                     MinWidth="50"
                     Width="*"/>
                 -->
+                
 
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
@@ -88,6 +92,13 @@
                                 </Button>
 
                                 <Button Style="{StaticResource MaterialDesignIconButton}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <cal:ActionMessage MethodName="ShowEditOrderDialog">
+                                                <cal:Parameter Value="{Binding}"/>
+                                            </cal:ActionMessage>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
                                     <materialDesign:PackIcon 
                                         Kind="NotebookEdit"
                                         Foreground="#4287f5"/>
@@ -105,12 +116,6 @@
             Identifier="AddOrderDialog"
             CloseOnClickAway="False">
 
-            <!--<materialDesign:DialogHost.DialogContentTemplate>
-                <DataTemplate>
-                    <ContentControl Content="{Binding}" />
-                </DataTemplate>
-            </materialDesign:DialogHost.DialogContentTemplate>-->
-
             <Button 
             x:Name="ShowAddOrderDialog"
             Style="{StaticResource RoundedButton}"
@@ -123,7 +128,7 @@
                     Height="25"
                     Width="25"/>
             </Button>
-            
+
         </materialDesign:DialogHost>
 
 

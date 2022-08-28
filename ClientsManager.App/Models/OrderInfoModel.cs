@@ -7,7 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ClientsManager.App.Models;
-internal class OrderInfoModel
+
+public class OrderInfoModel
 {
     public int Id { get; set; }
     public string FullName { get; set; }
