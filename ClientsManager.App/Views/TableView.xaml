@@ -4,12 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ClientsManager.App.Views"
-             xmlns:dialogs="clr-namespace:ClientsManager.App.Views.Dialogs"
+             xmlns:vm="clr-namespace:ClientsManager.App.ViewModels"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" Background="White"
              d:DesignHeight="425" d:DesignWidth="800"
              xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
              xmlns:converters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Dialogs/AddOrderDialogView.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
 
         <DataGrid 
@@ -95,26 +102,30 @@
         </DataGrid>
 
         <materialDesign:DialogHost 
-            x:Name="AddOrderDialog"
+            Identifier="AddOrderDialog"
             CloseOnClickAway="False">
-            
-            <materialDesign:DialogHost.DialogContent>
-                <Grid>
-                    <dialogs:AddOrderDialogView />
-                </Grid>
-            </materialDesign:DialogHost.DialogContent>
+
+            <!--<materialDesign:DialogHost.DialogContentTemplate>
+                <DataTemplate>
+                    <ContentControl Content="{Binding}" />
+                </DataTemplate>
+            </materialDesign:DialogHost.DialogContentTemplate>-->
 
             <Button 
+            x:Name="ShowAddOrderDialog"
             Style="{StaticResource RoundedButton}"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
             Margin="18"
-            Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+            >
                 <materialDesign:PackIcon 
                     Kind="Plus"
                     Height="25"
                     Width="25"/>
             </Button>
+            
         </materialDesign:DialogHost>
+
+
     </Grid>
 </UserControl>

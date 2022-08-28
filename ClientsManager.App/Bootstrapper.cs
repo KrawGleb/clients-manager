@@ -1,7 +1,5 @@
 ﻿using Caliburn.Micro;
 using ClientsManager.App.ViewModels;
-using ClientsManager.Infrastructure.Helpers.Implementations;
-using ClientsManager.Infrastructure.Helpers.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,9 +24,6 @@ public class Bootstrapper : BootstrapperBase
 		_container
 			.Singleton<IWindowManager, WindowManager>()
 			.Singleton<IEventAggregator, EventAggregator>();
-
-		_container
-			.PerRequest<IEnumsHelper, EnumsHelper>();
 
 		GetType().Assembly.GetTypes()
 			.Where(type => type.IsClass)

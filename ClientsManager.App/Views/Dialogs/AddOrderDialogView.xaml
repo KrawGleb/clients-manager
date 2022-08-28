@@ -1,156 +1,169 @@
-﻿<UserControl x:Class="ClientsManager.App.Views.Dialogs.AddOrderDialogView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:ClientsManager.App.Views.Dialogs"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             mc:Ignorable="d" 
-             Background="White"
-             d:DesignHeight="450" d:DesignWidth="400"
-             MinHeight="450" MinWidth="400">
-    <Grid Margin="10">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib" 
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                    xmlns:vm="clr-namespace:ClientsManager.App.ViewModels"
+                    >
+    <DataTemplate DataType="{x:Type vm:AddOrderDialogViewModel}">
+        <Grid Margin="10" MinWidth="400" MinHeight="440">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="auto"/>
-        </Grid.RowDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
 
-        <TextBlock 
+            <TextBlock 
             Grid.Row="0" 
             Grid.ColumnSpan="2"
             TextAlignment="Center"
             FontSize="20"
             Text="Добавление заказа" />
 
-        <Label 
+            <Label 
             Grid.Row="1"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Content="Имя:"/>
-        <TextBox
+            <TextBox
             x:Name="FirstName"
+            Text="{Binding FirstName}"
             Grid.Row="1"
             Grid.Column="1"
             Margin="0, 5"/>
 
-        <Label 
+            <Label 
             Grid.Row="2"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Content="Фамилия:" />
-        <TextBox
+            <TextBox
             x:Name="LastName"
+            Text="{Binding LastName}"
             Grid.Row="2" 
             Grid.Column="1"
             Margin="0, 0, 0, 10"/>
 
-        <Label 
+            <Label 
             Grid.Row="3"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Content="Отчество:" />
-        <TextBox
+            <TextBox
             x:Name="AdditionalName"
+            Text="{Binding AdditionalName}"
             Grid.Row="3"
             Grid.Column="1"
             Margin="0, 0, 0, 10"/>
 
-        <Label 
+            <Label 
             Grid.Row="4"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Content="Номер телефона:" />
-        <TextBox
+            <TextBox
             x:Name="PhoneNumber"
+            Text="{Binding PhoneNumber}"
             Grid.Row="4"
             Grid.Column="1"
             Margin="0, 0, 0, 10"/>
-        
-        <Label 
+
+            <Label 
             Grid.Row="5"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Content="Марка машины:" />
-        <TextBox
+            <TextBox
             x:Name="CarModel"
+            Text="{Binding CarModel}"
             Grid.Row="5"
             Grid.Column="1"
             Margin="0, 0, 0, 10"/>
 
-        <Label 
+            <Label 
             Grid.Row="6"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Content="Номер машины:" />
-        <TextBox
+            <TextBox
             x:Name="CarNumber"
+            Text="{Binding CarNumber}"
             Grid.Row="6"
             Grid.Column="1" 
             Margin="0, 0, 0, 10"/>
 
-        <Label 
+            <Label 
             Grid.Row="7"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Content="Цена:" />
-        <TextBox 
+            <TextBox 
             x:Name="Price"
+            Text="{Binding Price}"
             Grid.Row="7" 
             Grid.Column="1" 
             Margin="0, 0, 0, 10"/>
 
-        <Label 
+            <Label 
             Grid.Row="8"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Content="Тип:" />
-        <ComboBox 
-            x:Name="Type"
+            <ComboBox 
+            x:Name="OrderType"
+            Text="{Binding OrderType}"
             Grid.Row="8" 
             Grid.Column="1">
-            <TextBlock Text="Автомойка" Tag="0"/>
-            <TextBlock Text="Автосервис" Tag="1"/>
-        </ComboBox>
+                <TextBlock Text="Автомойка"/>
+                <TextBlock Text="Автосервис"/>
+            </ComboBox>
 
-        <Label 
+            <Label 
             Grid.Row="9"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Content="Описание:" />
-        <TextBox
+            <TextBox
             x:Name="Description"
+            Text="{Binding Description}"
             Grid.Row="9"
             Grid.Column="1"
             Margin="0, 0, 0, 10"/>
 
-        <StackPanel
+            <StackPanel
             Grid.Row="10"
             Grid.ColumnSpan="2"
             Orientation="Horizontal"
             HorizontalAlignment="Right">
 
-            <Button 
+                <Button 
                 Content="Отменить"
                 Style="{StaticResource MaterialDesignToolButton}"
                 Margin="10, 0"
-                Click="Cancel_Click"/>
-            <Button 
+                Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"/>
+
+                <Button 
+                x:Name="AddOrder"
                 Content="Сохранить"
-                Click="Save_Click"/>
-        </StackPanel>
-    </Grid>
-</UserControl>
+                Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
+                    <Button.CommandParameter>
+                        <system:Boolean>True</system:Boolean>
+                    </Button.CommandParameter>
+                </Button>
+
+            </StackPanel>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>
