@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using ClientsManager.App.ViewModels;
+using ClientsManager.Application;
 using ClientsManager.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -32,6 +33,7 @@ public class Bootstrapper : BootstrapperBase
             .Singleton<IEventAggregator, EventAggregator>();
 
         _container.AddInfrastructure(configuration);
+        _container.AddApplication();
 
         GetType().Assembly.GetTypes()
             .Where(type => type.IsClass)
