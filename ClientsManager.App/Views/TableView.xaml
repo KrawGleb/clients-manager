@@ -10,7 +10,7 @@
              mc:Ignorable="d" Background="White"
              d:DesignHeight="425" d:DesignWidth="800"
              xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
-             xmlns:converters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf"
+             xmlns:con="clr-namespace:ClientsManager.App.Helpers.Converters"
              xmlns:cal="http://www.caliburnproject.org">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -40,25 +40,21 @@
                     MinWidth="36"/>
 
                 <!--Full name-->
-                <DataGridTemplateColumn 
-                    Header="ФИО" 
-                    MinWidth="120" 
-                    Width="*">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <TextBlock Text="{Binding FirstName}"/>
-                                <TextBlock Text="{Binding LastName}" />
-                                <TextBlock Text="{Binding AdditionalName}" />
-                            </Grid>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-
+                <DataGridTextColumn 
+                    Header="ФИО">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding StringFormat=" {0} {1} {2}">
+                            <Binding Path="FirstName"/>
+                            <Binding Path="LastName"/>
+                            <Binding Path="AdditionalName"/>
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                
                 <!--Phone number-->
                 <DataGridTextColumn 
                     Header="Телефон"
-                    Binding="{Binding Path=PhoneNumber}"
+                    Binding="{Binding Path=PhoneNumber, Converter={StaticResource phoneConverter}}"
                     MinWidth="100"
                     Width="*"/>
 
