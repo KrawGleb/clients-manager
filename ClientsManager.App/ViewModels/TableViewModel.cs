@@ -2,6 +2,7 @@
 using ClientsManager.App.Commands.DataAccessCommands;
 using ClientsManager.App.ViewModels.Dialogs;
 using ClientsManager.Application.Services.Interfaces;
+using ClientsManager.Domain.Enums;
 using ClientsManager.Domain.Models;
 using MaterialDesignThemes.Wpf;
 using System.Collections.Generic;
@@ -13,6 +14,19 @@ namespace ClientsManager.App.ViewModels;
 public class TableViewModel : Screen
 {
     private readonly IOrdersService _ordersService;
+
+    private OrderType _selectedTab;
+
+    public OrderType SelectedTab
+    {
+        get => _selectedTab;
+        set 
+        { 
+            Set(ref _selectedTab, value);
+            LoadTableAsyncCommand.Execute(value);
+        }
+    }
+
 
     #region IsLoading property
     private bool _isLoading = false;
@@ -67,4 +81,9 @@ public class TableViewModel : Screen
 
         await command.ExecuteAsync(orderInfo.Id);
     } 
+
+    public async void ChangeTab(OrderType tabType)
+    {
+        SelectedTab = tabType;
+    }
 }

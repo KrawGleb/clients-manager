@@ -1,10 +1,12 @@
-﻿using ClientsManager.Domain.Models;
+﻿using ClientsManager.Domain.Enums;
+using ClientsManager.Domain.Models;
 
 namespace ClientsManager.Application.Services.Interfaces;
 
 public interface IOrdersService
 {
     Task<IEnumerable<OrderInfo>> GetAllAsync();
+    Task<IEnumerable<OrderInfo>> GetByTypeAsync(OrderType type);
     Task<OrderInfo?> GetByIdAsync(int id);
     Task AddAsync(OrderInfo order);
     Task UpdateAsync(OrderInfo order);

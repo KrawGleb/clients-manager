@@ -7,7 +7,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         
         mc:Ignorable="d"
-        Title="ShellView" Height="600" Width="1000">
+        Title="CWaS Manager" Height="600" Width="1000">
     <DockPanel>
         <Menu 
             DockPanel.Dock="Top" 
@@ -19,9 +19,9 @@
             </MenuItem>
         </Menu>
 
-        <DockPanel>
-            <ContentControl x:Name="ActiveItem"></ContentControl>
-        </DockPanel>
+        <Grid>
+            <ContentControl x:Name="ActiveItem"/>
+        </Grid>
         
     </DockPanel>
 </Window>

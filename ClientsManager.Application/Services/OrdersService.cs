@@ -26,6 +26,11 @@ public class OrdersService : IOrdersService
         return await _repository.GetAllAsync();
     }
 
+	public async Task<IEnumerable<OrderInfo>> GetByTypeAsync(OrderType type)
+	{
+		return await _repository.GetByTypeAsync(type);
+	}
+
 	public async Task<OrderInfo?> GetByIdAsync(int id)
 	{
 		return await _repository.GetByIdAsync(id);

@@ -23,9 +23,9 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <Grid>
-            <Grid.Style>
-                <Style TargetType="Grid">
+        <DockPanel>
+            <!--<StackPanel.Style>
+                <Style TargetType="StackPanel">
                     <Setter Property="Visibility" Value="Collapsed" />
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding IsLoading}" Value="False">
@@ -34,142 +34,168 @@
                     </Style.Triggers>
 
                 </Style>
-            </Grid.Style>
+            </StackPanel.Style>-->
 
-            <DataGrid 
-                x:Name="dgOrders" 
-                Grid.Row="0"
-                IsReadOnly="True"
-                AutoGenerateColumns="False"
-                Margin="10"
-                ItemsSource="{Binding Orders}">
-
-            
-                <DataGrid.Columns>
-                    <!--Id-->
-                    <DataGridTextColumn 
-                        x:Name="Id"
-                        Header="№"
-                        Binding="{Binding Path=Id}"
-                        MinWidth="36"/>
-
-                    <!--Full name-->
-                    <DataGridTextColumn 
-                        Header="ФИО">
-                        <DataGridTextColumn.Binding>
-                            <MultiBinding StringFormat=" {0} {1} {2}">
-                                <Binding Path="FirstName"/>
-                                <Binding Path="LastName"/>
-                                <Binding Path="AdditionalName"/>
-                            </MultiBinding>
-                        </DataGridTextColumn.Binding>
-                    </DataGridTextColumn>
-                
-                    <!--Phone number-->
-                    <DataGridTextColumn 
-                        Header="Телефон"
-                        Binding="{Binding Path=PhoneNumber, Converter={StaticResource phoneConverter}}"
-                        MinWidth="100"
-                        Width="*"/>
-
-                    <!--Car model-->
-                    <DataGridTextColumn 
-                        Header="Марка машины"
-                        Binding="{Binding Path=CarModel}"
-                        MinWidth="100"
-                        Width="*"/>
-
-                    <!--Car number-->
-                    <DataGridTextColumn 
-                        Header="Номер машины"
-                        Binding="{Binding Path=CarNumber}"
-                        MinWidth="100"
-                        Width="*"/>
-
-                    <!--Description-->
-                    <DataGridTextColumn 
-                        Header="Описание"
-                        Binding="{Binding Path=Description}"
-                        MinWidth="150"
-                        Width="*"/>
-
-                    <!--Price-->
-                    <DataGridTextColumn 
-                        Header="Стоимость"
-                        Binding="{Binding Path=Price}"
-                        MinWidth="50"
-                        Width="*"/>
-
-
-                    <!-- 
-                    <DataGridTextColumn 
-                        Header="Услуга"
-                        Binding="{Binding Path=OrderType}"
-                        MinWidth="50"
-                        Width="*"/>
-                    -->
-                
-
-                    <DataGridTemplateColumn>
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <!--Delete button-->
-                                    <Button Style="{StaticResource MaterialDesignIconButton}" >
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="Click">
-                                                <cal:ActionMessage MethodName="DeleteOrder">
-                                                    <cal:Parameter Value="{Binding}"/>
-                                                </cal:ActionMessage>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                        <materialDesign:PackIcon 
-                                                Kind="TrashCan"
-                                                Foreground="Red"/>
-                                    </Button>
-
-                                    <!--Edit button-->
-                                    <Button 
-                                        Style="{StaticResource MaterialDesignIconButton}">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="Click">
-                                                <cal:ActionMessage MethodName="EditOrder">
-                                                    <cal:Parameter Value="{Binding}"/>
-                                                </cal:ActionMessage>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                        <materialDesign:PackIcon 
-                                            Kind="NotebookEdit"
-                                            Foreground="#4287f5"/>
-                                    </Button>
-                                </StackPanel>
-                            </DataTemplate>
-
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-
-                </DataGrid.Columns>
-            </DataGrid>
-
-            <materialDesign:DialogHost 
-                Identifier="Dialog"
-                CloseOnClickAway="False">
-
-                <!--Add button-->
-                <Button 
-                    Style="{StaticResource RoundedButton}"
-                    Command="{Binding AddOrderAsyncCommand}"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Bottom"
-                    Margin="18">
-                    <materialDesign:PackIcon 
-                            Kind="Plus"
-                            Height="25"
-                            Width="25"/>
+            <StackPanel DockPanel.Dock="Top" MinHeight="30" Orientation="Horizontal">
+                <Button Content="Автомойка" Margin="0 0 4 0">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cal:ActionMessage MethodName="ChangeTab">
+                                <cal:Parameter Value="CarWash"/>
+                            </cal:ActionMessage>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                 </Button>
 
-            </materialDesign:DialogHost>
-        </Grid>
+                <Button Content="Шиномонтаж">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cal:ActionMessage MethodName="ChangeTab">
+                                <cal:Parameter Value="CarService"/>
+                            </cal:ActionMessage>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+            </StackPanel>
+            
+            <Grid DockPanel.Dock="Top">
+                <!--Table-->
+                <DataGrid 
+                    x:Name="dgOrders" 
+                    Grid.Row="0"
+                    IsReadOnly="True"
+                    AutoGenerateColumns="False"
+                    Margin="10, 0"
+                    ItemsSource="{Binding Orders}">
+
+            
+                    <DataGrid.Columns>
+                        <!--Id-->
+                        <DataGridTextColumn 
+                            x:Name="Id"
+                            Header="№"
+                            Binding="{Binding Path=Id}"
+                            MinWidth="36"/>
+
+                        <!--Full name-->
+                        <DataGridTextColumn 
+                            Header="ФИО">
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding StringFormat=" {0} {1} {2}">
+                                    <Binding Path="FirstName"/>
+                                    <Binding Path="LastName"/>
+                                    <Binding Path="AdditionalName"/>
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
+                
+                        <!--Phone number-->
+                        <DataGridTextColumn 
+                            Header="Телефон"
+                            Binding="{Binding Path=PhoneNumber, Converter={StaticResource phoneConverter}}"
+                            MinWidth="100"
+                            Width="*"/>
+
+                        <!--Car model-->
+                        <DataGridTextColumn 
+                            Header="Марка машины"
+                            Binding="{Binding Path=CarModel}"
+                            MinWidth="100"
+                            Width="*"/>
+
+                        <!--Car number-->
+                        <DataGridTextColumn 
+                            Header="Номер машины"
+                            Binding="{Binding Path=CarNumber}"
+                            MinWidth="100"
+                            Width="*"/>
+
+                        <!--Description-->
+                        <DataGridTextColumn 
+                            Header="Описание"
+                            Binding="{Binding Path=Description}"
+                            MinWidth="150"
+                            Width="*"/>
+
+                        <!--Price-->
+                        <DataGridTextColumn 
+                            Header="Стоимость"
+                            Binding="{Binding Path=Price}"
+                            MinWidth="50"
+                            Width="*"/>
+
+
+                        <!-- 
+                        <DataGridTextColumn 
+                            Header="Услуга"
+                            Binding="{Binding Path=OrderType}"
+                            MinWidth="50"
+                            Width="*"/>
+                        -->
+                
+
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <!--Delete button-->
+                                        <Button Style="{StaticResource MaterialDesignIconButton}" >
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="Click">
+                                                    <cal:ActionMessage MethodName="DeleteOrder">
+                                                        <cal:Parameter Value="{Binding}"/>
+                                                    </cal:ActionMessage>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                            <materialDesign:PackIcon 
+                                                    Kind="TrashCan"
+                                                    Foreground="Red"/>
+                                        </Button>
+
+                                        <!--Edit button-->
+                                        <Button 
+                                            Style="{StaticResource MaterialDesignIconButton}">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="Click">
+                                                    <cal:ActionMessage MethodName="EditOrder">
+                                                        <cal:Parameter Value="{Binding}"/>
+                                                    </cal:ActionMessage>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                            <materialDesign:PackIcon 
+                                                Kind="NotebookEdit"
+                                                Foreground="#4287f5"/>
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                    </DataGrid.Columns>
+                </DataGrid>
+                
+                <!--Add button-->
+                <materialDesign:DialogHost 
+                    Identifier="Dialog"
+                    CloseOnClickAway="False">
+
+                    <Button 
+                        Style="{StaticResource RoundedButton}"
+                        Command="{Binding AddOrderAsyncCommand}"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Margin="18">
+                        <materialDesign:PackIcon 
+                                Kind="Plus"
+                                Height="25"
+                                Width="25"/>
+                    </Button>
+
+                </materialDesign:DialogHost>
+            </Grid>
+        
+        </DockPanel>
         
         <Grid>
             <Grid.Style>

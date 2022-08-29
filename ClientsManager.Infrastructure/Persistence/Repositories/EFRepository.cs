@@ -6,8 +6,8 @@ namespace ClientsManager.Infrastructure.Persistence.Repositories;
 
 public class EFRepository<T> : IEFRepository<T> where T : class, IEntity, new()
 {
-    private readonly ApplicationDbContext _context;
-    private readonly DbSet<T> _table;
+    protected readonly ApplicationDbContext _context;
+    protected readonly DbSet<T> _table;
 
     public EFRepository(ApplicationDbContext context)
     {

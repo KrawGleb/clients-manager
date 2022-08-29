@@ -1,5 +1,6 @@
 ﻿using ClientsManager.App.ViewModels;
 using ClientsManager.Application.Services.Interfaces;
+using ClientsManager.Domain.Enums;
 using System.Threading.Tasks;
 
 namespace ClientsManager.App.Commands.DataAccessCommands;
@@ -20,8 +21,18 @@ public class LoadTableAsyncCommand : AsyncCommandBase
     public override async Task ExecuteAsync(object? parameter)
     {
         _tableViewModel.IsLoading = true;
-        
-        _tableViewModel.Orders = await _ordersService.GetAllAsync();
+
+        if (parameter is null)
+        {
+            _tableViewModel.Orders = await _ordersService.GetByTypeAsync(_tableViewModel.SelectedTab);
+        }
+        else
+        {
+            var type = (OrderType)parameter;
+
+
+            _tableViewModel.Orders = await _ordersService.GetByTypeAsync(type);
+        }
 
         _tableViewModel.IsLoading = false;
     }
