@@ -1,10 +1,20 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     xmlns:system="clr-namespace:System;assembly=mscorlib" 
                     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-                    xmlns:vm="clr-namespace:ClientsManager.App.ViewModels.Dialogs">
+                    xmlns:vm="clr-namespace:ClientsManager.App.ViewModels.Dialogs"
+                    xmlns:vr="clr-namespace:ClientsManager.App.Helpers.ValidationRules"
+                    xmlns:con="clr-namespace:ClientsManager.App.Helpers.Converters"
+                    xmlns:beh="clr-namespace:ClientsManager.App.Helpers.Behaviors">
     <DataTemplate DataType="{x:Type vm:EditOrderDialogViewModel}">
-        <Grid Margin="10" MinWidth="400" MinHeight="440">
+        <Grid
+            x:Name="FormGrid"
+            Margin="10" 
+            MinWidth="400" 
+            MaxWidth="400"
+            MinHeight="440"
+            >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
@@ -24,128 +34,208 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
+            <!--Title-->
             <TextBlock 
-            Grid.Row="0" 
-            Grid.ColumnSpan="2"
-            TextAlignment="Center"
-            FontSize="20"
-            Text="Добавление заказа" />
+                Grid.Row="0" 
+                Grid.ColumnSpan="2"
+                TextAlignment="Center"
+                FontSize="20"
+                Text="Изменение заказа" />
 
-            <Label 
-            Grid.Row="1"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Content="Имя:"/>
+            <!--First name-->
+            <TextBlock 
+                Grid.Row="1"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+                Имя:
+                <TextBlock 
+                    BaselineOffset="14"
+                    FontWeight="Bold"
+                    Text="*"
+                    Foreground="Red"/>
+            </TextBlock>
+
             <TextBox
-            x:Name="FirstName"
-            Text="{Binding FirstName}"
-            Grid.Row="1"
-            Grid.Column="1"
-            Margin="0, 5"/>
+                x:Name="FirstName"
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="0, 0, 0, 10"
+                MaxLength="50">
+                <TextBox.Text>
+                    <Binding Path="FirstName" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <vr:RequiredValidationRule/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
 
-            <Label 
-            Grid.Row="2"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Content="Фамилия:" />
+            <!--Last name-->
+            <TextBlock 
+                Grid.Row="2"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+                Фамилия:
+                <TextBlock 
+                    BaselineOffset="14"
+                    FontWeight="Bold"
+                    Text="*"
+                    Foreground="Red"/>
+            </TextBlock>
+
             <TextBox
-            x:Name="LastName"
-            Text="{Binding LastName}"
-            Grid.Row="2" 
-            Grid.Column="1"
-            Margin="0, 0, 0, 10"/>
+                x:Name="LastName"
+                Grid.Row="2" 
+                Grid.Column="1"
+                Margin="0, 0, 0, 10"
+                MaxLength="100">
+                <TextBox.Text>
+                    <Binding Path="LastName" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <vr:RequiredValidationRule />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
 
-            <Label 
-            Grid.Row="3"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Content="Отчество:" />
+            <!--Additional name-->
+            <TextBlock 
+                Grid.Row="3"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+                Отчество:
+            </TextBlock>
+
             <TextBox
-            x:Name="AdditionalName"
-            Text="{Binding AdditionalName}"
-            Grid.Row="3"
-            Grid.Column="1"
-            Margin="0, 0, 0, 10"/>
+                x:Name="AdditionalName"
+                Grid.Row="3"
+                Grid.Column="1"
+                Margin="0, 0, 0, 10"
+                MaxLength="100"/>
 
-            <Label 
-            Grid.Row="4"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Content="Номер телефона:" />
+            <!--Phone number-->
+            <TextBlock 
+                Grid.Row="4"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+                Номер телефона:
+                <TextBlock 
+                    BaselineOffset="14"
+                    FontWeight="Bold"
+                    Text="*"
+                    Foreground="Red"
+                    Margin="0, 0, 4, 0"/>
+            </TextBlock>
+
             <TextBox
-            x:Name="PhoneNumber"
-            Text="{Binding PhoneNumber}"
-            Grid.Row="4"
-            Grid.Column="1"
-            Margin="0, 0, 0, 10"/>
+                x:Name="PhoneNumber"
+                Grid.Row="4"
+                Grid.Column="1"
+                Margin="0, 0, 0, 10">
+                <i:Interaction.Behaviors>
+                    <beh:TextBoxInputRegExBehavior RegularExpression="\d+" MaxLength="20"/>
+                </i:Interaction.Behaviors>
 
-            <Label 
-            Grid.Row="5"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Content="Марка машины:" />
+                <TextBox.Text>
+                    <Binding Path="PhoneNumber" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged" Converter="{StaticResource phoneConverter}">
+                        <Binding.ValidationRules>
+                            <vr:RequiredValidationRule />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+            <!--Car model-->
+            <TextBlock 
+                Grid.Row="5"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Text=" Марка машины:" />
+
             <TextBox
-            x:Name="CarModel"
-            Text="{Binding CarModel}"
-            Grid.Row="5"
-            Grid.Column="1"
-            Margin="0, 0, 0, 10"/>
+                x:Name="CarModel"
+                Text="{Binding CarModel}"
+                Grid.Row="5"
+                Grid.Column="1"
+                Margin="0, 0, 0, 10"
+                MaxLength="50"/>
 
-            <Label 
-            Grid.Row="6"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Content="Номер машины:" />
+            <!--Car number-->
+            <TextBlock 
+                Grid.Row="6"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Text="Номер машины:" />
+
             <TextBox
-            x:Name="CarNumber"
-            Text="{Binding CarNumber}"
-            Grid.Row="6"
-            Grid.Column="1" 
-            Margin="0, 0, 0, 10"/>
+                x:Name="CarNumber"
+                Text="{Binding CarNumber}"
+                Grid.Row="6"
+                Grid.Column="1" 
+                Margin="0, 0, 0, 10"
+                MaxLength="20"/>
 
-            <Label 
-            Grid.Row="7"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Content="Цена:" />
+            <!--Price-->
+            <TextBlock 
+                Grid.Row="7"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Text="Цена:" />
             <TextBox 
-            x:Name="Price"
-            Text="{Binding Price}"
-            Grid.Row="7" 
-            Grid.Column="1" 
-            Margin="0, 0, 0, 10"/>
+                x:Name="Price"
+                Text="{Binding Price}"
+                Grid.Row="7" 
+                Grid.Column="1" 
+                Margin="0, 0, 0, 10">
+                <i:Interaction.Behaviors>
+                    <beh:TextBoxInputRegExBehavior RegularExpression="^\d{0,5}(?:[.]\d{0,3}){0,1}$" MaxLength="15"/>
+                </i:Interaction.Behaviors>
+            </TextBox>
 
-            <Label 
-            Grid.Row="8"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Content="Тип:" />
+            <!--Order type-->
+            <TextBlock 
+                Grid.Row="8"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+                Тип:
+                <TextBlock 
+                    BaselineOffset="14"
+                    FontWeight="Bold"
+                    Text="*"
+                    Foreground="Red"/>
+            </TextBlock>
+
             <ComboBox 
-            x:Name="OrderType"
-            Text="{Binding OrderType}"
-            Grid.Row="8" 
-            Grid.Column="1">
-                <TextBlock Text="Автомойка"/>
-                <TextBlock Text="Автосервис"/>
-            </ComboBox>
+                x:Name="OrderType"
+                Grid.Row="8" 
+                Grid.Column="1"
+                ItemsSource="{Binding Path=OrderType, Converter={con:EnumToCollectionConverter}, Mode=OneTime}"
+                SelectedValuePath="Value"
+                DisplayMemberPath="Description"
+                SelectedValue="{Binding Path=OrderType}" />
 
+            <!--Description-->
             <Label 
-            Grid.Row="9"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Content="Описание:" />
+                Grid.Row="9"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Content="Описание:" />
             <TextBox
-            x:Name="Description"
-            Text="{Binding Description}"
-            Grid.Row="9"
-            Grid.Column="1"
-            Margin="0, 0, 0, 10"/>
+                x:Name="Description"
+                Text="{Binding Description}"
+                TextWrapping="Wrap"
+                Grid.Row="9"
+                Grid.Column="1"
+                Margin="0, 0, 0, 10"
+                MaxLength="500"/>
 
+            <!--Buttons-->
             <StackPanel
             Grid.Row="10"
             Grid.ColumnSpan="2"
             Orientation="Horizontal"
-            HorizontalAlignment="Right">
+            HorizontalAlignment="Right"
+            Margin="0, 10">
 
                 <Button 
                 Content="Отменить"
@@ -160,6 +250,22 @@
                     <Button.CommandParameter>
                         <system:Boolean>True</system:Boolean>
                     </Button.CommandParameter>
+
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
+                            <Setter Property="IsEnabled" Value="False"/>
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding ElementName=FirstName, Path=(Validation.HasError)}" Value="False" />
+                                        <Condition Binding="{Binding ElementName=LastName, Path=(Validation.HasError)}" Value="False" />
+                                        <Condition Binding="{Binding ElementName=PhoneNumber, Path=(Validation.HasError)}" Value="False" />
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
                 </Button>
 
             </StackPanel>

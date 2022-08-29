@@ -55,7 +55,7 @@
                     Text="*"
                     Foreground="Red"/>
             </TextBlock>
-            
+
             <TextBox
                 x:Name="FirstName"
                 Grid.Row="1"
@@ -65,7 +65,7 @@
                 <TextBox.Text>
                     <Binding Path="FirstName" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <vr:RequiredValidationRule />
+                            <vr:RequiredValidationRule/>
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
@@ -83,7 +83,7 @@
                     Text="*"
                     Foreground="Red"/>
             </TextBlock>
-            
+
             <TextBox
                 x:Name="LastName"
                 Grid.Row="2" 
@@ -106,7 +106,7 @@
                 VerticalAlignment="Center">
                 Отчество:
             </TextBlock>
-            
+
             <TextBox
                 x:Name="AdditionalName"
                 Grid.Row="3"
@@ -127,7 +127,7 @@
                     Foreground="Red"
                     Margin="0, 0, 4, 0"/>
             </TextBlock>
-            
+
             <TextBox
                 x:Name="PhoneNumber"
                 Grid.Row="4"
@@ -167,7 +167,7 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Text="Номер машины:" />
-            
+
             <TextBox
                 x:Name="CarNumber"
                 Text="{Binding CarNumber}"
@@ -205,7 +205,7 @@
                     Text="*"
                     Foreground="Red"/>
             </TextBlock>
-            
+
             <ComboBox 
                 x:Name="OrderType"
                 Grid.Row="8" 
@@ -251,6 +251,22 @@
                     <Button.CommandParameter>
                         <system:Boolean>True</system:Boolean>
                     </Button.CommandParameter>
+
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
+                            <Setter Property="IsEnabled" Value="False"/>
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding ElementName=FirstName, Path=(Validation.HasError)}" Value="False" />
+                                        <Condition Binding="{Binding ElementName=LastName, Path=(Validation.HasError)}" Value="False" />
+                                        <Condition Binding="{Binding ElementName=PhoneNumber, Path=(Validation.HasError)}" Value="False" />
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
                 </Button>
 
             </StackPanel>
