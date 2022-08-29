@@ -18,7 +18,12 @@ public class OrdersService : IOrdersService
 		_repository = repository;
 	}
 
-	public async Task AddAsync(OrderInfo order)
+    public async Task<IEnumerable<OrderInfo>> GetAllAsync()
+    {
+        return await _repository.GetAllAsync();
+    }
+
+    public async Task AddAsync(OrderInfo order)
 	{
 		_repository.Create(order);
 

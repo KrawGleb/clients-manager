@@ -28,45 +28,62 @@
             Grid.Row="0"
             IsReadOnly="True"
             AutoGenerateColumns="False"
-            Margin="10">
+            Margin="10"
+            ItemsSource="{Binding Orders.Result}">
             
             <DataGrid.Columns>
+                <!--Id-->
                 <DataGridTextColumn 
                     x:Name="Id"
                     Header="№"
                     Binding="{Binding Path=Id}"
                     MinWidth="36"/>
 
-                <DataGridTextColumn 
-                    Header="ФИО"
-                    Binding="{Binding Path=FullName}"
-                    MinWidth="120"
-                    Width="*"/>
+                <!--Full name-->
+                <DataGridTemplateColumn 
+                    Header="ФИО" 
+                    MinWidth="120" 
+                    Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <TextBlock Text="{Binding FirstName}"/>
+                                <TextBlock Text="{Binding LastName}" />
+                                <TextBlock Text="{Binding AdditionalName}" />
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
 
+                <!--Phone number-->
                 <DataGridTextColumn 
                     Header="Телефон"
                     Binding="{Binding Path=PhoneNumber}"
                     MinWidth="100"
                     Width="*"/>
 
+                <!--Car model-->
                 <DataGridTextColumn 
                     Header="Марка машины"
                     Binding="{Binding Path=CarModel}"
                     MinWidth="100"
                     Width="*"/>
 
+                <!--Car number-->
                 <DataGridTextColumn 
                     Header="Номер машины"
                     Binding="{Binding Path=CarNumber}"
                     MinWidth="100"
                     Width="*"/>
 
+                <!--Description-->
                 <DataGridTextColumn 
                     Header="Описание"
                     Binding="{Binding Path=Description}"
                     MinWidth="150"
                     Width="*"/>
 
+                <!--Price-->
                 <DataGridTextColumn 
                     Header="Стоимость"
                     Binding="{Binding Path=Price}"
@@ -105,7 +122,7 @@
                                 <Button Style="{StaticResource MaterialDesignIconButton}">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
-                                            <cal:ActionMessage MethodName="ShowEditOrderDialog">
+                                            <cal:ActionMessage MethodName="EditOrder">
                                                 <cal:Parameter Value="{Binding}"/>
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
@@ -129,7 +146,7 @@
 
             <!--Add button-->
             <Button 
-            x:Name="ShowAddOrderDialog"
+            x:Name="AddOrder"
             Style="{StaticResource RoundedButton}"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"

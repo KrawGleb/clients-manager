@@ -1,27 +1,35 @@
-﻿using ClientsManager.App.Models;
+﻿using ClientsManager.App.Helpers.Models;
+using ClientsManager.App.Models;
 using ClientsManager.App.ViewModels.Dialogs;
 using ClientsManager.Application.Services.Interfaces;
 using ClientsManager.Domain.Models;
+using DocumentFormat.OpenXml.Spreadsheet;
 using MaterialDesignThemes.Wpf;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ClientsManager.App.ViewModels;
 
 public class TableViewModel
 {
-    private const string AddDialogIdentifier = "Dialog";
+    private const string DialogIdentifier = "Dialog";
 
     private readonly IOrdersService _ordersService;
 
     public TableViewModel(IOrdersService ordersService)
     {
         _ordersService = ordersService;
+
+        Orders = new NotifyTaskCompletion<IEnumerable<OrderInfo>>(_ordersService.GetAllAsync());
     }
 
-    // TODO: Rename it
-    public async void ShowAddOrderDialog()
+    public NotifyTaskCompletion<IEnumerable<OrderInfo>> Orders { get; set; }
+
+    public async void AddOrder()
     {
         var vm = new AddOrderDialogViewModel();
-        var dialogResult = await DialogHost.Show(vm, AddDialogIdentifier);
+        var dialogResult = await DialogHost.Show(vm, DialogIdentifier);
 
         if (dialogResult is bool boolResult && boolResult)
         {
@@ -42,14 +50,13 @@ public class TableViewModel
         }
     }
 
-    // TODO: Rename it
-    public async void ShowEditOrderDialog(OrderInfoModel orderInfo)
+    public async void EditOrder(OrderInfoModel orderInfo)
     {
         var vm = new EditOrderDialogViewModel()
         {
             FirstName = "Test" + orderInfo.Id
         };
-        var dialogResult = await DialogHost.Show(vm, AddDialogIdentifier);
+        var dialogResult = await DialogHost.Show(vm, DialogIdentifier);
 
         if (dialogResult is bool boolResult && boolResult)
         {
@@ -67,7 +74,7 @@ public class TableViewModel
         {
             Message = $"Вы собираетесь удалить запись под номером {orderInfo.Id}"
         };
-        var dialogResult = await DialogHost.Show(vm, AddDialogIdentifier);
+        var dialogResult = await DialogHost.Show(vm, DialogIdentifier);
 
         if (dialogResult is bool boolResult && boolResult)
         {

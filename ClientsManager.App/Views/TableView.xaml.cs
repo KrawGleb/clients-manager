@@ -20,20 +20,8 @@ namespace ClientsManager.App.Views;
 /// </summary>
 public partial class TableView : UserControl
 {
-    private readonly List<OrderInfoModel> _orderInfos = new();
-
     public TableView()
     {
         InitializeComponent();
-
-        _orderInfos.Add(new() { Id = 1, FullName = "FullName1" });
-        _orderInfos.Add(new() { Id = 2, FullName = "FullName1" });
-        _orderInfos.Add(new() { Id = 3, FullName = "FullName1" });
-        _orderInfos.Add(new() { Id = 4, FullName = "FullName1" });
-        _orderInfos.Add(new() { Id = 5, FullName = "FullName1" });
-        _orderInfos.Add(new() { Id = 6, FullName = "FullName1" });
-        
-        
-        dgOrders.ItemsSource = _orderInfos;
     }
 }
