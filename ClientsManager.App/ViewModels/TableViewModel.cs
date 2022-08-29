@@ -35,7 +35,7 @@ public class TableViewModel
                 CarNumber = vm.CarNumber,
                 Description = vm.Description,
                 OrderType = vm.OrderType,
-                // Price = vm.Price
+                Price = vm.Price
             };
 
             await _ordersService.AddAsync(order);

@@ -35,6 +35,7 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
+            <!--Title-->
             <TextBlock 
                 Grid.Row="0" 
                 Grid.ColumnSpan="2"
@@ -42,11 +43,19 @@
                 FontSize="20"
                 Text="Добавление заказа" />
 
-            <Label 
+            <!--First name-->
+            <TextBlock 
                 Grid.Row="1"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Content="Имя:"/>
+                VerticalAlignment="Center">
+                Имя:
+                <TextBlock 
+                    BaselineOffset="14"
+                    FontWeight="Bold"
+                    Text="*"
+                    Foreground="Red"/>
+            </TextBlock>
+            
             <TextBox
                 x:Name="FirstName"
                 Grid.Row="1"
@@ -62,11 +71,19 @@
                 </TextBox.Text>
             </TextBox>
 
-            <Label 
+            <!--Last name-->
+            <TextBlock 
                 Grid.Row="2"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Content="Фамилия:" />
+                VerticalAlignment="Center">
+                Фамилия:
+                <TextBlock 
+                    BaselineOffset="14"
+                    FontWeight="Bold"
+                    Text="*"
+                    Foreground="Red"/>
+            </TextBlock>
+            
             <TextBox
                 x:Name="LastName"
                 Grid.Row="2" 
@@ -82,11 +99,14 @@
                 </TextBox.Text>
             </TextBox>
 
-            <Label 
+            <!--Additional name-->
+            <TextBlock 
                 Grid.Row="3"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Content="Отчество:" />
+                VerticalAlignment="Center">
+                Отчество:
+            </TextBlock>
+            
             <TextBox
                 x:Name="AdditionalName"
                 Grid.Row="3"
@@ -94,11 +114,20 @@
                 Margin="0, 0, 0, 10"
                 MaxLength="100"/>
 
-            <Label 
+            <!--Phone number-->
+            <TextBlock 
                 Grid.Row="4"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Content="Номер телефона:" />
+                VerticalAlignment="Center">
+                Номер телефона:
+                <TextBlock 
+                    BaselineOffset="14"
+                    FontWeight="Bold"
+                    Text="*"
+                    Foreground="Red"
+                    Margin="0, 0, 4, 0"/>
+            </TextBlock>
+            
             <TextBox
                 x:Name="PhoneNumber"
                 Grid.Row="4"
@@ -117,11 +146,13 @@
                 </TextBox.Text>
             </TextBox>
 
-            <Label 
+            <!--Car model-->
+            <TextBlock 
                 Grid.Row="5"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Content="Марка машины:" />
+                Text=" Марка машины:" />
+
             <TextBox
                 x:Name="CarModel"
                 Text="{Binding CarModel}"
@@ -130,11 +161,13 @@
                 Margin="0, 0, 0, 10"
                 MaxLength="50"/>
 
-            <Label 
+            <!--Car number-->
+            <TextBlock 
                 Grid.Row="6"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Content="Номер машины:" />
+                Text="Номер машины:" />
+            
             <TextBox
                 x:Name="CarNumber"
                 Text="{Binding CarNumber}"
@@ -143,11 +176,12 @@
                 Margin="0, 0, 0, 10"
                 MaxLength="20"/>
 
-            <Label 
+            <!--Price-->
+            <TextBlock 
                 Grid.Row="7"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Content="Цена:" />
+                Text="Цена:" />
             <TextBox 
                 x:Name="Price"
                 Text="{Binding Price}"
@@ -159,20 +193,29 @@
                 </i:Interaction.Behaviors>
             </TextBox>
 
-            <Label 
-            Grid.Row="8"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Content="Тип:" />
+            <!--Order type-->
+            <TextBlock 
+                Grid.Row="8"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+                Тип:
+                <TextBlock 
+                    BaselineOffset="14"
+                    FontWeight="Bold"
+                    Text="*"
+                    Foreground="Red"/>
+            </TextBlock>
+            
             <ComboBox 
-            x:Name="OrderType"
-            Text="{Binding OrderType}"
-            Grid.Row="8" 
-            Grid.Column="1">
-                <TextBlock Text="Автомойка"/>
-                <TextBlock Text="Автосервис"/>
-            </ComboBox>
+                x:Name="OrderType"
+                Grid.Row="8" 
+                Grid.Column="1"
+                ItemsSource="{Binding Path=OrderType, Converter={con:EnumToCollectionConverter}, Mode=OneTime}"
+                SelectedValuePath="Value"
+                DisplayMemberPath="Description"
+                SelectedValue="{Binding Path=OrderType}" />
 
+            <!--Description-->
             <Label 
                 Grid.Row="9"
                 HorizontalAlignment="Center"
@@ -187,6 +230,7 @@
                 Margin="0, 0, 0, 10"
                 MaxLength="500"/>
 
+            <!--Buttons-->
             <StackPanel
             Grid.Row="10"
             Grid.ColumnSpan="2"

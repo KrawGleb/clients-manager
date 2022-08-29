@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace ClientsManager.Domain.Enums;
 
 
 public enum OrderType
 {
+    [Description("Автомойка")]
     CarWash = 0,
+
+    [Description("Автосервис")]
     CarService = 1
 }
