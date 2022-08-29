@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using ClientsManager.App.Commands.DataAccessCommands;
+using ClientsManager.App.Commands.TableCommands;
 using ClientsManager.App.ViewModels.Dialogs;
 using ClientsManager.Application.Services.Interfaces;
 using ClientsManager.Domain.Enums;
@@ -10,7 +11,6 @@ using System.Windows.Input;
 
 namespace ClientsManager.App.ViewModels;
 
-// TODO: Clean this
 public class TableViewModel : Screen
 {
     private readonly IOrdersService _ordersService;
@@ -27,8 +27,9 @@ public class TableViewModel : Screen
         }
     }
 
+    #region Properties
 
-    #region IsLoading property
+    #region IsLoading 
     private bool _isLoading = false;
     public bool IsLoading
     {
@@ -37,7 +38,7 @@ public class TableViewModel : Screen
     }
     #endregion
 
-    #region Orders property 
+    #region Orders 
     private IEnumerable<OrderInfo> _orders;
     public IEnumerable<OrderInfo> Orders
     {
@@ -46,9 +47,58 @@ public class TableViewModel : Screen
     }
     #endregion
 
+    #region CurrentPageNumber
+    private int _currentPageNumber = 0;
+
+    public int CurrentPageNumber
+    {
+        get => _currentPageNumber;
+        set => Set(ref _currentPageNumber, value);
+    }
+    #endregion
+
+    #region PageSize
+    private int _pageSize = 2;
+
+    public int PageSize
+    {
+        get => _pageSize;
+        set => Set(ref _pageSize, value);
+    }
+    #endregion
+
+    #region TotalPagesCount
+    private int _totalPagesCount = 10;
+
+    public int TotalPagesCount
+    {
+        get { return _totalPagesCount; }
+        set { _totalPagesCount = value; }
+    }
+    #endregion
+
+    #region IsFirstPage
+    public bool IsFirstPage
+    {
+        get => CurrentPageNumber == 1;
+    }
+    #endregion
+
+    #region IsLastPage
+    public bool IsLastPage
+    {
+        get => CurrentPageNumber == TotalPagesCount;
+    } 
+    #endregion
+
+    #endregion
+
     #region Commands
     public ICommand LoadTableAsyncCommand { get; }
     public ICommand AddOrderAsyncCommand { get; } 
+    public ICommand NextPageAsyncCommand { get; }
+    public ICommand PrevPageAsyncCommand { get; }
+    public ICommand GetTotalPagesCountAsyncCommand { get; }
     #endregion
 
     public TableViewModel(IOrdersService ordersService)
@@ -57,13 +107,17 @@ public class TableViewModel : Screen
 
         LoadTableAsyncCommand = new LoadTableAsyncCommand(this, ordersService);
         AddOrderAsyncCommand = new AddOrderAsyncCommand(this, ordersService);
+        NextPageAsyncCommand = new NextPageAsyncCommand(this, ordersService);
+        PrevPageAsyncCommand = new PrevPageAsyncCommand(this, ordersService);
+        //GetTotalPagesCountAsyncCommand = new GetTotalPagesCountAsyncCommand(this, ordersService);
     }
 
     public static TableViewModel LoadTableViewModel(IOrdersService ordersService)
     {
         var tableViewModel = new TableViewModel(ordersService);
 
-        tableViewModel.LoadTableAsyncCommand.Execute(null);
+        //tableViewModel.GetTotalPagesCountAsyncCommand.Execute(null);
+        tableViewModel.NextPageAsyncCommand.Execute(null);
 
         return tableViewModel;
     }

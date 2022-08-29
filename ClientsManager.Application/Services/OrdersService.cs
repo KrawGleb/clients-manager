@@ -35,6 +35,19 @@ public class OrdersService : IOrdersService
 		return await _repository.GetByIdAsync(id);
 	}
 
+	public async Task<IEnumerable<OrderInfo>> GetPageAsync(
+		int pageNumber, 
+		int pageSize = 25,
+		OrderType type = OrderType.CarWash)
+	{
+		return await _repository.GetSliceAsync(pageNumber, pageSize, type);
+	}
+
+	public async Task<int> GetTotalCountAsync(OrderType type)
+	{
+		return await _repository.GetTotalCount(type);
+	}
+
     public async Task AddAsync(OrderInfo order)
 	{
 		_repository.Create(order);

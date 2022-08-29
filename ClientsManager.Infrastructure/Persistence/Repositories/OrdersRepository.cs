@@ -8,9 +8,7 @@ namespace ClientsManager.Infrastructure.Persistence.Repositories;
 public class OrdersRepository : EFRepository<OrderInfo>, IOrdersRepository
 {
     public OrdersRepository(ApplicationDbContext context) : base(context)
-    {
-    
-    }
+    { }
 
     public async Task<IEnumerable<OrderInfo>> GetByTypeAsync(OrderType type, bool trackEntities = false)
     {
@@ -35,6 +33,20 @@ public class OrdersRepository : EFRepository<OrderInfo>, IOrdersRepository
         _context.Entry(oldEntity).CurrentValues.SetValues(entity);
 
         await _context.SaveChangesAsync();
+    }
+
+    public async Task<IEnumerable<OrderInfo>> GetSliceAsync(int sliceNumber, int sliceSize, OrderType type)
+    {
+        return await _table
+            .Where(e => e.OrderType == type)
+            .Skip((sliceNumber - 1) * sliceSize)
+            .Take(sliceSize)
+            .ToListAsync();
+    }
+
+    public async Task<int> GetTotalCount(OrderType type)
+    {
+        return await _table.CountAsync(e => e.OrderType == type);
     }
 
 }

@@ -7,7 +7,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         
         mc:Ignorable="d"
-        Title="CWaS Manager" Height="600" Width="1000">
+        Title="CWaS Manager" Height="700" Width="1500">
     <DockPanel>
         <Menu 
             DockPanel.Dock="Top" 
