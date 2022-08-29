@@ -23,4 +23,18 @@ public class OrdersRepository : EFRepository<OrderInfo>, IOrdersRepository
             .ToListAsync();
     }
 
+    public async Task UpdateAsync(OrderInfo entity)
+    {
+        var oldEntity = await _table.FirstOrDefaultAsync(e => e.Id == entity.Id);
+
+        if (oldEntity is null)
+        {
+            throw new InvalidOperationException();
+        }
+
+        _context.Entry(oldEntity).CurrentValues.SetValues(entity);
+
+        await _context.SaveChangesAsync();
+    }
+
 }

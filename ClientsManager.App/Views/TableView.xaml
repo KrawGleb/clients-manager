@@ -36,8 +36,21 @@
                 </Style>
             </StackPanel.Style>-->
 
+            <!--Tabs-->
             <StackPanel DockPanel.Dock="Top" MinHeight="30" Orientation="Horizontal">
-                <Button Content="Автомойка" Margin="0 0 4 0">
+                <Button Content="Автомойка" Margin="0 0 4 0" >
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatMidBgButton}">
+                            <Setter Property="BorderBrush" Value="Violet" />
+                            <Setter Property="BorderThickness" Value="0 0 0 0" />
+
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SelectedTab}" Value="CarWash">
+                                    <Setter Property="BorderThickness" Value="0 0 0 3"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <cal:ActionMessage MethodName="ChangeTab">
@@ -48,6 +61,18 @@
                 </Button>
 
                 <Button Content="Шиномонтаж">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatMidBgButton}">
+                            <Setter Property="BorderBrush" Value="Violet" />
+                            <Setter Property="BorderThickness" Value="0 0 0 0" />
+
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SelectedTab}" Value="CarService">
+                                    <Setter Property="BorderThickness" Value="0 0 0 3"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <cal:ActionMessage MethodName="ChangeTab">
@@ -58,8 +83,8 @@
                 </Button>
             </StackPanel>
             
+            <!--Table-->
             <Grid DockPanel.Dock="Top">
-                <!--Table-->
                 <DataGrid 
                     x:Name="dgOrders" 
                     Grid.Row="0"

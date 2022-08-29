@@ -1,6 +1,5 @@
 ﻿using ClientsManager.App.ViewModels;
 using ClientsManager.App.ViewModels.Dialogs;
-using ClientsManager.Application.Services;
 using ClientsManager.Application.Services.Interfaces;
 using ClientsManager.Domain.Models;
 using MaterialDesignThemes.Wpf;

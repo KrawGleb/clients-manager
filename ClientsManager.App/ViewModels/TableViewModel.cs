@@ -84,6 +84,11 @@ public class TableViewModel : Screen
 
     public async void ChangeTab(OrderType tabType)
     {
+        if (tabType == SelectedTab)
+        {
+            return;
+        }
+
         SelectedTab = tabType;
     }
 }
