@@ -9,15 +9,17 @@
         mc:Ignorable="d"
         Title="ShellView" Height="600" Width="1000">
     <DockPanel>
-        <Menu DockPanel.Dock="Top" FontSize="16">
+        <Menu 
+            DockPanel.Dock="Top" 
+            FontSize="14"
+            VerticalAlignment="Center">
             <MenuItem Header="_Файл">
                 <MenuItem Header="Экспортировать"></MenuItem>
                 <MenuItem Header="Импортировать"></MenuItem>
             </MenuItem>
         </Menu>
-        
+
         <DockPanel>
-           
             <ContentControl x:Name="ActiveItem"></ContentControl>
         </DockPanel>
         

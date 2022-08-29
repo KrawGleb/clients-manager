@@ -24,7 +24,7 @@ public class EFRepository<T> : IEFRepository<T> where T : class, IEntity, new()
         return await query.ToListAsync();
     }
 
-    public virtual async Task<T?> GetById(int id, bool trackEntity = false)
+    public virtual async Task<T?> GetByIdAsync(int id, bool trackEntity = false)
     {
         var query = trackEntity
             ? _table

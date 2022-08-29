@@ -7,6 +7,6 @@ public interface IEFRepository<T> where T : class, IEntity, new()
     void Delete(int id);
     void Delete(T entity);
     Task<IEnumerable<T>> GetAllAsync(bool trackEntities = false);
-    Task<T?> GetById(int id, bool trackEntity = false);
+    Task<T?> GetByIdAsync(int id, bool trackEntity = false);
     void Update(T entity);
 }

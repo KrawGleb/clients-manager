@@ -21,8 +21,6 @@ public class LoadTableAsyncCommand : AsyncCommandBase
     {
         _tableViewModel.IsLoading = true;
         
-        // TODO: Remove this
-        await Task.Delay(10000);
         _tableViewModel.Orders = await _ordersService.GetAllAsync();
 
         _tableViewModel.IsLoading = false;

@@ -25,7 +25,6 @@ public class TableViewModel : Screen
     }
 
     private IEnumerable<OrderInfo> _orders;
-
     public IEnumerable<OrderInfo> Orders
     {
         get => _orders;
@@ -33,12 +32,14 @@ public class TableViewModel : Screen
     }
 
     public ICommand LoadTableAsyncCommand { get; }
+    public ICommand AddOrderAsyncCommand { get; }
 
     public TableViewModel(IOrdersService ordersService)
     {
         _ordersService = ordersService;
 
         LoadTableAsyncCommand = new LoadTableAsyncCommand(this, ordersService);
+        AddOrderAsyncCommand = new AddOrderAsyncCommand(this, ordersService);
     }
 
     public static TableViewModel LoadTableViewModel(IOrdersService ordersService)
@@ -50,47 +51,13 @@ public class TableViewModel : Screen
         return tableViewModel;
     }
 
+
     #region Old
-    public async void AddOrder()
+    public async void EditOrder(OrderInfo orderInfo)
     {
-        var vm = new AddOrderDialogViewModel();
-        var dialogResult = await DialogHost.Show(vm, DialogIdentifier);
+        var command = new UpdateOrderAsyncCommand(this, _ordersService);
 
-        if (dialogResult is bool boolResult && boolResult)
-        {
-            var order = new OrderInfo()
-            {
-                FirstName = vm.FirstName,
-                LastName = vm.LastName,
-                AdditionalName = vm.AdditionalName,
-                PhoneNumber = vm.PhoneNumber,
-                CarModel = vm.CarModel,
-                CarNumber = vm.CarNumber,
-                Description = vm.Description,
-                OrderType = vm.OrderType,
-                Price = vm.Price
-            };
-
-            await _ordersService.AddAsync(order);
-        }
-    }
-
-    public async void EditOrder(OrderInfoModel orderInfo)
-    {
-        var vm = new EditOrderDialogViewModel()
-        {
-            FirstName = "Test" + orderInfo.Id
-        };
-        var dialogResult = await DialogHost.Show(vm, DialogIdentifier);
-
-        if (dialogResult is bool boolResult && boolResult)
-        {
-
-        }
-        else
-        {
-
-        }
+        await command.ExecuteAsync(orderInfo);
     }
 
     public async void DeleteOrder(OrderInfoModel orderInfo)

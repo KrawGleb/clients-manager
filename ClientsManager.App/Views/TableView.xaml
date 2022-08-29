@@ -129,7 +129,8 @@
                                     </Button>
 
                                     <!--Edit button-->
-                                    <Button Style="{StaticResource MaterialDesignIconButton}">
+                                    <Button 
+                                        Style="{StaticResource MaterialDesignIconButton}">
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="Click">
                                                 <cal:ActionMessage MethodName="EditOrder">
@@ -156,16 +157,15 @@
 
                 <!--Add button-->
                 <Button 
-                x:Name="AddOrder"
-                Style="{StaticResource RoundedButton}"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Bottom"
-                Margin="18"
-                >
+                    Style="{StaticResource RoundedButton}"
+                    Command="{Binding AddOrderAsyncCommand}"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Margin="18">
                     <materialDesign:PackIcon 
-                        Kind="Plus"
-                        Height="25"
-                        Width="25"/>
+                            Kind="Plus"
+                            Height="25"
+                            Width="25"/>
                 </Button>
 
             </materialDesign:DialogHost>
