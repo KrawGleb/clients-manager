@@ -82,7 +82,7 @@
                     </i:Interaction.Triggers>
                 </Button>
             </StackPanel>
-            
+
             <!--Table-->
             <Grid DockPanel.Dock="Top">
                 <DataGrid 
@@ -93,7 +93,7 @@
                     Margin="10, 0"
                     ItemsSource="{Binding Orders}">
 
-            
+
                     <DataGrid.Columns>
                         <!--Id-->
                         <DataGridTextColumn 
@@ -113,7 +113,7 @@
                                 </MultiBinding>
                             </DataGridTextColumn.Binding>
                         </DataGridTextColumn>
-                
+
                         <!--Phone number-->
                         <DataGridTextColumn 
                             Header="Телефон"
@@ -157,7 +157,7 @@
                             MinWidth="50"
                             Width="*"/>
                         -->
-                
+
 
                         <DataGridTemplateColumn>
                             <DataGridTemplateColumn.CellTemplate>
@@ -199,6 +199,13 @@
 
                     </DataGrid.Columns>
                 </DataGrid>
+
+                <!--Pagination-->
+                <!--<Grid Background="Red" VerticalAlignment="Bottom" Margin="0 0 0 5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"/>
+                    </Grid.RowDefinitions>
+                </Grid>-->
                 
                 <!--Add button-->
                 <materialDesign:DialogHost 
@@ -219,9 +226,8 @@
 
                 </materialDesign:DialogHost>
             </Grid>
-        
         </DockPanel>
-        
+
         <Grid>
             <Grid.Style>
                 <Style TargetType="Grid">
