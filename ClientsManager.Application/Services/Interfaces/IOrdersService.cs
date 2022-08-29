@@ -8,4 +8,5 @@ public interface IOrdersService
     Task<OrderInfo?> GetByIdAsync(int id);
     Task AddAsync(OrderInfo order);
     Task UpdateAsync(OrderInfo order);
+    Task DeleteAsync(int id);
 }

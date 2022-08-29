@@ -13,14 +13,14 @@ public class AddOrderAsyncCommand : AsyncCommandBase
     private const string DialogIdentifier = "Dialog";
 
     private readonly TableViewModel _tableViewModel;
-    private readonly IOrdersService _orderService;
+    private readonly IOrdersService _ordersService;
 
     public AddOrderAsyncCommand(
         TableViewModel tableViewModel,
         IOrdersService orderService)
     {
         _tableViewModel = tableViewModel;
-        _orderService = orderService;
+        _ordersService = orderService;
     }
 
     public override async Task ExecuteAsync(object? parameter)
@@ -45,11 +45,11 @@ public class AddOrderAsyncCommand : AsyncCommandBase
 
             _tableViewModel.IsLoading = true;
 
-            await _orderService.AddAsync(order);
+            await _ordersService.AddAsync(order);
 
             _tableViewModel.IsLoading = false;
 
-            var loadCommand = new LoadTableAsyncCommand(_tableViewModel, _orderService);
+            var loadCommand = new LoadTableAsyncCommand(_tableViewModel, _ordersService);
             await loadCommand.ExecuteAsync(null);
         }
 

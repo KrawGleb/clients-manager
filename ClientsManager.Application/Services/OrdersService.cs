@@ -61,4 +61,11 @@ public class OrdersService : IOrdersService
 
 		await _context.SaveChangesAsync();
     }
+
+	public async Task DeleteAsync(int id)
+	{
+		_repository.Delete(id);
+
+		await _context.SaveChangesAsync();
+	}
 }

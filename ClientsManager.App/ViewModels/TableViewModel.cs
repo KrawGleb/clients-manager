@@ -1,6 +1,5 @@
 ﻿using Caliburn.Micro;
 using ClientsManager.App.Commands.DataAccessCommands;
-using ClientsManager.App.Models;
 using ClientsManager.App.ViewModels.Dialogs;
 using ClientsManager.Application.Services.Interfaces;
 using ClientsManager.Domain.Models;
@@ -13,26 +12,30 @@ namespace ClientsManager.App.ViewModels;
 // TODO: Clean this
 public class TableViewModel : Screen
 {
-    private const string DialogIdentifier = "Dialog";
-
     private readonly IOrdersService _ordersService;
 
+    #region IsLoading property
     private bool _isLoading = false;
     public bool IsLoading
     {
         get => _isLoading;
         set => Set(ref _isLoading, value);
     }
+    #endregion
 
+    #region Orders property 
     private IEnumerable<OrderInfo> _orders;
     public IEnumerable<OrderInfo> Orders
     {
         get => _orders;
         set => Set(ref _orders, value);
     }
+    #endregion
 
+    #region Commands
     public ICommand LoadTableAsyncCommand { get; }
-    public ICommand AddOrderAsyncCommand { get; }
+    public ICommand AddOrderAsyncCommand { get; } 
+    #endregion
 
     public TableViewModel(IOrdersService ordersService)
     {
@@ -51,8 +54,6 @@ public class TableViewModel : Screen
         return tableViewModel;
     }
 
-
-    #region Old
     public async void EditOrder(OrderInfo orderInfo)
     {
         var command = new UpdateOrderAsyncCommand(this, _ordersService);
@@ -60,22 +61,10 @@ public class TableViewModel : Screen
         await command.ExecuteAsync(orderInfo);
     }
 
-    public async void DeleteOrder(OrderInfoModel orderInfo)
+    public async void DeleteOrder(OrderInfo orderInfo)
     {
-        var vm = new WarningMessageDialogViewModel()
-        {
-            Message = $"Вы собираетесь удалить запись под номером {orderInfo.Id}"
-        };
-        var dialogResult = await DialogHost.Show(vm, DialogIdentifier);
+        var command = new DeleteOrderAsyncCommand(this, _ordersService);
 
-        if (dialogResult is bool boolResult && boolResult)
-        {
-
-        }
-        else
-        {
-
-        }
+        await command.ExecuteAsync(orderInfo.Id);
     } 
-    #endregion
 }
