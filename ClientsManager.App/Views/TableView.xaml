@@ -11,7 +11,8 @@
              d:DesignHeight="425" d:DesignWidth="800"
              xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
              xmlns:con="clr-namespace:ClientsManager.App.Helpers.Converters"
-             xmlns:cal="http://www.caliburnproject.org">
+             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:spinner="clr-namespace:LoadingSpinnerControl;assembly=LoadingSpinnerControl">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -22,140 +23,186 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
+        <Grid>
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsLoading}" Value="False">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
 
-        <DataGrid 
-            x:Name="dgOrders" 
-            Grid.Row="0"
-            IsReadOnly="True"
-            AutoGenerateColumns="False"
-            Margin="10"
-            ItemsSource="{Binding Orders.Result}">
+                </Style>
+            </Grid.Style>
+
+            <DataGrid 
+                x:Name="dgOrders" 
+                Grid.Row="0"
+                IsReadOnly="True"
+                AutoGenerateColumns="False"
+                Margin="10"
+                ItemsSource="{Binding Orders}">
+
             
-            <DataGrid.Columns>
-                <!--Id-->
-                <DataGridTextColumn 
-                    x:Name="Id"
-                    Header="№"
-                    Binding="{Binding Path=Id}"
-                    MinWidth="36"/>
+                <DataGrid.Columns>
+                    <!--Id-->
+                    <DataGridTextColumn 
+                        x:Name="Id"
+                        Header="№"
+                        Binding="{Binding Path=Id}"
+                        MinWidth="36"/>
 
-                <!--Full name-->
-                <DataGridTextColumn 
-                    Header="ФИО">
-                    <DataGridTextColumn.Binding>
-                        <MultiBinding StringFormat=" {0} {1} {2}">
-                            <Binding Path="FirstName"/>
-                            <Binding Path="LastName"/>
-                            <Binding Path="AdditionalName"/>
-                        </MultiBinding>
-                    </DataGridTextColumn.Binding>
-                </DataGridTextColumn>
+                    <!--Full name-->
+                    <DataGridTextColumn 
+                        Header="ФИО">
+                        <DataGridTextColumn.Binding>
+                            <MultiBinding StringFormat=" {0} {1} {2}">
+                                <Binding Path="FirstName"/>
+                                <Binding Path="LastName"/>
+                                <Binding Path="AdditionalName"/>
+                            </MultiBinding>
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
                 
-                <!--Phone number-->
-                <DataGridTextColumn 
-                    Header="Телефон"
-                    Binding="{Binding Path=PhoneNumber, Converter={StaticResource phoneConverter}}"
-                    MinWidth="100"
-                    Width="*"/>
+                    <!--Phone number-->
+                    <DataGridTextColumn 
+                        Header="Телефон"
+                        Binding="{Binding Path=PhoneNumber, Converter={StaticResource phoneConverter}}"
+                        MinWidth="100"
+                        Width="*"/>
 
-                <!--Car model-->
-                <DataGridTextColumn 
-                    Header="Марка машины"
-                    Binding="{Binding Path=CarModel}"
-                    MinWidth="100"
-                    Width="*"/>
+                    <!--Car model-->
+                    <DataGridTextColumn 
+                        Header="Марка машины"
+                        Binding="{Binding Path=CarModel}"
+                        MinWidth="100"
+                        Width="*"/>
 
-                <!--Car number-->
-                <DataGridTextColumn 
-                    Header="Номер машины"
-                    Binding="{Binding Path=CarNumber}"
-                    MinWidth="100"
-                    Width="*"/>
+                    <!--Car number-->
+                    <DataGridTextColumn 
+                        Header="Номер машины"
+                        Binding="{Binding Path=CarNumber}"
+                        MinWidth="100"
+                        Width="*"/>
 
-                <!--Description-->
-                <DataGridTextColumn 
-                    Header="Описание"
-                    Binding="{Binding Path=Description}"
-                    MinWidth="150"
-                    Width="*"/>
+                    <!--Description-->
+                    <DataGridTextColumn 
+                        Header="Описание"
+                        Binding="{Binding Path=Description}"
+                        MinWidth="150"
+                        Width="*"/>
 
-                <!--Price-->
-                <DataGridTextColumn 
-                    Header="Стоимость"
-                    Binding="{Binding Path=Price}"
-                    MinWidth="50"
-                    Width="*"/>
+                    <!--Price-->
+                    <DataGridTextColumn 
+                        Header="Стоимость"
+                        Binding="{Binding Path=Price}"
+                        MinWidth="50"
+                        Width="*"/>
 
 
-                <!-- 
-                <DataGridTextColumn 
-                    Header="Услуга"
-                    Binding="{Binding Path=OrderType}"
-                    MinWidth="50"
-                    Width="*"/>
-                -->
+                    <!-- 
+                    <DataGridTextColumn 
+                        Header="Услуга"
+                        Binding="{Binding Path=OrderType}"
+                        MinWidth="50"
+                        Width="*"/>
+                    -->
                 
 
-                <DataGridTemplateColumn>
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <!--Delete button-->
-                                <Button Style="{StaticResource MaterialDesignIconButton}" >
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="Click">
-                                            <cal:ActionMessage MethodName="DeleteOrder">
-                                                <cal:Parameter Value="{Binding}"/>
-                                            </cal:ActionMessage>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                    <materialDesign:PackIcon 
-                                            Kind="TrashCan"
-                                            Foreground="Red"/>
-                                </Button>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <!--Delete button-->
+                                    <Button Style="{StaticResource MaterialDesignIconButton}" >
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Click">
+                                                <cal:ActionMessage MethodName="DeleteOrder">
+                                                    <cal:Parameter Value="{Binding}"/>
+                                                </cal:ActionMessage>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                        <materialDesign:PackIcon 
+                                                Kind="TrashCan"
+                                                Foreground="Red"/>
+                                    </Button>
 
-                                <!--Edit button-->
-                                <Button Style="{StaticResource MaterialDesignIconButton}">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="Click">
-                                            <cal:ActionMessage MethodName="EditOrder">
-                                                <cal:Parameter Value="{Binding}"/>
-                                            </cal:ActionMessage>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                    <materialDesign:PackIcon 
-                                        Kind="NotebookEdit"
-                                        Foreground="#4287f5"/>
-                                </Button>
-                            </StackPanel>
-                        </DataTemplate>
+                                    <!--Edit button-->
+                                    <Button Style="{StaticResource MaterialDesignIconButton}">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Click">
+                                                <cal:ActionMessage MethodName="EditOrder">
+                                                    <cal:Parameter Value="{Binding}"/>
+                                                </cal:ActionMessage>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                        <materialDesign:PackIcon 
+                                            Kind="NotebookEdit"
+                                            Foreground="#4287f5"/>
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
 
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
 
-            </DataGrid.Columns>
-        </DataGrid>
+                </DataGrid.Columns>
+            </DataGrid>
 
-        <materialDesign:DialogHost 
-            Identifier="Dialog"
-            CloseOnClickAway="False">
+            <materialDesign:DialogHost 
+                Identifier="Dialog"
+                CloseOnClickAway="False">
 
-            <!--Add button-->
-            <Button 
-            x:Name="AddOrder"
-            Style="{StaticResource RoundedButton}"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Bottom"
-            Margin="18"
-            >
-                <materialDesign:PackIcon 
-                    Kind="Plus"
-                    Height="25"
-                    Width="25"/>
-            </Button>
+                <!--Add button-->
+                <Button 
+                x:Name="AddOrder"
+                Style="{StaticResource RoundedButton}"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Margin="18"
+                >
+                    <materialDesign:PackIcon 
+                        Kind="Plus"
+                        Height="25"
+                        Width="25"/>
+                </Button>
 
-        </materialDesign:DialogHost>
+            </materialDesign:DialogHost>
+        </Grid>
+        
+        <Grid>
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
 
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
 
+            <spinner:LoadingSpinner 
+                Grid.Row="1"
+                IsLoading="{Binding IsLoading}"
+                Thickness="5"
+                Color="Black"/>
+
+            <TextBlock
+                Grid.Row="2"
+                Margin="20"
+                FontSize="18"
+                Text="Загрузка..."
+                TextAlignment="Center"/>
+        </Grid>
     </Grid>
+
 </UserControl>

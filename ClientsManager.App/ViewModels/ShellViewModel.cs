@@ -1,4 +1,6 @@
 ﻿using Caliburn.Micro;
+using ClientsManager.App.Helpers.Models;
+using ClientsManager.Application.Services.Interfaces;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -6,12 +8,10 @@ namespace ClientsManager.App.ViewModels;
 
 public class ShellViewModel : Conductor<object>
 {
-    private readonly TableViewModel _tableVM;
-
-    public ShellViewModel(TableViewModel tableVM)
+    public ShellViewModel(IOrdersService orderService)
     {
-        _tableVM = tableVM;
 
-        Task.WaitAll(ActivateItemAsync(_tableVM, CancellationToken.None));
+        var tableVM = TableViewModel.LoadTableViewModel(orderService);
+        var _ = new NotifyTaskCompletion<object>(ActivateItemAsync(tableVM, CancellationToken.None));
     }
 }

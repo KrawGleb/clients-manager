@@ -1,31 +1,56 @@
-﻿using ClientsManager.App.Helpers.Models;
+﻿using Caliburn.Micro;
+using ClientsManager.App.Commands.DataAccessCommands;
 using ClientsManager.App.Models;
 using ClientsManager.App.ViewModels.Dialogs;
 using ClientsManager.Application.Services.Interfaces;
 using ClientsManager.Domain.Models;
-using DocumentFormat.OpenXml.Spreadsheet;
 using MaterialDesignThemes.Wpf;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace ClientsManager.App.ViewModels;
 
-public class TableViewModel
+// TODO: Clean this
+public class TableViewModel : Screen
 {
     private const string DialogIdentifier = "Dialog";
 
     private readonly IOrdersService _ordersService;
 
+    private bool _isLoading = false;
+    public bool IsLoading
+    {
+        get => _isLoading;
+        set => Set(ref _isLoading, value);
+    }
+
+    private IEnumerable<OrderInfo> _orders;
+
+    public IEnumerable<OrderInfo> Orders
+    {
+        get => _orders;
+        set => Set(ref _orders, value);
+    }
+
+    public ICommand LoadTableAsyncCommand { get; }
+
     public TableViewModel(IOrdersService ordersService)
     {
         _ordersService = ordersService;
 
-        Orders = new NotifyTaskCompletion<IEnumerable<OrderInfo>>(_ordersService.GetAllAsync());
+        LoadTableAsyncCommand = new LoadTableAsyncCommand(this, ordersService);
     }
 
-    public NotifyTaskCompletion<IEnumerable<OrderInfo>> Orders { get; set; }
+    public static TableViewModel LoadTableViewModel(IOrdersService ordersService)
+    {
+        var tableViewModel = new TableViewModel(ordersService);
 
+        tableViewModel.LoadTableAsyncCommand.Execute(null);
+
+        return tableViewModel;
+    }
+
+    #region Old
     public async void AddOrder()
     {
         var vm = new AddOrderDialogViewModel();
@@ -84,5 +109,6 @@ public class TableViewModel
         {
 
         }
-    }
+    } 
+    #endregion
 }
