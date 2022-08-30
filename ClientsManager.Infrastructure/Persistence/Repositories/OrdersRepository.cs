@@ -44,9 +44,9 @@ public class OrdersRepository : EFRepository<OrderInfo>, IOrdersRepository
             .ToListAsync();
     }
 
-    public async Task<int> GetTotalCount(OrderType type)
+    public int GetTotalCount(OrderType type)
     {
-        return await _table.CountAsync(e => e.OrderType == type);
+        return _table.Count(e => e.OrderType == type);
     }
 
 }

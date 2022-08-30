@@ -214,8 +214,19 @@
                     <!--Arrow buttons-->
                     <Button
                         Grid.Column="1"
-                        Style="{StaticResource MaterialDesignToolButton}"
                         Command="{Binding PrevPageAsyncCommand}">
+
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignToolButton}">
+                                <Setter Property="IsEnabled" Value="True" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsFirstPage}" Value="True">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+
                         <materialDesign:PackIcon 
                                 Kind="ArrowLeft"
                                 Height="25"
@@ -223,8 +234,19 @@
                     </Button>
                     <Button 
                         Grid.Column="5"
-                        Style="{StaticResource MaterialDesignToolButton}"
                         Command="{Binding NextPageAsyncCommand}">
+
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignToolButton}">
+                                <Setter Property="IsEnabled" Value="True" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsLastPage}" Value="True">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        
                         <materialDesign:PackIcon 
                                         Kind="ArrowRight"
                                         Height="25"
@@ -233,8 +255,9 @@
                     </Button>
 
                     <TextBox 
+                        x:Name="CurrentPageNumber"
                         Grid.Column="2"
-                        Text="{Binding CurrentPageNumber}"
+                        Text="{Binding CurrentPageNumber, Mode=TwoWay, Delay=700, UpdateSourceTrigger=PropertyChanged}"
                         HorizontalAlignment="Right"
                         TextAlignment="Right"
                         MinWidth="20"/>

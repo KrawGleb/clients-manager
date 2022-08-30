@@ -5,7 +5,6 @@ using ClientsManager.App.ViewModels.Dialogs;
 using ClientsManager.Application.Services.Interfaces;
 using ClientsManager.Domain.Enums;
 using ClientsManager.Domain.Models;
-using MaterialDesignThemes.Wpf;
 using System.Collections.Generic;
 using System.Windows.Input;
 
@@ -15,19 +14,21 @@ public class TableViewModel : Screen
 {
     private readonly IOrdersService _ordersService;
 
+
+    #region Properties
+
+    #region SelectedTab
     private OrderType _selectedTab;
 
     public OrderType SelectedTab
     {
         get => _selectedTab;
-        set 
-        { 
+        set
+        {
             Set(ref _selectedTab, value);
-            LoadTableAsyncCommand.Execute(value);
         }
     }
-
-    #region Properties
+    #endregion
 
     #region IsLoading 
     private bool _isLoading = false;
@@ -53,12 +54,24 @@ public class TableViewModel : Screen
     public int CurrentPageNumber
     {
         get => _currentPageNumber;
-        set => Set(ref _currentPageNumber, value);
+        set
+        {
+            value = value <= TotalPagesCount 
+                ? value 
+                : TotalPagesCount;
+
+            Set(ref _currentPageNumber, value);
+
+            IsFirstPage = CurrentPageNumber == 1;
+            IsLastPage = CurrentPageNumber == TotalPagesCount;
+
+            LoadPageAsyncCommand.Execute(CurrentPageNumber);
+        }
     }
     #endregion
 
     #region PageSize
-    private int _pageSize = 2;
+    private int _pageSize = 1;
 
     public int PageSize
     {
@@ -72,52 +85,57 @@ public class TableViewModel : Screen
 
     public int TotalPagesCount
     {
-        get { return _totalPagesCount; }
-        set { _totalPagesCount = value; }
+        get => _totalPagesCount;
+        set => Set(ref _totalPagesCount, value);
     }
     #endregion
 
     #region IsFirstPage
+    private bool _isFirstPage;
+
     public bool IsFirstPage
     {
-        get => CurrentPageNumber == 1;
+        get => _isFirstPage;
+        set => Set(ref _isFirstPage, value);
     }
     #endregion
 
     #region IsLastPage
+    private bool _isLastPage;
+
     public bool IsLastPage
     {
-        get => CurrentPageNumber == TotalPagesCount;
-    } 
+        get => _isLastPage;
+        set => Set(ref _isLastPage, value);
+    }
     #endregion
 
     #endregion
 
     #region Commands
-    public ICommand LoadTableAsyncCommand { get; }
-    public ICommand AddOrderAsyncCommand { get; } 
+    public ICommand AddOrderAsyncCommand { get; }
     public ICommand NextPageAsyncCommand { get; }
     public ICommand PrevPageAsyncCommand { get; }
-    public ICommand GetTotalPagesCountAsyncCommand { get; }
+    public ICommand InitTableAsyncCommand { get; }
+    public ICommand LoadPageAsyncCommand { get; }
     #endregion
 
     public TableViewModel(IOrdersService ordersService)
     {
         _ordersService = ordersService;
 
-        LoadTableAsyncCommand = new LoadTableAsyncCommand(this, ordersService);
         AddOrderAsyncCommand = new AddOrderAsyncCommand(this, ordersService);
         NextPageAsyncCommand = new NextPageAsyncCommand(this, ordersService);
         PrevPageAsyncCommand = new PrevPageAsyncCommand(this, ordersService);
-        //GetTotalPagesCountAsyncCommand = new GetTotalPagesCountAsyncCommand(this, ordersService);
+        InitTableAsyncCommand = new InitTableAsyncCommand(this, ordersService);
+        LoadPageAsyncCommand = new LoadPageAsyncCommand(this, ordersService);
     }
 
     public static TableViewModel LoadTableViewModel(IOrdersService ordersService)
     {
         var tableViewModel = new TableViewModel(ordersService);
 
-        //tableViewModel.GetTotalPagesCountAsyncCommand.Execute(null);
-        tableViewModel.NextPageAsyncCommand.Execute(null);
+        tableViewModel.InitTableAsyncCommand.Execute(ordersService);
 
         return tableViewModel;
     }
@@ -134,7 +152,7 @@ public class TableViewModel : Screen
         var command = new DeleteOrderAsyncCommand(this, _ordersService);
 
         await command.ExecuteAsync(orderInfo.Id);
-    } 
+    }
 
     public async void ChangeTab(OrderType tabType)
     {
@@ -144,5 +162,7 @@ public class TableViewModel : Screen
         }
 
         SelectedTab = tabType;
+
+        InitTableAsyncCommand.Execute(null);
     }
 }

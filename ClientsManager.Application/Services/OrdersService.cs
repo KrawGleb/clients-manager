@@ -43,9 +43,9 @@ public class OrdersService : IOrdersService
 		return await _repository.GetSliceAsync(pageNumber, pageSize, type);
 	}
 
-	public async Task<int> GetTotalCountAsync(OrderType type)
+	public int GetTotalCountAsync(OrderType type)
 	{
-		return await _repository.GetTotalCount(type);
+		return _repository.GetTotalCount(type);
 	}
 
     public async Task AddAsync(OrderInfo order)

@@ -1,4 +1,5 @@
-﻿using ClientsManager.App.ViewModels;
+﻿using ClientsManager.App.Commands.TableCommands;
+using ClientsManager.App.ViewModels;
 using ClientsManager.App.ViewModels.Dialogs;
 using ClientsManager.Application.Services;
 using ClientsManager.Application.Services.Interfaces;
@@ -49,9 +50,7 @@ public class AddOrderAsyncCommand : AsyncCommandBase
 
             _tableViewModel.IsLoading = false;
 
-            var loadCommand = new LoadTableAsyncCommand(_tableViewModel, _ordersService);
-            await loadCommand.ExecuteAsync(null);
+            new InitTableAsyncCommand(_tableViewModel, _ordersService).Execute(null);
         }
-
     }
 }
