@@ -12,6 +12,6 @@ public class PrevPageAsyncCommand : TableAsyncCommandBase
 
     public override async Task ExecuteAsync(object? parameter)
     {
-        _tableViewModel.CurrentPageNumber -= 1;
+        _tableViewModel.PaginationComponent.CurrentPageNumber -= 1;
     }
 }

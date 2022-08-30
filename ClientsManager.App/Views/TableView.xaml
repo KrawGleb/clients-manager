@@ -4,16 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:local="clr-namespace:ClientsManager.App.Views"
-             xmlns:vm="clr-namespace:ClientsManager.App.ViewModels"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             mc:Ignorable="d" Background="White"
-             d:DesignHeight="425" d:DesignWidth="800"
-             xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
-             xmlns:con="clr-namespace:ClientsManager.App.Helpers.Converters"
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:spinner="clr-namespace:LoadingSpinnerControl;assembly=LoadingSpinnerControl"
-             xmlns:controlzEx="urn:controlzex">
+             mc:Ignorable="d" Background="White"
+             d:DesignHeight="425" d:DesignWidth="800">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -83,57 +78,14 @@
                 </StackPanel>
 
 
-                <!--Searching area-->
-                <StackPanel
-                    Orientation="Horizontal"
-                    DockPanel.Dock="Right">
-                    <Grid Margin="130 0 320 0">
+                <!--Search component-->
+                <ContentControl x:Name="SearchComponent"/>
 
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                        </Grid.RowDefinitions>
-
-                        <ComboBox
-                            Grid.Column="0"
-                            x:Name="SearchOption"
-                            ItemsSource="{Binding Path=SearchOption, Converter={con:EnumToCollectionConverter}, Mode=OneTime}"
-                            SelectedValuePath="Value"
-                            DisplayMemberPath="Description"
-                            SelectedValue="{Binding Path=SearchOption}"
-                            MinWidth="120"
-                            MaxHeight="26"
-                            Height="auto"
-                            HorizontalContentAlignment="Center"
-                            VerticalContentAlignment="Center"/>
-
-
-                        <TextBox 
-                            Grid.Column="1"
-                            MinWidth="200"
-                            MaxHeight="26"
-                            Text="{Binding SearchValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                            TextAlignment="Center"
-                            MaxLength="25"
-                            Margin="5 0"/>
-
-                        <Button
-                            Grid.Column="2"
-                            Content="Найти"
-                            Command="{Binding LoadPageAsyncCommand}"/>
-
-                    </Grid>
-                </StackPanel>
-                
             </DockPanel>
 
             <!--Table-->
-            <Grid DockPanel.Dock="Top">
+            <Grid 
+                DockPanel.Dock="Top">
                 <DataGrid 
                     x:Name="dgOrders" 
                     Grid.Row="0"
@@ -246,89 +198,7 @@
                 </DataGrid>
 
                 <!--Pagination-->
-                <Grid 
-                    VerticalAlignment="Bottom"
-                    Margin="0 0 0 5">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="28"/>
-                    </Grid.RowDefinitions>
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="7*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="0.7*"/>
-                        <ColumnDefinition Width="0.2*"/>
-                        <ColumnDefinition Width="0.7*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="7*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <!--Arrow buttons-->
-                    <Button
-                        Grid.Column="1"
-                        Command="{Binding PrevPageAsyncCommand}">
-
-                        <Button.Style>
-                            <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignToolButton}">
-                                <Setter Property="IsEnabled" Value="True" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsFirstPage}" Value="True">
-                                        <Setter Property="IsEnabled" Value="False" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-
-                        <materialDesign:PackIcon 
-                                Kind="ArrowLeft"
-                                Height="25"
-                                Width="25"/>
-                    </Button>
-                    <Button 
-                        Grid.Column="5"
-                        Command="{Binding NextPageAsyncCommand}">
-
-                        <Button.Style>
-                            <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignToolButton}">
-                                <Setter Property="IsEnabled" Value="True" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsLastPage}" Value="True">
-                                        <Setter Property="IsEnabled" Value="False" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                        
-                        <materialDesign:PackIcon 
-                                        Kind="ArrowRight"
-                                        Height="25"
-                                        Width="25"/>
-
-                    </Button>
-
-                    <TextBox 
-                        x:Name="CurrentPageNumber"
-                        Grid.Column="2"
-                        Text="{Binding CurrentPageNumber, Mode=TwoWay, Delay=700, UpdateSourceTrigger=PropertyChanged}"
-                        HorizontalAlignment="Right"
-                        TextAlignment="Right"
-                        MinWidth="20"/>
-
-                    <TextBlock 
-                        Grid.Column="3"
-                        Text="/"
-                        TextAlignment="Center"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Width="auto"/>
-
-                    <TextBlock 
-                        Grid.Column="4"
-                        Text="{Binding TotalPagesCount}"
-                        TextAlignment="Center"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"/>
-                </Grid>
+                <ContentControl x:Name="PaginationComponent" />
 
                 <!--Add button-->
                 <materialDesign:DialogHost 
@@ -349,8 +219,10 @@
 
                 </materialDesign:DialogHost>
             </Grid>
+            
         </DockPanel>
 
+        <!--Spinner-->
         <Grid>
             <Grid.Style>
                 <Style TargetType="Grid">

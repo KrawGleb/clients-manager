@@ -6,7 +6,7 @@ public static class WithPaginationExtension
 {
     public static IOrdersTableQueryBuilder WithPagination(this IOrdersTableQueryBuilder builder, int pageNumber, int pageSize)
     {
-        if (pageNumber >= 0 && pageSize >= 0)
+        if (pageNumber > 0 && pageSize >= 0)
         {
             builder.Query = builder.Query
                 .Skip((pageNumber - 1) * pageSize)
