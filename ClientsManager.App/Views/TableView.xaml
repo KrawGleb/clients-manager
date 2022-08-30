@@ -27,87 +27,110 @@
         <DockPanel>
 
             <!--Tabs-->
-            <StackPanel DockPanel.Dock="Top" MinHeight="30" Orientation="Horizontal">
-                <Button Content="Автомойка" Margin="4 0" >
-                    <Button.Style>
-                        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatMidBgButton}">
-                            <Setter Property="BorderBrush" Value="Violet" />
-                            <Setter Property="BorderThickness" Value="0 0 0 0" />
+            <DockPanel
+                DockPanel.Dock="Top"
+                MinHeight="30"
+                Width="auto"
+                HorizontalAlignment="Center"
+                Margin="0 0 0 10">
 
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding SelectedTab}" Value="CarWash">
-                                    <Setter Property="BorderThickness" Value="0 0 0 3"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <cal:ActionMessage MethodName="ChangeTab">
-                                <cal:Parameter Value="CarWash"/>
-                            </cal:ActionMessage>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Button>
+                <StackPanel 
+                    Orientation="Horizontal"
+                    DockPanel.Dock="Left">
+                    <Button Content="Автомойка" Margin="16 0" >
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatMidBgButton}">
+                                <Setter Property="BorderBrush" Value="Violet" />
+                                <Setter Property="BorderThickness" Value="0 0 0 0" />
 
-                <Button Content="Шиномонтаж">
-                    <Button.Style>
-                        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatMidBgButton}">
-                            <Setter Property="BorderBrush" Value="Violet" />
-                            <Setter Property="BorderThickness" Value="0 0 0 0" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedTab}" Value="CarWash">
+                                        <Setter Property="BorderThickness" Value="0 0 0 3"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="ChangeTab">
+                                    <cal:Parameter Value="CarWash"/>
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
 
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding SelectedTab}" Value="CarService">
-                                    <Setter Property="BorderThickness" Value="0 0 0 3"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <cal:ActionMessage MethodName="ChangeTab">
-                                <cal:Parameter Value="CarService"/>
-                            </cal:ActionMessage>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Button>
+                    <Button Content="Шиномонтаж">
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatMidBgButton}">
+                                <Setter Property="BorderBrush" Value="Violet" />
+                                <Setter Property="BorderThickness" Value="0 0 0 0" />
+
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedTab}" Value="CarService">
+                                        <Setter Property="BorderThickness" Value="0 0 0 3"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="ChangeTab">
+                                    <cal:Parameter Value="CarService"/>
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                </StackPanel>
+
 
                 <!--Searching area-->
-                <Grid Margin="60 0">
+                <StackPanel
+                    Orientation="Horizontal"
+                    DockPanel.Dock="Right">
+                    <Grid Margin="130 0 320 0">
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+
+                        <ComboBox
+                            Grid.Column="0"
+                            x:Name="SearchOption"
+                            ItemsSource="{Binding Path=SearchOption, Converter={con:EnumToCollectionConverter}, Mode=OneTime}"
+                            SelectedValuePath="Value"
+                            DisplayMemberPath="Description"
+                            SelectedValue="{Binding Path=SearchOption}"
+                            MinWidth="120"
+                            MaxHeight="26"
+                            Height="auto"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"/>
 
 
-                    <ComboBox
-                        Grid.Column="0"
-                        x:Name="SearchOption"
-                        ItemsSource="{Binding Path=SearchOption, Converter={con:EnumToCollectionConverter}, Mode=OneTime}"
-                        SelectedValuePath="Value"
-                        DisplayMemberPath="Description"
-                        SelectedValue="{Binding Path=SearchOption}"
-                        MinWidth="120"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"/>
+                        <TextBox 
+                            Grid.Column="1"
+                            MinWidth="200"
+                            MaxHeight="26"
+                            Text="{Binding SearchValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            TextAlignment="Center"
+                            MaxLength="25"
+                            Margin="5 0"/>
 
+                        <Button
+                            Grid.Column="2"
+                            Content="Найти"
+                            Command="{Binding LoadPageAsyncCommand}"/>
 
-                    <TextBox 
-                        Grid.Column="1"
-                        MinWidth="200" 
-                        Text="{Binding SearchValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        TextAlignment="Center"
-                        Margin="5 0"/>
-
-                     <Button
-                        Grid.Column="2"
-                        Content="Найти"
-                        Command="{Binding LoadPageAsyncCommand}"/>
-
-                </Grid>
-            </StackPanel>
+                    </Grid>
+                </StackPanel>
+                
+            </DockPanel>
 
             <!--Table-->
             <Grid DockPanel.Dock="Top">
@@ -117,7 +140,9 @@
                     IsReadOnly="True"
                     AutoGenerateColumns="False"
                     Margin="10, 0"
-                    ItemsSource="{Binding Orders}">
+                    ItemsSource="{Binding Orders}"
+                    Width="auto"
+                    HorizontalAlignment="Center">
 
 
                     <DataGrid.Columns>
@@ -131,7 +156,8 @@
                         <!--Full name-->
                         <DataGridTextColumn 
                             Header="ФИО"
-                            Width="auto">
+                            Width="auto"
+                            SortMemberPath="FirstName">
                             <DataGridTextColumn.Binding>
                                 <MultiBinding StringFormat=" {0} {1} {2}">
                                     <Binding Path="FirstName"/>

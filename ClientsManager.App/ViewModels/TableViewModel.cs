@@ -55,14 +55,13 @@ public class TableViewModel : Screen
         get => _currentPageNumber;
         set
         {
-            value = value <= TotalPagesCount 
-                ? value 
+            value = value <= TotalPagesCount
+                ? value
                 : TotalPagesCount;
 
             Set(ref _currentPageNumber, value);
 
             IsFirstPage = CurrentPageNumber == 1;
-            IsLastPage = CurrentPageNumber == TotalPagesCount;
 
             LoadPageAsyncCommand.Execute(CurrentPageNumber);
         }
@@ -85,7 +84,12 @@ public class TableViewModel : Screen
     public int TotalPagesCount
     {
         get => _totalPagesCount;
-        set => Set(ref _totalPagesCount, value);
+        set
+        {
+            Set(ref _totalPagesCount, value);
+
+            IsLastPage = CurrentPageNumber == TotalPagesCount;
+        }
     }
     #endregion
 
