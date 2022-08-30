@@ -10,7 +10,8 @@ public static class DependencyInjection
     {
         container
             .PerRequest<ISearchingService, SearchingService>()
-            .PerRequest<IOrdersService, OrdersService>();
+            .PerRequest<IOrdersService, OrdersService>()
+            .PerRequest<ISerializationService, SerializationService>();
 
         return container;
     }

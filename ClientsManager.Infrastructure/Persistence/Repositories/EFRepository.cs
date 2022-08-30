@@ -33,6 +33,14 @@ public class EFRepository<T> : IEFRepository<T> where T : class, IEntity, new()
         return await query.FirstOrDefaultAsync(t => t.Id == id);
     }
 
+    public virtual async Task AddRangeAsync(IEnumerable<T> entities)
+    {
+        await _table.AddRangeAsync(entities);
+
+        await _context.SaveChangesAsync();
+    }
+
+
     public virtual void Create(T entity) => _table.Add(entity);
 
     public virtual void Update(T entity) => _table.Update(entity);

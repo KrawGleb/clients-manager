@@ -8,4 +8,5 @@ public interface IOrdersRepository : IEFRepository<OrderInfo>
     Task<IEnumerable<OrderInfo>> GetByTypeAsync(OrderType type, bool trackEntities = false);
     Task UpdateAsync(OrderInfo entity);
     int GetTotalCount(OrderType type);
+    Task ClearAsync();
 }

@@ -9,15 +9,6 @@
              xmlns:spinner="clr-namespace:LoadingSpinnerControl;assembly=LoadingSpinnerControl"
              mc:Ignorable="d" Background="White"
              d:DesignHeight="425" d:DesignWidth="800">
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Dialogs/AddOrderDialogView.xaml"/>
-                <ResourceDictionary Source="Dialogs/EditOrderDialogView.xaml"/>
-                <ResourceDictionary Source="Dialogs/WarningMessageDialogView.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </UserControl.Resources>
     <Grid>
         <DockPanel>
 
@@ -201,10 +192,7 @@
                 <ContentControl x:Name="PaginationComponent" />
 
                 <!--Add button-->
-                <materialDesign:DialogHost 
-                    Identifier="Dialog"
-                    CloseOnClickAway="False">
-
+                
                     <Button 
                         Style="{StaticResource RoundedButton}"
                         Command="{Binding AddOrderAsyncCommand}"
@@ -217,7 +205,6 @@
                                 Width="25"/>
                     </Button>
 
-                </materialDesign:DialogHost>
             </Grid>
             
         </DockPanel>

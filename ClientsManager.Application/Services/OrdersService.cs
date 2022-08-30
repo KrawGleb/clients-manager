@@ -79,6 +79,11 @@ public class OrdersService : IOrdersService
 		await _context.SaveChangesAsync();
 	}
 
+	public async Task AddRangeAsync(IEnumerable<OrderInfo> orders)
+	{
+		await _repository.AddRangeAsync(orders);
+	}
+
 	public async Task UpdateAsync(OrderInfo order)
 	{
 		await _repository.UpdateAsync(order);
@@ -89,5 +94,10 @@ public class OrdersService : IOrdersService
 		_repository.Delete(id);
 
 		await _context.SaveChangesAsync();
+	}
+
+	public async Task ClearAsync()
+	{
+		await _repository.ClearAsync();
 	}
 }

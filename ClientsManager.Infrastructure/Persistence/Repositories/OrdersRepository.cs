@@ -40,4 +40,8 @@ public class OrdersRepository : EFRepository<OrderInfo>, IOrdersRepository
         return _table.Count(e => e.OrderType == type);
     }
 
+    public async Task ClearAsync()
+    {
+        await _context.Database.ExecuteSqlRawAsync($"TRUNCATE TABLE orders");
+    }
 }

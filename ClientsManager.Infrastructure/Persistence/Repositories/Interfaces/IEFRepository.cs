@@ -8,5 +8,6 @@ public interface IEFRepository<T> where T : class, IEntity, new()
     void Delete(T entity);
     Task<IEnumerable<T>> GetAllAsync(bool trackEntities = false);
     Task<T?> GetByIdAsync(int id, bool trackEntity = false);
+    Task AddRangeAsync(IEnumerable<T> entities);
     void Update(T entity);
 }

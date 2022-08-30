@@ -3,22 +3,84 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:spinner="clr-namespace:LoadingSpinnerControl;assembly=LoadingSpinnerControl"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="CWaS Manager" Height="700" Width="1500">
-    <DockPanel>
-        <Menu 
-            DockPanel.Dock="Top" 
-            FontSize="14"
-            VerticalAlignment="Center">
-            <MenuItem Header="_Файл">
-                <MenuItem Header="Экспортировать"></MenuItem>
-                <MenuItem Header="Импортировать"></MenuItem>
-            </MenuItem>
-        </Menu>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Dialogs/AddOrderDialogView.xaml"/>
+                <ResourceDictionary Source="Dialogs/EditOrderDialogView.xaml"/>
+                <ResourceDictionary Source="Dialogs/WarningMessageDialogView.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <DockPanel>
+            <Menu 
+                DockPanel.Dock="Top" 
+                FontSize="14"
+                VerticalAlignment="Center"
+                Margin="10 0">
+                <MenuItem Header="_Файл">
+                    <MenuItem 
+                        Header="Экспортировать в..."
+                        Command="{Binding ExportToFileCommand}" />
 
-        <Grid>
-            <ContentControl x:Name="ActiveItem"/>
-        </Grid>
+                    <MenuItem 
+                        Header="Импортировать из..."
+                        Command="{Binding ImportFromFileCommand}"/>
+
+                    <MenuItem
+                        Header="Очистить"
+                        Foreground="Red"
+                        Command="{Binding ClearOrdersTableCommand}"/>
+                </MenuItem>
+            </Menu>
+
+            <Grid>
+                <ContentControl x:Name="ActiveItem"/>
+            </Grid>
+        </DockPanel>
         
-    </DockPanel>
+            <Grid>
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+
+                <spinner:LoadingSpinner 
+                    Grid.Row="1"
+                    IsLoading="{Binding IsLoading}"
+                    Thickness="5"
+                    Color="Black"/>
+
+                <TextBlock
+                    Grid.Row="2"
+                    Margin="20"
+                    FontSize="18"
+                    Text="Загрузка..."
+                    TextAlignment="Center"/>
+            </Grid>
+
+        <materialDesign:DialogHost 
+                    Identifier="Dialog"
+                    CloseOnClickAway="False"/>
+
+    </Grid>
+
 </Window>
