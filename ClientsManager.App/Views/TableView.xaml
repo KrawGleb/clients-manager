@@ -10,7 +10,6 @@
              mc:Ignorable="d" Background="White"
              d:DesignHeight="425" d:DesignWidth="800"
              xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
-             xmlns:com="clr-namespace:ClientsManager.App.Views.Components"
              xmlns:con="clr-namespace:ClientsManager.App.Helpers.Converters"
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:spinner="clr-namespace:LoadingSpinnerControl;assembly=LoadingSpinnerControl"
@@ -84,59 +83,14 @@
                 </StackPanel>
 
 
-                <!--Searching area-->
-                <StackPanel
-                    Orientation="Horizontal"
-                    DockPanel.Dock="Right">
-                    <Grid Margin="130 0 320 0">
+                <!--Search component-->
+                <ContentControl x:Name="SearchComponent"/>
 
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                        </Grid.RowDefinitions>
-
-                        <ComboBox
-                            Grid.Column="0"
-                            x:Name="SearchOption"
-                            ItemsSource="{Binding Path=SearchOption, Converter={con:EnumToCollectionConverter}, Mode=OneTime}"
-                            SelectedValuePath="Value"
-                            DisplayMemberPath="Description"
-                            SelectedValue="{Binding Path=SearchOption}"
-                            MinWidth="120"
-                            MaxHeight="26"
-                            Height="auto"
-                            HorizontalContentAlignment="Center"
-                            VerticalContentAlignment="Center"/>
-
-
-                        <TextBox 
-                            Grid.Column="1"
-                            MinWidth="200"
-                            MaxHeight="26"
-                            Text="{Binding SearchValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                            TextAlignment="Center"
-                            MaxLength="25"
-                            Margin="5 0"/>
-
-                        <Button
-                            Grid.Column="2"
-                            Content="Найти"
-                            Command="{Binding LoadPageAsyncCommand}"/>
-
-                    </Grid>
-                </StackPanel>
-                
             </DockPanel>
 
-            <ContentControl x:Name="TestComponent" />
-
             <!--Table-->
-            <Grid DockPanel.Dock="Top">
+            <Grid 
+                DockPanel.Dock="Top">
                 <DataGrid 
                     x:Name="dgOrders" 
                     Grid.Row="0"
@@ -270,6 +224,7 @@
 
                 </materialDesign:DialogHost>
             </Grid>
+            
         </DockPanel>
 
         <!--Spinner-->

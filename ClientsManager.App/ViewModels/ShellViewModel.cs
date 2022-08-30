@@ -10,9 +10,14 @@ public class ShellViewModel : Conductor<object>
 {
     public ShellViewModel(
         IOrdersService orderService,
-        PaginationComponentViewModel paginationComponent)
+        PaginationComponentViewModel paginationComponent,
+        SearchComponentViewModel searchComponentVM)
     {
-        var tableVM = TableViewModel.LoadTableViewModel(orderService, paginationComponent);
+        var tableVM = TableViewModel.LoadTableViewModel(
+            orderService, 
+            paginationComponent, 
+            searchComponentVM);
+
         var _ = new NotifyTaskCompletion<object>(ActivateItemAsync(tableVM, CancellationToken.None));
     }
 }

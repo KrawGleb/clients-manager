@@ -103,11 +103,9 @@ public class PaginationComponentViewModel : Screen
 	public ICommand PrevPageAsyncCommand { get; set; } 
 	#endregion
 
-
 	private void InitCommands()
 	{
 		NextPageAsyncCommand = new NextPageAsyncCommand(ParentRef, _ordersService);
 		PrevPageAsyncCommand = new PrevPageAsyncCommand(ParentRef, _ordersService);
 	}
-
 }

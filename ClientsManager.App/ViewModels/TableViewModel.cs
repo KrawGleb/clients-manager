@@ -17,6 +17,7 @@ public class TableViewModel : Screen
     private readonly IOrdersService _ordersService;
 
     public PaginationComponentViewModel PaginationComponent { get; set; }
+    public SearchComponentViewModel SearchComponent { get; set; }
 
     #region Properties
 
@@ -51,20 +52,6 @@ public class TableViewModel : Screen
     }
     #endregion
 
-    #region SearchValue
-    private string _searchValue;
-
-    public string SearchValue
-    {
-        get { return _searchValue; }
-        set { _searchValue = value; }
-    }
-    #endregion
-
-    #region SearchOption
-    public SearchOptions SearchOption { get; set; }
-    # endregion
-
     #endregion
 
     #region Commands
@@ -75,13 +62,16 @@ public class TableViewModel : Screen
 
     public TableViewModel(
         IOrdersService ordersService,
-        PaginationComponentViewModel paginationComponentVM)
+        PaginationComponentViewModel paginationComponentVM,
+        SearchComponentViewModel searchComponent)
     {
         _ordersService = ordersService;
 
         PaginationComponent = paginationComponentVM;
+        SearchComponent = searchComponent;
 
-        paginationComponentVM.ParentRef = this;
+        PaginationComponent.ParentRef = this;
+        SearchComponent.ParentRef = this;
 
         AddOrderAsyncCommand = new AddOrderAsyncCommand(this, ordersService);
         InitTableAsyncCommand = new InitTableAsyncCommand(this, ordersService);
@@ -90,9 +80,13 @@ public class TableViewModel : Screen
 
     public static TableViewModel LoadTableViewModel(
         IOrdersService ordersService, 
-        PaginationComponentViewModel paginationComponentVM)
+        PaginationComponentViewModel paginationComponentVM,
+        SearchComponentViewModel searchComponentVM)
     {
-        var tableViewModel = new TableViewModel(ordersService, paginationComponentVM);
+        var tableViewModel = new TableViewModel(
+            ordersService,
+            paginationComponentVM,
+            searchComponentVM);
 
         tableViewModel.InitTableAsyncCommand.Execute(ordersService);
 
@@ -131,8 +125,8 @@ public class TableViewModel : Screen
         {
             PageSize = PaginationComponent.PageSize,
             PageNumber = PaginationComponent.CurrentPageNumber,
-            SearchOption = SearchOption,
-            SearchValue = SearchValue,
+            SearchOption = SearchComponent.SearchOption,
+            SearchValue = SearchComponent.SearchValue,
             Tab = SelectedTab,
         };
     }
