@@ -31,7 +31,7 @@ public class PaginationComponentViewModel : Screen
     #endregion
 
     #region CurrentPageNumber
-    private int _currentPageNumber = 0;
+    private int _currentPageNumber = 1;
 
     public int CurrentPageNumber
     {

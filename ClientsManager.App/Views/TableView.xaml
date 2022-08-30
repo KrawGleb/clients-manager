@@ -272,6 +272,7 @@
             </Grid>
         </DockPanel>
 
+        <!--Spinner-->
         <Grid>
             <Grid.Style>
                 <Style TargetType="Grid">
