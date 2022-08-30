@@ -13,18 +13,19 @@ public class LoadPageAsyncCommand : TableAsyncCommandBase
 
     public override async Task ExecuteAsync(object? parameter)
     {
-        if (parameter is null)
-        {
-            return;
-        }
-
         _tableViewModel.IsLoading = true;
 
-        var pageNumber = (int)parameter;
-        var pageSize = _tableViewModel.PageSize;
-        var selectedTab = _tableViewModel.SelectedTab;
+        var tableItemsParams = _tableViewModel.GetItemsParameters();
 
-        _tableViewModel.Orders = await _ordersService.GetPageAsync(pageNumber, pageSize, selectedTab);
+        _tableViewModel.Orders = await _ordersService.GetPageAsync(
+            tableItemsParams.PageNumber,
+            tableItemsParams.PageSize,
+            tableItemsParams.Tab,
+            tableItemsParams.SearchOption,
+            tableItemsParams.SearchValue);
+
+
+        new GetTotalPagesCountCommand(_tableViewModel, _ordersService).Execute(null);
 
         _tableViewModel.IsLoading = false;
     }

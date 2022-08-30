@@ -1,7 +1,7 @@
 ﻿using Caliburn.Micro;
 using ClientsManager.App.Commands.DataAccessCommands;
 using ClientsManager.App.Commands.TableCommands;
-using ClientsManager.App.ViewModels.Dialogs;
+using ClientsManager.App.Helpers.Models;
 using ClientsManager.Application.Services.Interfaces;
 using ClientsManager.Domain.Enums;
 using ClientsManager.Domain.Models;
@@ -13,7 +13,6 @@ namespace ClientsManager.App.ViewModels;
 public class TableViewModel : Screen
 {
     private readonly IOrdersService _ordersService;
-
 
     #region Properties
 
@@ -71,7 +70,7 @@ public class TableViewModel : Screen
     #endregion
 
     #region PageSize
-    private int _pageSize = 1;
+    private int _pageSize = 10;
 
     public int PageSize
     {
@@ -109,6 +108,20 @@ public class TableViewModel : Screen
         set => Set(ref _isLastPage, value);
     }
     #endregion
+
+    #region SearchValue
+    private string _searchValue;
+
+    public string SearchValue
+    {
+        get { return _searchValue; }
+        set { _searchValue = value; }
+    }
+    #endregion
+
+    #region SearchOption
+    public SearchOptions SearchOption { get; set; }
+    # endregion
 
     #endregion
 
@@ -164,5 +177,17 @@ public class TableViewModel : Screen
         SelectedTab = tabType;
 
         InitTableAsyncCommand.Execute(null);
+    }
+
+    public TableItemsParameters GetItemsParameters()
+    {
+        return new()
+        {
+            PageSize = PageSize,
+            PageNumber = CurrentPageNumber,
+            SearchOption = SearchOption,
+            SearchValue = SearchValue,
+            Tab = SelectedTab,
+        };
     }
 }

@@ -12,7 +12,7 @@ public class GetTotalPagesCountCommand : ICommand
 
     public GetTotalPagesCountCommand(
         TableViewModel tableViewModel,
-        IOrdersService ordersService) 
+        IOrdersService ordersService)
     {
         _tableViewModel = tableViewModel;
         _ordersService = ordersService;
@@ -27,10 +27,9 @@ public class GetTotalPagesCountCommand : ICommand
     {
         _tableViewModel.IsLoading = true;
 
-        var selectedTab = _tableViewModel.SelectedTab;
-        var pageSize = _tableViewModel.PageSize;
-        var totalCount = _ordersService.GetTotalCountAsync(selectedTab);
-        _tableViewModel.TotalPagesCount = (int)Math.Ceiling((double)totalCount / pageSize);
+        var parameters = _tableViewModel.GetItemsParameters();
+        var totalCount = _ordersService.GetTotalCountAsync(parameters.Tab, parameters.SearchOption, parameters.SearchValue);
+        _tableViewModel.TotalPagesCount = (int)Math.Ceiling((double)totalCount / parameters.PageSize);
 
         _tableViewModel.IsLoading = false;
 

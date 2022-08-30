@@ -2,6 +2,8 @@
 using ClientsManager.Domain.Enums;
 using ClientsManager.Domain.Models;
 using ClientsManager.Infrastructure.Persistence;
+using ClientsManager.Infrastructure.Persistence.Builders.Extenstions.OrdersTableQueryBuilderExtensions;
+using ClientsManager.Infrastructure.Persistence.Builders.Interfaces;
 using ClientsManager.Infrastructure.Persistence.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,13 +13,19 @@ public class OrdersService : IOrdersService
 {
 	private readonly ApplicationDbContext _context;
 	private readonly IOrdersRepository _repository;
+	private readonly ISearchingService _searchingService;
+	private readonly IOrdersTableQueryBuilder _ordersTableQueryBuilder;
 
 	public OrdersService(
 		ApplicationDbContext context,
-		IOrdersRepository repository)
+		IOrdersRepository repository,
+		ISearchingService searchingService,
+		IOrdersTableQueryBuilder ordersTableQueryBuilder)
 	{
 		_context = context;
 		_repository = repository;
+		_searchingService = searchingService;
+		_ordersTableQueryBuilder = ordersTableQueryBuilder;
 	}
 
     public async Task<IEnumerable<OrderInfo>> GetAllAsync()
@@ -38,15 +46,31 @@ public class OrdersService : IOrdersService
 	public async Task<IEnumerable<OrderInfo>> GetPageAsync(
 		int pageNumber, 
 		int pageSize = 25,
-		OrderType type = OrderType.CarWash)
+		OrderType type = OrderType.CarWash,
+		SearchOptions searchOption = SearchOptions.None,
+		string searchParameter = "")
 	{
-		return await _repository.GetSliceAsync(pageNumber, pageSize, type);
+		_ordersTableQueryBuilder
+			.ClearQuery()
+			.WithType(type)
+			.WithSearching(searchOption, searchParameter)
+			.WithPagination(pageNumber, pageSize);
+
+		var list = await _ordersTableQueryBuilder.BuildAsync();
+		return list;
 	}
 
-	public int GetTotalCountAsync(OrderType type)
+	public int GetTotalCountAsync(
+		OrderType type,
+		SearchOptions searchOption,
+		string searchParameter)
 	{
-		return _repository.GetTotalCount(type);
-	}
+		return _ordersTableQueryBuilder
+			.ClearQuery()
+			.WithType(type)
+			.WithSearching(searchOption, searchParameter)
+			.Count();
+    }
 
     public async Task AddAsync(OrderInfo order)
 	{

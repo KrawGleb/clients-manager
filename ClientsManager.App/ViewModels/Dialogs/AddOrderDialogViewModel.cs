@@ -9,7 +9,7 @@ public class AddOrderDialogViewModel
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }
-    public string? AdditionalName { get; set; };
+    public string? AdditionalName { get; set; }
     public string PhoneNumber { get; set; }
     public string? CarModel { get; set; }
     public string? CarNumber { get; set; }

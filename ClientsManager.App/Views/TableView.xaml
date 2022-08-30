@@ -12,7 +12,8 @@
              xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
              xmlns:con="clr-namespace:ClientsManager.App.Helpers.Converters"
              xmlns:cal="http://www.caliburnproject.org"
-             xmlns:spinner="clr-namespace:LoadingSpinnerControl;assembly=LoadingSpinnerControl">
+             xmlns:spinner="clr-namespace:LoadingSpinnerControl;assembly=LoadingSpinnerControl"
+             xmlns:controlzEx="urn:controlzex">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -24,17 +25,6 @@
     </UserControl.Resources>
     <Grid>
         <DockPanel>
-            <!--<StackPanel.Style>
-                <Style TargetType="StackPanel">
-                    <Setter Property="Visibility" Value="Collapsed" />
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsLoading}" Value="False">
-                            <Setter Property="Visibility" Value="Visible"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-
-                </Style>
-            </StackPanel.Style>-->
 
             <!--Tabs-->
             <StackPanel DockPanel.Dock="Top" MinHeight="30" Orientation="Horizontal">
@@ -81,6 +71,42 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
+
+                <!--Searching area-->
+                <Grid Margin="60 0">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+
+                    <ComboBox
+                        Grid.Column="0"
+                        x:Name="SearchOption"
+                        ItemsSource="{Binding Path=SearchOption, Converter={con:EnumToCollectionConverter}, Mode=OneTime}"
+                        SelectedValuePath="Value"
+                        DisplayMemberPath="Description"
+                        SelectedValue="{Binding Path=SearchOption}"
+                        MinWidth="120"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"/>
+
+
+                    <TextBox 
+                        Grid.Column="1"
+                        MinWidth="200" 
+                        Text="{Binding SearchValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        TextAlignment="Center"
+                        Margin="5 0"/>
+
+                     <Button
+                        Grid.Column="2"
+                        Content="Найти"
+                        Command="{Binding LoadPageAsyncCommand}"/>
+
+                </Grid>
             </StackPanel>
 
             <!--Table-->

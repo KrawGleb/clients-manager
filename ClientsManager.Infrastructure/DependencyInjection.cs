@@ -1,5 +1,7 @@
 ﻿using Caliburn.Micro;
 using ClientsManager.Infrastructure.Persistence;
+using ClientsManager.Infrastructure.Persistence.Builders;
+using ClientsManager.Infrastructure.Persistence.Builders.Interfaces;
 using ClientsManager.Infrastructure.Persistence.Repositories;
 using ClientsManager.Infrastructure.Persistence.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -20,7 +22,8 @@ public static class DependencyInjection
         container.Instance(dbContext);
 
         container
-            .PerRequest<IOrdersRepository, OrdersRepository>();
+            .PerRequest<IOrdersRepository, OrdersRepository>()
+            .PerRequest<IOrdersTableQueryBuilder, OrdersTableQueryBuilder>();
 
         return container;
     }

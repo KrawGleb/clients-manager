@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace ClientsManager.App.Commands.TableCommands;
 
-public class InitTableAsyncCommand : TableAsyncCommandBase
+public class SearchAsyncCommand : TableAsyncCommandBase
 {
-    public InitTableAsyncCommand(TableViewModel tableViewModel, IOrdersService ordersService) 
+    public SearchAsyncCommand(TableViewModel tableViewModel, IOrdersService ordersService) 
         : base(tableViewModel, ordersService)
     { }
 
@@ -14,7 +14,8 @@ public class InitTableAsyncCommand : TableAsyncCommandBase
     {
         _tableViewModel.IsLoading = true;
 
-        _tableViewModel.CurrentPageNumber = 1;
+        var parameters = _tableViewModel.GetItemsParameters();
+
 
         _tableViewModel.IsLoading = false;
     }

@@ -35,15 +35,6 @@ public class OrdersRepository : EFRepository<OrderInfo>, IOrdersRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task<IEnumerable<OrderInfo>> GetSliceAsync(int sliceNumber, int sliceSize, OrderType type)
-    {
-        return await _table
-            .Where(e => e.OrderType == type)
-            .Skip((sliceNumber - 1) * sliceSize)
-            .Take(sliceSize)
-            .ToListAsync();
-    }
-
     public int GetTotalCount(OrderType type)
     {
         return _table.Count(e => e.OrderType == type);

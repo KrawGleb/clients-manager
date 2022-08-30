@@ -7,10 +7,18 @@ public interface IOrdersService
 {
     Task<IEnumerable<OrderInfo>> GetAllAsync();
     Task<IEnumerable<OrderInfo>> GetByTypeAsync(OrderType type);
-    Task<IEnumerable<OrderInfo>> GetPageAsync(int pageNumber, int pageSize = 25, OrderType type = OrderType.CarWash);
-    int GetTotalCountAsync(OrderType type);
     Task<OrderInfo?> GetByIdAsync(int id);
     Task AddAsync(OrderInfo order);
     Task UpdateAsync(OrderInfo order);
     Task DeleteAsync(int id);
+    Task<IEnumerable<OrderInfo>> GetPageAsync(
+        int pageNumber,
+        int pageSize = 25,
+        OrderType type = OrderType.CarWash,
+        SearchOptions searchOption = SearchOptions.None,
+        string searchParameter = "");
+    int GetTotalCountAsync(
+        OrderType type,
+        SearchOptions searchOption,
+        string searchParameter);
 }
