@@ -14,7 +14,7 @@ public class InitTableAsyncCommand : TableAsyncCommandBase
     {
         _tableViewModel.IsLoading = true;
 
-        _tableViewModel.CurrentPageNumber = 1;
+        _tableViewModel.PaginationComponent.CurrentPageNumber = 1;
 
         _tableViewModel.IsLoading = false;
     }

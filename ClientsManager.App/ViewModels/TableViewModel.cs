@@ -2,6 +2,8 @@
 using ClientsManager.App.Commands.DataAccessCommands;
 using ClientsManager.App.Commands.TableCommands;
 using ClientsManager.App.Helpers.Models;
+using ClientsManager.App.ViewModels.Components;
+using ClientsManager.App.ViewModels.Components.Table;
 using ClientsManager.Application.Services.Interfaces;
 using ClientsManager.Domain.Enums;
 using ClientsManager.Domain.Models;
@@ -13,6 +15,8 @@ namespace ClientsManager.App.ViewModels;
 public class TableViewModel : Screen
 {
     private readonly IOrdersService _ordersService;
+
+    public PaginationComponentViewModel PaginationComponent { get; set; }
 
     #region Properties
 
@@ -47,72 +51,6 @@ public class TableViewModel : Screen
     }
     #endregion
 
-    #region CurrentPageNumber
-    private int _currentPageNumber = 0;
-
-    public int CurrentPageNumber
-    {
-        get => _currentPageNumber;
-        set
-        {
-            value = value <= TotalPagesCount
-                ? value
-                : TotalPagesCount;
-
-            Set(ref _currentPageNumber, value);
-
-            IsFirstPage = CurrentPageNumber == 1;
-
-            LoadPageAsyncCommand.Execute(CurrentPageNumber);
-        }
-    }
-    #endregion
-
-    #region PageSize
-    private int _pageSize = 10;
-
-    public int PageSize
-    {
-        get => _pageSize;
-        set => Set(ref _pageSize, value);
-    }
-    #endregion
-
-    #region TotalPagesCount
-    private int _totalPagesCount = 10;
-
-    public int TotalPagesCount
-    {
-        get => _totalPagesCount;
-        set
-        {
-            Set(ref _totalPagesCount, value);
-
-            IsLastPage = CurrentPageNumber == TotalPagesCount;
-        }
-    }
-    #endregion
-
-    #region IsFirstPage
-    private bool _isFirstPage;
-
-    public bool IsFirstPage
-    {
-        get => _isFirstPage;
-        set => Set(ref _isFirstPage, value);
-    }
-    #endregion
-
-    #region IsLastPage
-    private bool _isLastPage;
-
-    public bool IsLastPage
-    {
-        get => _isLastPage;
-        set => Set(ref _isLastPage, value);
-    }
-    #endregion
-
     #region SearchValue
     private string _searchValue;
 
@@ -131,26 +69,30 @@ public class TableViewModel : Screen
 
     #region Commands
     public ICommand AddOrderAsyncCommand { get; }
-    public ICommand NextPageAsyncCommand { get; }
-    public ICommand PrevPageAsyncCommand { get; }
     public ICommand InitTableAsyncCommand { get; }
     public ICommand LoadPageAsyncCommand { get; }
     #endregion
 
-    public TableViewModel(IOrdersService ordersService)
+    public TableViewModel(
+        IOrdersService ordersService,
+        PaginationComponentViewModel paginationComponentVM)
     {
         _ordersService = ordersService;
 
+        PaginationComponent = paginationComponentVM;
+
+        paginationComponentVM.ParentRef = this;
+
         AddOrderAsyncCommand = new AddOrderAsyncCommand(this, ordersService);
-        NextPageAsyncCommand = new NextPageAsyncCommand(this, ordersService);
-        PrevPageAsyncCommand = new PrevPageAsyncCommand(this, ordersService);
         InitTableAsyncCommand = new InitTableAsyncCommand(this, ordersService);
         LoadPageAsyncCommand = new LoadPageAsyncCommand(this, ordersService);
     }
 
-    public static TableViewModel LoadTableViewModel(IOrdersService ordersService)
+    public static TableViewModel LoadTableViewModel(
+        IOrdersService ordersService, 
+        PaginationComponentViewModel paginationComponentVM)
     {
-        var tableViewModel = new TableViewModel(ordersService);
+        var tableViewModel = new TableViewModel(ordersService, paginationComponentVM);
 
         tableViewModel.InitTableAsyncCommand.Execute(ordersService);
 
@@ -187,8 +129,8 @@ public class TableViewModel : Screen
     {
         return new()
         {
-            PageSize = PageSize,
-            PageNumber = CurrentPageNumber,
+            PageSize = PaginationComponent.PageSize,
+            PageNumber = PaginationComponent.CurrentPageNumber,
             SearchOption = SearchOption,
             SearchValue = SearchValue,
             Tab = SelectedTab,
