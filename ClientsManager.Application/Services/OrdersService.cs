@@ -75,11 +75,9 @@ public class OrdersService : IOrdersService
 			.Count();
     }
 
-    public async Task AddAsync(OrderInfo order)
+    public void Add(OrderInfo order)
 	{
 		_repository.Create(order);
-
-		await _context.SaveChangesAsync();
 	}
 
 	public async Task AddRangeAsync(IEnumerable<OrderInfo> orders)
@@ -92,11 +90,9 @@ public class OrdersService : IOrdersService
 		await _repository.UpdateAsync(order);
     }
 
-	public async Task DeleteAsync(int id)
+	public void Delete(int id)
 	{
 		_repository.Delete(id);
-
-		await _context.SaveChangesAsync();
 	}
 
 	public async Task ClearAsync()

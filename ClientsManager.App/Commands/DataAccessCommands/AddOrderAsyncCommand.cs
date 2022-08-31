@@ -45,7 +45,7 @@ public class AddOrderAsyncCommand : AsyncCommandBase
 
             _tableViewModel.IsLoading = true;
 
-            await _ordersService.AddAsync(order);
+            _ordersService.Add(order);
 
             _tableViewModel.IsLoading = false;
 
