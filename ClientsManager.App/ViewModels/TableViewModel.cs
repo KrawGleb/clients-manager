@@ -127,8 +127,8 @@ public class TableViewModel : Screen
         if (SortBy is not null && SortBy == e.Column.SortMemberPath)
         {
             SortOrder = SortOrder == ListSortDirection.Ascending.ToString()
-                ? ListSortDirection.Descending.ToString()
-                : ListSortDirection.Ascending.ToString();
+                ? ListSortDirection.Ascending.ToString()
+                : ListSortDirection.Descending.ToString();
         }
         else
         {

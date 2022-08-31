@@ -105,8 +105,7 @@
                             x:Name="Id"
                             Header="№"
                             Binding="{Binding Path=Id}"
-                            Width="auto"
-                            SortMemberPath="{x:Null}"/>
+                            Width="auto"/>
 
                         <!--Full name-->
                         <DataGridTextColumn 
