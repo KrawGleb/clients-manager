@@ -2,6 +2,7 @@
 using ClientsManager.App.Commands.DataAccessCommands;
 using ClientsManager.App.Commands.FileCommands;
 using ClientsManager.App.Helpers.Models;
+using ClientsManager.App.ViewModels.Base;
 using ClientsManager.App.ViewModels.Components.Table;
 using ClientsManager.Application.Services.Interfaces;
 using System.Threading;
@@ -9,27 +10,28 @@ using System.Windows.Input;
 
 namespace ClientsManager.App.ViewModels;
 
-public class ShellViewModel : Conductor<object>
+public class ShellViewModel : ViewModelBase
 {
     public ShellViewModel(
         IOrdersService orderService,
         ISerializationService serializationService,
         IPrintToPdfService printToPdfService,
         PaginationComponentViewModel paginationComponent,
-        SearchComponentViewModel searchComponentVM)
+        SearchComponentViewModel searchComponentVM,
+        TableViewModel tableViewModel)
     {
-        var tableVM = TableViewModel.LoadTableViewModel(
-            orderService,
-            paginationComponent,
-            searchComponentVM);
+        Table = tableViewModel;
+
+        tableViewModel.InitTableAsyncCommand.Execute(null);
 
         ExportToFileCommand = new ExportToFileAsyncCommand(this, orderService, serializationService);
-        ImportFromFileCommand = new ImportFromFileAsyncCommand(this, tableVM, orderService, serializationService);
-        ClearOrdersTableCommand = new ClearOrdersTableAsyncCommand(tableVM, orderService);
-        PrintAsyncCommand = new PrintAsyncCommand(tableVM, printToPdfService);
-
-        var _ = new NotifyTaskCompletion<object>(ActivateItemAsync(tableVM, CancellationToken.None));
+        ImportFromFileCommand = new ImportFromFileAsyncCommand(this, Table, orderService, serializationService);
+        ClearOrdersTableCommand = new ClearOrdersTableAsyncCommand(Table, orderService);
+        PrintAsyncCommand = new PrintAsyncCommand(Table, printToPdfService);
     }
+
+    public TableViewModel Table { get; set; }
+
 
     #region IsLoading 
     private bool _isLoading = false;

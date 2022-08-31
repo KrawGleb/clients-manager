@@ -17,7 +17,8 @@ public class LoadPageAsyncCommand : TableAsyncCommandBase
 
         var tableItemsParams = _tableViewModel.GetItemsParameters();
 
-        _tableViewModel.Orders = await _ordersService.GetPageAsync(
+        _tableViewModel.Orders.Clear();
+        var collection = await _ordersService.GetPageAsync(
             tableItemsParams.PageNumber,
             tableItemsParams.PageSize,
             tableItemsParams.Tab,
@@ -25,6 +26,7 @@ public class LoadPageAsyncCommand : TableAsyncCommandBase
             tableItemsParams.SearchValue,
             tableItemsParams.SortBy,
             tableItemsParams.SortOrder);
+        _tableViewModel.Orders.AddRange(collection);
 
 
         new GetTotalPagesCountCommand(_tableViewModel, _ordersService).Execute(null);

@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using ClientsManager.App.Commands.DataAccessCommands;
 using ClientsManager.App.Commands.TableCommands;
+using ClientsManager.App.Helpers.Collections;
 using ClientsManager.App.Helpers.Models;
 using ClientsManager.App.ViewModels.Components;
 using ClientsManager.App.ViewModels.Components.Table;
@@ -9,9 +10,11 @@ using ClientsManager.Domain.Enums;
 using ClientsManager.Domain.Models;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace ClientsManager.App.ViewModels;
@@ -31,10 +34,7 @@ public class TableViewModel : Screen
     public OrderType SelectedTab
     {
         get => _selectedTab;
-        set
-        {
-            Set(ref _selectedTab, value);
-        }
+        set => Set(ref _selectedTab, value);
     }
     #endregion
 
@@ -48,11 +48,11 @@ public class TableViewModel : Screen
     #endregion
 
     #region Orders 
-    private IEnumerable<OrderInfo> _orders;
-    public IEnumerable<OrderInfo> Orders
+    private WpfObservableRangeCollection<OrderInfo> _orders = new();
+
+    public WpfObservableRangeCollection<OrderInfo> Orders
     {
         get => _orders;
-        set => Set(ref _orders, value);
     }
     #endregion
 
@@ -76,6 +76,7 @@ public class TableViewModel : Screen
     }
     #endregion
 
+
     public IEnumerable SelectedItems { get; set; }
 
     #endregion
@@ -84,6 +85,8 @@ public class TableViewModel : Screen
     public ICommand AddOrderAsyncCommand { get; }
     public ICommand InitTableAsyncCommand { get; }
     public ICommand LoadPageAsyncCommand { get; }
+    public ICommand UpdateOrderAsyncCommand { get; }
+    public ICommand DeleteOrderAsyncCommand { get; }
     #endregion
 
     public TableViewModel(
@@ -99,38 +102,12 @@ public class TableViewModel : Screen
         PaginationComponent.ParentRef = this;
         SearchComponent.ParentRef = this;
 
+        // ToDo: Inject commands
         AddOrderAsyncCommand = new AddOrderAsyncCommand(this, ordersService);
         InitTableAsyncCommand = new InitTableAsyncCommand(this, ordersService);
         LoadPageAsyncCommand = new LoadPageAsyncCommand(this, ordersService);
-    }
-
-    public static TableViewModel LoadTableViewModel(
-        IOrdersService ordersService, 
-        PaginationComponentViewModel paginationComponentVM,
-        SearchComponentViewModel searchComponentVM)
-    {
-        var tableViewModel = new TableViewModel(
-            ordersService,
-            paginationComponentVM,
-            searchComponentVM);
-
-        tableViewModel.InitTableAsyncCommand.Execute(ordersService);
-
-        return tableViewModel;
-    }
-
-    public void EditOrder(OrderInfo orderInfo)
-    {
-        var command = new UpdateOrderAsyncCommand(this, _ordersService);
-
-        command.Execute(orderInfo);
-    }
-
-    public void DeleteOrder(OrderInfo orderInfo)
-    {
-        var command = new DeleteOrderAsyncCommand(this, _ordersService);
-
-        command.Execute(orderInfo.Id);
+        UpdateOrderAsyncCommand = new UpdateOrderAsyncCommand(this, ordersService);
+        DeleteOrderAsyncCommand = new DeleteOrderAsyncCommand(this, ordersService);
     }
 
     public void ChangeTab(OrderType tabType)
@@ -149,7 +126,7 @@ public class TableViewModel : Screen
     {
         if (SortBy is not null && SortBy == e.Column.SortMemberPath)
         {
-            SortOrder = SortOrder == ListSortDirection.Ascending.ToString() 
+            SortOrder = SortOrder == ListSortDirection.Ascending.ToString()
                 ? ListSortDirection.Descending.ToString()
                 : ListSortDirection.Ascending.ToString();
         }

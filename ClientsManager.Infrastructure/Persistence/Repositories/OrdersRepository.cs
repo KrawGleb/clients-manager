@@ -32,7 +32,7 @@ public class OrdersRepository : EFRepository<OrderInfo>, IOrdersRepository
 
         _context.Entry(oldEntity).CurrentValues.SetValues(entity);
 
-        await _context.SaveChangesAsync();
+        _context.SaveChanges();
     }
 
     public int GetTotalCount(OrderType type)
@@ -42,6 +42,8 @@ public class OrdersRepository : EFRepository<OrderInfo>, IOrdersRepository
 
     public async Task ClearAsync()
     {
-        await _context.Database.ExecuteSqlRawAsync($"TRUNCATE TABLE orders");
+        var entities = _table.ToList();
+        _context.RemoveRange(entities);
+        await _context.SaveChangesAsync();
     }
 }

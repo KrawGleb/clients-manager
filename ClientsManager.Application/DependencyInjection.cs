@@ -1,19 +1,19 @@
 ﻿using Caliburn.Micro;
 using ClientsManager.Application.Services;
 using ClientsManager.Application.Services.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ClientsManager.Application;
 
 public static class DependencyInjection
 {
-    public static SimpleContainer AddApplication(this SimpleContainer container)
+    public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-        container
-            .PerRequest<ISearchingService, SearchingService>()
-            .PerRequest<IOrdersService, OrdersService>()
-            .PerRequest<ISerializationService, SerializationService>()
-            .PerRequest<IPrintToPdfService, PrintToPdfService>();
+        services.AddScoped<ISearchingService, SearchingService>();
+        services.AddScoped<IOrdersService, OrdersService>();
+        services.AddScoped<ISerializationService, SerializationService>();
+        services.AddScoped<IPrintToPdfService, PrintToPdfService>();
 
-        return container;
+        return services;
     }
 }

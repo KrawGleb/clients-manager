@@ -3,10 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:ClientsManager.App.ViewModels"
+        xmlns:view="clr-namespace:ClientsManager.App.Views"
         xmlns:spinner="clr-namespace:LoadingSpinnerControl;assembly=LoadingSpinnerControl"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="CWaS Manager" Height="700" Width="1500">
+        Title="CWaS Manager" Height="700" Width="1500"
+        DataContext="{Binding ShellViewModel, Source={StaticResource Locator}}">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -44,7 +47,7 @@
             </Menu>
 
             <Grid>
-                <ContentControl x:Name="ActiveItem"/>
+                <view:TableView DataContext="{Binding Table}"/>
             </Grid>
         </DockPanel>
         

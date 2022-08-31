@@ -5,10 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:components="clr-namespace:ClientsManager.App.Views.Components.Table"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:spinner="clr-namespace:LoadingSpinnerControl;assembly=LoadingSpinnerControl"
              mc:Ignorable="d" Background="White"
-             d:DesignHeight="425" d:DesignWidth="800">
+             d:DesignHeight="425" d:DesignWidth="800"
+             DataContext="{Binding TableViewModel, Source={StaticResource Locator}}">
     <Grid>
         <DockPanel>
 
@@ -70,8 +72,7 @@
 
 
                 <!--Search component-->
-                <ContentControl x:Name="SearchComponent"/>
-
+                <components:SearchComponentView DataContext="{Binding SearchComponent}"/>
             </DockPanel>
 
             <!--Table-->
@@ -163,14 +164,11 @@
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
                                         <!--Delete button-->
-                                        <Button Style="{StaticResource MaterialDesignIconButton}" >
-                                            <i:Interaction.Triggers>
-                                                <i:EventTrigger EventName="Click">
-                                                    <cal:ActionMessage MethodName="DeleteOrder">
-                                                        <cal:Parameter Value="{Binding}"/>
-                                                    </cal:ActionMessage>
-                                                </i:EventTrigger>
-                                            </i:Interaction.Triggers>
+                                        <Button 
+                                            Style="{StaticResource MaterialDesignIconButton}" 
+                                            Command="{Binding DataContext.DeleteOrderAsyncCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                            CommandParameter="{Binding Id}">
+                                            
                                             <materialDesign:PackIcon 
                                                     Kind="TrashCan"
                                                     Foreground="Red"/>
@@ -178,14 +176,10 @@
 
                                         <!--Edit button-->
                                         <Button 
-                                            Style="{StaticResource MaterialDesignIconButton}">
-                                            <i:Interaction.Triggers>
-                                                <i:EventTrigger EventName="Click">
-                                                    <cal:ActionMessage MethodName="EditOrder">
-                                                        <cal:Parameter Value="{Binding}"/>
-                                                    </cal:ActionMessage>
-                                                </i:EventTrigger>
-                                            </i:Interaction.Triggers>
+                                            Style="{StaticResource MaterialDesignIconButton}"
+                                            Command="{Binding DataContext.UpdateOrderAsyncCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                            CommandParameter="{Binding}">
+                                            
                                             <materialDesign:PackIcon 
                                                 Kind="NotebookEdit"
                                                 Foreground="#4287f5"/>
@@ -200,7 +194,7 @@
                 </DataGrid>
 
                 <!--Pagination-->
-                <ContentControl x:Name="PaginationComponent" />
+                <components:PaginationComponentView DataContext="{Binding PaginationComponent}"/>
 
                 <!--Add button-->
                 

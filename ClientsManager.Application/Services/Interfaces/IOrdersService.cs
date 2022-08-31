@@ -8,10 +8,10 @@ public interface IOrdersService
     Task<IEnumerable<OrderInfo>> GetAllAsync();
     Task<IEnumerable<OrderInfo>> GetByTypeAsync(OrderType type);
     Task<OrderInfo?> GetByIdAsync(int id);
-    Task AddAsync(OrderInfo order);
+    void Add(OrderInfo order);
     Task AddRangeAsync(IEnumerable<OrderInfo> orders);
     Task UpdateAsync(OrderInfo order);
-    Task DeleteAsync(int id);
+    void Delete(int id);
     Task ClearAsync();
     Task<IEnumerable<OrderInfo>> GetPageAsync(
         int pageNumber,
