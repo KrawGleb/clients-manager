@@ -8,7 +8,7 @@ public abstract class AsyncCommandBase : ICommand
 {
     private bool _isExecuting;
 
-    public bool IsExeuting
+    public bool IsExecuting
     {
         get =>_isExecuting;
         set { 
@@ -20,15 +20,15 @@ public abstract class AsyncCommandBase : ICommand
     public event EventHandler? CanExecuteChanged;
 
     public bool CanExecute(object? parameter)
-        => !IsExeuting;
+        => !IsExecuting;
 
     public async void Execute(object? parameter)
     {
-        IsExeuting = true;
+        IsExecuting = true;
 
         await ExecuteAsync(parameter);
 
-        IsExeuting = false;
+        IsExecuting = false;
     }
 
     public abstract Task ExecuteAsync(object? parameter);

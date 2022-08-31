@@ -6,8 +6,7 @@
                     xmlns:vm="clr-namespace:ClientsManager.App.ViewModels.Dialogs"
                     xmlns:vr="clr-namespace:ClientsManager.App.Helpers.ValidationRules"
                     xmlns:con="clr-namespace:ClientsManager.App.Helpers.Converters"
-                    xmlns:beh="clr-namespace:ClientsManager.App.Helpers.Behaviors"
-                    >
+                    xmlns:beh="clr-namespace:ClientsManager.App.Helpers.Behaviors">
     <DataTemplate DataType="{x:Type vm:AddOrderDialogViewModel}">
         <Grid
             x:Name="FormGrid"

@@ -17,20 +17,21 @@ public class ShellViewModel : ViewModelBase
         ISerializationService serializationService,
         IPrintToPdfService printToPdfService,
         PaginationComponentViewModel paginationComponent,
-        SearchComponentViewModel searchComponentVM)
+        SearchComponentViewModel searchComponentVM,
+        TableViewModel tableViewModel)
     {
-        var tableVM = TableViewModel.LoadTableViewModel(
-            orderService,
-            paginationComponent,
-            searchComponentVM);
+        Table = tableViewModel;
+
+        tableViewModel.InitTableAsyncCommand.Execute(null);
 
         ExportToFileCommand = new ExportToFileAsyncCommand(this, orderService, serializationService);
-        ImportFromFileCommand = new ImportFromFileAsyncCommand(this, tableVM, orderService, serializationService);
-        ClearOrdersTableCommand = new ClearOrdersTableAsyncCommand(tableVM, orderService);
-        PrintAsyncCommand = new PrintAsyncCommand(tableVM, printToPdfService);
-
-        // var _ = new NotifyTaskCompletion<object>(ActivateItemAsync(tableVM, CancellationToken.None));
+        ImportFromFileCommand = new ImportFromFileAsyncCommand(this, Table, orderService, serializationService);
+        ClearOrdersTableCommand = new ClearOrdersTableAsyncCommand(Table, orderService);
+        PrintAsyncCommand = new PrintAsyncCommand(Table, printToPdfService);
     }
+
+    public TableViewModel Table { get; set; }
+
 
     #region IsLoading 
     private bool _isLoading = false;
