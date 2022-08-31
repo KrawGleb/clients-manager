@@ -114,8 +114,8 @@
                             SortMemberPath="LastName">
                             <DataGridTextColumn.Binding>
                                 <MultiBinding StringFormat=" {0} {1} {2}">
-                                    <Binding Path="FirstName"/>
                                     <Binding Path="LastName"/>
+                                    <Binding Path="FirstName"/>
                                     <Binding Path="AdditionalName"/>
                                 </MultiBinding>
                             </DataGridTextColumn.Binding>
