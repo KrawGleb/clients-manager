@@ -31,6 +31,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
@@ -41,11 +42,20 @@
                 Grid.ColumnSpan="2"
                 TextAlignment="Center"
                 FontSize="20"
-                Text="Добавление заказа" />
+                Text="Добавление записи" />
+
+            <!--Info message-->
+            <TextBlock
+                Grid.Row="1"
+                Grid.ColumnSpan="2"
+                TextAlignment="Left"
+                Text="* Обязательное поле"
+                Margin="20 10 0 0"
+                Foreground="Red"/>
 
             <!--First name-->
             <TextBlock 
-                Grid.Row="1"
+                Grid.Row="2"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center">
                 Имя:
@@ -58,7 +68,7 @@
 
             <TextBox
                 x:Name="FirstName"
-                Grid.Row="1"
+                Grid.Row="2"
                 Grid.Column="1"
                 Margin="0, 0, 0, 10"
                 MaxLength="50">
@@ -73,7 +83,7 @@
 
             <!--Last name-->
             <TextBlock 
-                Grid.Row="2"
+                Grid.Row="3"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center">
                 Фамилия:
@@ -86,7 +96,7 @@
 
             <TextBox
                 x:Name="LastName"
-                Grid.Row="2" 
+                Grid.Row="3" 
                 Grid.Column="1"
                 Margin="0, 0, 0, 10"
                 MaxLength="100">
@@ -101,7 +111,7 @@
 
             <!--Additional name-->
             <TextBlock 
-                Grid.Row="3"
+                Grid.Row="4"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center">
                 Отчество:
@@ -109,7 +119,7 @@
 
             <TextBox
                 x:Name="AdditionalName"
-                Grid.Row="3"
+                Grid.Row="4"
                 Grid.Column="1"
                 Margin="0, 0, 0, 10"
                 MaxLength="100"
@@ -117,7 +127,7 @@
 
             <!--Phone number-->
             <TextBlock 
-                Grid.Row="4"
+                Grid.Row="5"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center">
                 Номер телефона:
@@ -131,7 +141,7 @@
 
             <TextBox
                 x:Name="PhoneNumber"
-                Grid.Row="4"
+                Grid.Row="5"
                 Grid.Column="1"
                 Margin="0, 0, 0, 10">
                 <i:Interaction.Behaviors>
@@ -149,7 +159,7 @@
 
             <!--Car model-->
             <TextBlock 
-                Grid.Row="5"
+                Grid.Row="6"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Text=" Марка машины:" />
@@ -157,14 +167,14 @@
             <TextBox
                 x:Name="CarModel"
                 Text="{Binding CarModel}"
-                Grid.Row="5"
+                Grid.Row="6"
                 Grid.Column="1"
                 Margin="0, 0, 0, 10"
                 MaxLength="50"/>
 
             <!--Car number-->
             <TextBlock 
-                Grid.Row="6"
+                Grid.Row="7"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Text="Номер машины:" />
@@ -172,21 +182,21 @@
             <TextBox
                 x:Name="CarNumber"
                 Text="{Binding CarNumber}"
-                Grid.Row="6"
+                Grid.Row="7"
                 Grid.Column="1" 
                 Margin="0, 0, 0, 10"
                 MaxLength="20"/>
 
             <!--Price-->
             <TextBlock 
-                Grid.Row="7"
+                Grid.Row="8"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Text="Цена:" />
             <TextBox 
                 x:Name="Price"
                 Text="{Binding Price}"
-                Grid.Row="7" 
+                Grid.Row="8" 
                 Grid.Column="1" 
                 Margin="0, 0, 0, 10">
                 <i:Interaction.Behaviors>
@@ -196,7 +206,7 @@
 
             <!--Order type-->
             <TextBlock 
-                Grid.Row="8"
+                Grid.Row="9"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center">
                 Тип:
@@ -209,7 +219,7 @@
 
             <ComboBox 
                 x:Name="OrderType"
-                Grid.Row="8" 
+                Grid.Row="9" 
                 Grid.Column="1"
                 ItemsSource="{Binding Path=OrderType, Converter={con:EnumToCollectionConverter}, Mode=OneTime}"
                 SelectedValuePath="Value"
@@ -218,7 +228,7 @@
 
             <!--Description-->
             <Label 
-                Grid.Row="9"
+                Grid.Row="10"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Content="Описание:" />
@@ -226,14 +236,14 @@
                 x:Name="Description"
                 Text="{Binding Description}"
                 TextWrapping="Wrap"
-                Grid.Row="9"
+                Grid.Row="10"
                 Grid.Column="1"
                 Margin="0, 0, 0, 10"
                 MaxLength="500"/>
 
             <!--Buttons-->
             <StackPanel
-            Grid.Row="10"
+            Grid.Row="11"
             Grid.ColumnSpan="2"
             Orientation="Horizontal"
             HorizontalAlignment="Right"
