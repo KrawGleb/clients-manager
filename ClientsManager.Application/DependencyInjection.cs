@@ -11,7 +11,8 @@ public static class DependencyInjection
         container
             .PerRequest<ISearchingService, SearchingService>()
             .PerRequest<IOrdersService, OrdersService>()
-            .PerRequest<ISerializationService, SerializationService>();
+            .PerRequest<ISerializationService, SerializationService>()
+            .PerRequest<IPrintToPdfService, PrintToPdfService>();
 
         return container;
     }

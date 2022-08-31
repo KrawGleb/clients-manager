@@ -33,6 +33,10 @@
                         Command="{Binding ImportFromFileCommand}"/>
 
                     <MenuItem
+                        Header="Печать"
+                        Command="{Binding PrintAsyncCommand}"/>
+
+                    <MenuItem
                         Header="Очистить"
                         Foreground="Red"
                         Command="{Binding ClearOrdersTableCommand}"/>

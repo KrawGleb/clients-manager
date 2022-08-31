@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Aspose.PDF" Version="22.8.0" />
     <PackageReference Include="Caliburn.Micro.Core" Version="4.0.212" />
   </ItemGroup>
 

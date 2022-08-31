@@ -7,9 +7,11 @@ using ClientsManager.App.ViewModels.Components.Table;
 using ClientsManager.Application.Services.Interfaces;
 using ClientsManager.Domain.Enums;
 using ClientsManager.Domain.Models;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 
 namespace ClientsManager.App.ViewModels;
@@ -54,6 +56,7 @@ public class TableViewModel : Screen
     }
     #endregion
 
+    #region SortBy
     private string _sortBy;
 
     public string SortBy
@@ -61,7 +64,9 @@ public class TableViewModel : Screen
         get { return _sortBy; }
         set { _sortBy = value; }
     }
+    #endregion
 
+    #region SortOrder
     private string _sortOrder;
 
     public string SortOrder
@@ -69,8 +74,9 @@ public class TableViewModel : Screen
         get { return _sortOrder; }
         set { _sortOrder = value; }
     }
+    #endregion
 
-
+    public IEnumerable SelectedItems { get; set; }
 
     #endregion
 
@@ -113,21 +119,21 @@ public class TableViewModel : Screen
         return tableViewModel;
     }
 
-    public async void EditOrder(OrderInfo orderInfo)
+    public void EditOrder(OrderInfo orderInfo)
     {
         var command = new UpdateOrderAsyncCommand(this, _ordersService);
 
-        await command.ExecuteAsync(orderInfo);
+        command.Execute(orderInfo);
     }
 
-    public async void DeleteOrder(OrderInfo orderInfo)
+    public void DeleteOrder(OrderInfo orderInfo)
     {
         var command = new DeleteOrderAsyncCommand(this, _ordersService);
 
-        await command.ExecuteAsync(orderInfo.Id);
+        command.Execute(orderInfo.Id);
     }
 
-    public async void ChangeTab(OrderType tabType)
+    public void ChangeTab(OrderType tabType)
     {
         if (tabType == SelectedTab)
         {
@@ -138,21 +144,6 @@ public class TableViewModel : Screen
 
         InitTableAsyncCommand.Execute(null);
     }
-
-    public TableItemsParameters GetItemsParameters()
-    {
-        return new()
-        {
-            PageSize = PaginationComponent.PageSize,
-            PageNumber = PaginationComponent.CurrentPageNumber,
-            SearchOption = SearchComponent.SearchOption,
-            SearchValue = SearchComponent.SearchValue,
-            Tab = SelectedTab,
-            SortBy = SortBy,
-            SortOrder = SortOrder
-        };
-    }
-
 
     public void SortTable(object sender, DataGridSortingEventArgs e)
     {
@@ -172,5 +163,24 @@ public class TableViewModel : Screen
         }
 
         InitTableAsyncCommand.Execute(null);
+    }
+
+    public TableItemsParameters GetItemsParameters()
+    {
+        return new()
+        {
+            PageSize = PaginationComponent.PageSize,
+            PageNumber = PaginationComponent.CurrentPageNumber,
+            SearchOption = SearchComponent.SearchOption,
+            SearchValue = SearchComponent.SearchValue,
+            Tab = SelectedTab,
+            SortBy = SortBy,
+            SortOrder = SortOrder
+        };
+    }
+
+    public void SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+    {
+        SelectedItems = (sender as DataGrid)?.SelectedItems;
     }
 }

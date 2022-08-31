@@ -14,6 +14,7 @@ public class ShellViewModel : Conductor<object>
     public ShellViewModel(
         IOrdersService orderService,
         ISerializationService serializationService,
+        IPrintToPdfService printToPdfService,
         PaginationComponentViewModel paginationComponent,
         SearchComponentViewModel searchComponentVM)
     {
@@ -25,6 +26,7 @@ public class ShellViewModel : Conductor<object>
         ExportToFileCommand = new ExportToFileAsyncCommand(this, orderService, serializationService);
         ImportFromFileCommand = new ImportFromFileAsyncCommand(this, tableVM, orderService, serializationService);
         ClearOrdersTableCommand = new ClearOrdersTableAsyncCommand(tableVM, orderService);
+        PrintAsyncCommand = new PrintAsyncCommand(tableVM, printToPdfService);
 
         var _ = new NotifyTaskCompletion<object>(ActivateItemAsync(tableVM, CancellationToken.None));
     }
@@ -38,7 +40,10 @@ public class ShellViewModel : Conductor<object>
     }
     #endregion
 
+    #region Commands
     public ICommand ExportToFileCommand { get; }
     public ICommand ImportFromFileCommand { get; }
     public ICommand ClearOrdersTableCommand { get; set; }
+    public ICommand PrintAsyncCommand { get; set; } 
+    #endregion
 }
