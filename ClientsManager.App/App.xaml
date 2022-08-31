@@ -2,12 +2,13 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:ClientsManager.App"
-             xmlns:con="clr-namespace:ClientsManager.App.Helpers.Converters">
+             xmlns:con="clr-namespace:ClientsManager.App.Helpers.Converters"
+             xmlns:vm="clr-namespace:ClientsManager.App.ViewModels"
+             StartupUri="Views/ShellView.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
-                    <local:Bootstrapper x:Key="Bootstrapper" />
                     <con:StringToPhoneConverter x:Key="phoneConverter" />
                 </ResourceDictionary>
 
@@ -20,6 +21,8 @@
                 <!-- My Themes -->
                 <ResourceDictionary Source="Themes/RoundedButtonTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <vm:ViewModelLocator x:Key="Locator" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

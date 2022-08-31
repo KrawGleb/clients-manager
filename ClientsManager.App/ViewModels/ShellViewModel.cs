@@ -2,6 +2,7 @@
 using ClientsManager.App.Commands.DataAccessCommands;
 using ClientsManager.App.Commands.FileCommands;
 using ClientsManager.App.Helpers.Models;
+using ClientsManager.App.ViewModels.Base;
 using ClientsManager.App.ViewModels.Components.Table;
 using ClientsManager.Application.Services.Interfaces;
 using System.Threading;
@@ -9,7 +10,7 @@ using System.Windows.Input;
 
 namespace ClientsManager.App.ViewModels;
 
-public class ShellViewModel : Conductor<object>
+public class ShellViewModel : ViewModelBase
 {
     public ShellViewModel(
         IOrdersService orderService,
@@ -28,7 +29,7 @@ public class ShellViewModel : Conductor<object>
         ClearOrdersTableCommand = new ClearOrdersTableAsyncCommand(tableVM, orderService);
         PrintAsyncCommand = new PrintAsyncCommand(tableVM, printToPdfService);
 
-        var _ = new NotifyTaskCompletion<object>(ActivateItemAsync(tableVM, CancellationToken.None));
+        // var _ = new NotifyTaskCompletion<object>(ActivateItemAsync(tableVM, CancellationToken.None));
     }
 
     #region IsLoading 

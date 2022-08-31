@@ -6,25 +6,21 @@ using ClientsManager.Infrastructure.Persistence.Repositories;
 using ClientsManager.Infrastructure.Persistence.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ClientsManager.Infrastructure;
 
 public static class DependencyInjection
 {
-    public static SimpleContainer AddInfrastructure(this SimpleContainer container, IConfiguration configuration)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("Default");
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-            .UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
-            .Options;
-        var dbContext = new ApplicationDbContext(options);
+        services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
-        container.Instance(dbContext);
+        services.AddScoped<IOrdersRepository, OrdersRepository>();
+        services.AddScoped<IOrdersTableQueryBuilder, OrdersTableQueryBuilder>();
 
-        container
-            .PerRequest<IOrdersRepository, OrdersRepository>()
-            .PerRequest<IOrdersTableQueryBuilder, OrdersTableQueryBuilder>();
-
-        return container;
+        return services;
     }
 }
