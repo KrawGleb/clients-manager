@@ -85,6 +85,8 @@ public class TableViewModel : Screen
     public ICommand AddOrderAsyncCommand { get; }
     public ICommand InitTableAsyncCommand { get; }
     public ICommand LoadPageAsyncCommand { get; }
+    public ICommand UpdateOrderAsyncCommand { get; }
+    public ICommand DeleteOrderAsyncCommand { get; }
     #endregion
 
     public TableViewModel(
@@ -100,23 +102,12 @@ public class TableViewModel : Screen
         PaginationComponent.ParentRef = this;
         SearchComponent.ParentRef = this;
 
+        // ToDo: Inject commands
         AddOrderAsyncCommand = new AddOrderAsyncCommand(this, ordersService);
         InitTableAsyncCommand = new InitTableAsyncCommand(this, ordersService);
         LoadPageAsyncCommand = new LoadPageAsyncCommand(this, ordersService);
-    }
-
-    public void EditOrder(OrderInfo orderInfo)
-    {
-        var command = new UpdateOrderAsyncCommand(this, _ordersService);
-
-        command.Execute(orderInfo);
-    }
-
-    public void DeleteOrder(OrderInfo orderInfo)
-    {
-        var command = new DeleteOrderAsyncCommand(this, _ordersService);
-
-        command.Execute(orderInfo.Id);
+        UpdateOrderAsyncCommand = new UpdateOrderAsyncCommand(this, ordersService);
+        DeleteOrderAsyncCommand = new DeleteOrderAsyncCommand(this, ordersService);
     }
 
     public void ChangeTab(OrderType tabType)

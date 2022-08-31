@@ -164,14 +164,11 @@
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
                                         <!--Delete button-->
-                                        <Button Style="{StaticResource MaterialDesignIconButton}" >
-                                            <i:Interaction.Triggers>
-                                                <i:EventTrigger EventName="Click">
-                                                    <cal:ActionMessage MethodName="DeleteOrder">
-                                                        <cal:Parameter Value="{Binding}"/>
-                                                    </cal:ActionMessage>
-                                                </i:EventTrigger>
-                                            </i:Interaction.Triggers>
+                                        <Button 
+                                            Style="{StaticResource MaterialDesignIconButton}" 
+                                            Command="{Binding DataContext.DeleteOrderAsyncCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                            CommandParameter="{Binding Id}">
+                                            
                                             <materialDesign:PackIcon 
                                                     Kind="TrashCan"
                                                     Foreground="Red"/>
@@ -179,14 +176,10 @@
 
                                         <!--Edit button-->
                                         <Button 
-                                            Style="{StaticResource MaterialDesignIconButton}">
-                                            <i:Interaction.Triggers>
-                                                <i:EventTrigger EventName="Click">
-                                                    <cal:ActionMessage MethodName="EditOrder">
-                                                        <cal:Parameter Value="{Binding}"/>
-                                                    </cal:ActionMessage>
-                                                </i:EventTrigger>
-                                            </i:Interaction.Triggers>
+                                            Style="{StaticResource MaterialDesignIconButton}"
+                                            Command="{Binding DataContext.UpdateOrderAsyncCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                            CommandParameter="{Binding}">
+                                            
                                             <materialDesign:PackIcon 
                                                 Kind="NotebookEdit"
                                                 Foreground="#4287f5"/>
