@@ -48,12 +48,15 @@ public class OrdersService : IOrdersService
 		int pageSize = 25,
 		OrderType type = OrderType.CarWash,
 		SearchOptions searchOption = SearchOptions.None,
-		string searchParameter = "")
+		string searchParameter = "",
+		string sortBy = "",
+		string sortOrder = "")
 	{
 		_ordersTableQueryBuilder
 			.ClearQuery()
 			.WithType(type)
 			.WithSearching(searchOption, searchParameter)
+			.OrderBy(sortBy, sortOrder)
 			.WithPagination(pageNumber, pageSize);
 
 		var list = await _ordersTableQueryBuilder.BuildAsync();

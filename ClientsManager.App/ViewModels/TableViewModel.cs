@@ -8,6 +8,8 @@ using ClientsManager.Application.Services.Interfaces;
 using ClientsManager.Domain.Enums;
 using ClientsManager.Domain.Models;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace ClientsManager.App.ViewModels;
@@ -51,6 +53,24 @@ public class TableViewModel : Screen
         set => Set(ref _orders, value);
     }
     #endregion
+
+    private string _sortBy;
+
+    public string SortBy
+    {
+        get { return _sortBy; }
+        set { _sortBy = value; }
+    }
+
+    private string _sortOrder;
+
+    public string SortOrder
+    {
+        get { return _sortOrder; }
+        set { _sortOrder = value; }
+    }
+
+
 
     #endregion
 
@@ -128,6 +148,29 @@ public class TableViewModel : Screen
             SearchOption = SearchComponent.SearchOption,
             SearchValue = SearchComponent.SearchValue,
             Tab = SelectedTab,
+            SortBy = SortBy,
+            SortOrder = SortOrder
         };
+    }
+
+
+    public void SortTable(object sender, DataGridSortingEventArgs e)
+    {
+        if (SortBy is not null && SortBy == e.Column.SortMemberPath)
+        {
+            SortOrder = SortOrder == ListSortDirection.Ascending.ToString() 
+                ? ListSortDirection.Descending.ToString()
+                : ListSortDirection.Ascending.ToString();
+        }
+        else
+        {
+            SortBy = e.Column.SortMemberPath;
+
+            SortOrder = (e.Column.SortDirection ?? ListSortDirection.Ascending) == ListSortDirection.Ascending
+                ? ListSortDirection.Descending.ToString()
+                : ListSortDirection.Ascending.ToString();
+        }
+
+        InitTableAsyncCommand.Execute(null);
     }
 }

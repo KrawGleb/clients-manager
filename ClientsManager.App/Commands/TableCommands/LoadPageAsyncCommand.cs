@@ -22,7 +22,9 @@ public class LoadPageAsyncCommand : TableAsyncCommandBase
             tableItemsParams.PageSize,
             tableItemsParams.Tab,
             tableItemsParams.SearchOption,
-            tableItemsParams.SearchValue);
+            tableItemsParams.SearchValue,
+            tableItemsParams.SortBy,
+            tableItemsParams.SortOrder);
 
 
         new GetTotalPagesCountCommand(_tableViewModel, _ordersService).Execute(null);

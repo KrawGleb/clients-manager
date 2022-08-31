@@ -18,7 +18,9 @@ public interface IOrdersService
         int pageSize = 25,
         OrderType type = OrderType.CarWash,
         SearchOptions searchOption = SearchOptions.None,
-        string searchParameter = "");
+        string searchParameter = "",
+        string sortBy = "",
+        string sortOrder = "");
     int GetTotalCountAsync(
         OrderType type,
         SearchOptions searchOption,

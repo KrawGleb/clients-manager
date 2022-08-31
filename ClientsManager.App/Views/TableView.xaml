@@ -88,19 +88,27 @@
                     HorizontalAlignment="Center">
 
 
+                    <i:Interaction.Triggers>
+                        
+                        <i:EventTrigger EventName="Sorting" >
+                            <i:CallMethodAction TargetObject="{Binding}" MethodName="SortTable"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    
                     <DataGrid.Columns>
                         <!--Id-->
                         <DataGridTextColumn 
                             x:Name="Id"
                             Header="№"
                             Binding="{Binding Path=Id}"
-                            Width="auto"/>
+                            Width="auto"
+                            SortMemberPath="{x:Null}"/>
 
                         <!--Full name-->
                         <DataGridTextColumn 
                             Header="ФИО"
                             Width="auto"
-                            SortMemberPath="FirstName">
+                            SortMemberPath="LastName">
                             <DataGridTextColumn.Binding>
                                 <MultiBinding StringFormat=" {0} {1} {2}">
                                     <Binding Path="FirstName"/>
