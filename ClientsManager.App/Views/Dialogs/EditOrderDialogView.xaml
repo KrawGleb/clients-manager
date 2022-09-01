@@ -72,11 +72,8 @@
                 Margin="0, 0, 0, 10"
                 MaxLength="50">
                 <TextBox.Text>
-                    <Binding Path="FirstName" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
-                        <Binding.ValidationRules>
-                            <vr:RequiredValidationRule/>
-                        </Binding.ValidationRules>
-                    </Binding>
+                    <Binding Path="FirstName" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged"/>
+
                 </TextBox.Text>
             </TextBox>
 
@@ -100,11 +97,7 @@
                 Margin="0, 0, 0, 10"
                 MaxLength="100">
                 <TextBox.Text>
-                    <Binding Path="LastName" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
-                        <Binding.ValidationRules>
-                            <vr:RequiredValidationRule />
-                        </Binding.ValidationRules>
-                    </Binding>
+                    <Binding Path="LastName" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged"/>
                 </TextBox.Text>
             </TextBox>
 
@@ -148,11 +141,7 @@
                 </i:Interaction.Behaviors>
 
                 <TextBox.Text>
-                    <Binding Path="PhoneNumber" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged" Converter="{StaticResource phoneConverter}">
-                        <Binding.ValidationRules>
-                            <vr:RequiredValidationRule />
-                        </Binding.ValidationRules>
-                    </Binding>
+                    <Binding Path="PhoneNumber" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged" Converter="{StaticResource phoneConverter}"/>
                 </TextBox.Text>
             </TextBox>
 
@@ -255,9 +244,10 @@
                 Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"/>
 
                 <Button 
-                x:Name="AddOrder"
-                Content="Сохранить"
-                Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
+                    x:Name="AddOrder"
+                    Content="Сохранить"
+                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                    IsEnabled="{Binding IsFormValid}">
                     <Button.CommandParameter>
                         <system:Boolean>True</system:Boolean>
                     </Button.CommandParameter>

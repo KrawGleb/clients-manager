@@ -1,25 +1,20 @@
-﻿using Caliburn.Micro;
-using ClientsManager.App.Commands.DataAccessCommands;
+﻿using ClientsManager.App.Commands.DataAccessCommands;
 using ClientsManager.App.Commands.TableCommands;
 using ClientsManager.App.Helpers.Collections;
 using ClientsManager.App.Helpers.Models;
-using ClientsManager.App.ViewModels.Components;
+using ClientsManager.App.ViewModels.Base;
 using ClientsManager.App.ViewModels.Components.Table;
 using ClientsManager.Application.Services.Interfaces;
 using ClientsManager.Domain.Enums;
 using ClientsManager.Domain.Models;
 using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
 using System.Windows.Input;
 
 namespace ClientsManager.App.ViewModels;
 
-public class TableViewModel : Screen
+public class TableViewModel : ViewModelBase
 {
     private readonly IOrdersService _ordersService;
 
