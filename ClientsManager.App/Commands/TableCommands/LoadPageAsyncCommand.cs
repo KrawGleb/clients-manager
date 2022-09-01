@@ -28,9 +28,6 @@ public class LoadPageAsyncCommand : TableAsyncCommandBase
             tableItemsParams.SortOrder);
         _tableViewModel.Orders.AddRange(collection);
 
-
-        new GetTotalPagesCountCommand(_tableViewModel, _ordersService).Execute(null);
-
         _tableViewModel.IsLoading = false;
     }
 }

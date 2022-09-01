@@ -14,8 +14,12 @@ public class InitTableAsyncCommand : TableAsyncCommandBase
     {
         _tableViewModel.IsLoading = true;
 
-        _tableViewModel.LoadPageAsyncCommand.Execute(
-            _tableViewModel.PaginationComponent.CurrentPageNumber);
+        new GetTotalPagesCountCommand(_tableViewModel, _ordersService).Execute(null);
+
+        _tableViewModel.PaginationComponent.CurrentPageNumber = 1;
+
+        //_tableViewModel.LoadPageAsyncCommand.Execute(
+        //    _tableViewModel.PaginationComponent.CurrentPageNumber);
 
         _tableViewModel.IsLoading = false;
     }

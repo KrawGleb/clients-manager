@@ -31,7 +31,7 @@ public class PaginationComponentViewModel : Screen
     #endregion
 
     #region CurrentPageNumber
-    private int _currentPageNumber = 1;
+    private int _currentPageNumber = 0;
 
     public int CurrentPageNumber
     {
@@ -44,7 +44,7 @@ public class PaginationComponentViewModel : Screen
 
             Set(ref _currentPageNumber, value);
 
-            IsFirstPage = CurrentPageNumber == 1;
+            IsFirstPage = CurrentPageNumber == 1 || CurrentPageNumber == 0;
 
             ParentRef.LoadPageAsyncCommand.Execute(CurrentPageNumber);
         }
