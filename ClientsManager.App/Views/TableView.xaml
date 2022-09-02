@@ -111,7 +111,27 @@
                         <DataGridTextColumn 
                             Header="ФИО"
                             Width="auto"
-                            SortMemberPath="LastName">
+                            SortMemberPath="LastName"
+                            MaxWidth="250">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Height" Value="70"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Height" Value="auto"/>
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                            <Setter Property="Foreground" Value="Black"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                            <DataGridTextColumn.ElementStyle>
+                                <Style>
+                                    <Setter Property="TextBlock.TextWrapping" Value="Wrap"/>
+                                    <Setter Property="TextBlock.Margin" Value="5 0"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
                             <DataGridTextColumn.Binding>
                                 <MultiBinding StringFormat=" {0} {1} {2}">
                                     <Binding Path="LastName"/>
@@ -133,7 +153,13 @@
                             Header="Марка машины"
                             Binding="{Binding Path=CarModel}"
                             MinWidth="100"
-                            Width="auto"/>
+                            MaxWidth="230">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style>
+                                    <Setter Property="TextBlock.TextWrapping" Value="Wrap"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
 
                         <!--Car number-->
                         <DataGridTextColumn 
@@ -147,7 +173,26 @@
                             Header="Описание"
                             Binding="{Binding Path=Description}"
                             MinWidth="150"
-                            Width="auto"/>
+                            MaxWidth="370">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Height" Value="70"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Height" Value="auto"/>
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="Foreground" Value="Black"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="TextWrapping" Value="Wrap"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
 
                         <!--Price-->
                         <DataGridTextColumn 
