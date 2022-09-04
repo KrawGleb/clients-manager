@@ -8,7 +8,7 @@ public class ApplicationDbContext : DbContext
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
-
+        Database.EnsureCreated();
     }
 
     public DbSet<OrderInfo> Orders { get; set; }
@@ -18,7 +18,7 @@ public class ApplicationDbContext : DbContext
         modelBuilder
             .Entity<OrderInfo>()
             .Property(o => o.Id)
-            .UseMySqlIdentityColumn()
+            .UseIdentityColumn()
             .IsRequired();
 
         modelBuilder

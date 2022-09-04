@@ -1,5 +1,4 @@
-﻿using Caliburn.Micro;
-using ClientsManager.Infrastructure.Persistence;
+﻿using ClientsManager.Infrastructure.Persistence;
 using ClientsManager.Infrastructure.Persistence.Builders;
 using ClientsManager.Infrastructure.Persistence.Builders.Interfaces;
 using ClientsManager.Infrastructure.Persistence.Repositories;
@@ -14,9 +13,8 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("Default");
         services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+            options.UseSqlServer(configuration.GetConnectionString("Default")));
 
         services.AddScoped<IOrdersRepository, OrdersRepository>();
         services.AddScoped<IOrdersTableQueryBuilder, OrdersTableQueryBuilder>();
