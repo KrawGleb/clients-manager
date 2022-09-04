@@ -15,8 +15,6 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // ToDo: Add indexes
-
         modelBuilder
             .Entity<OrderInfo>()
             .Property(o => o.Id)
@@ -62,7 +60,7 @@ public class ApplicationDbContext : DbContext
         modelBuilder
             .Entity<OrderInfo>()
             .Property(o => o.Description)
-            .HasColumnType("nvarchar(500)")
+            .HasColumnType("nvarchar(2500)")
             .IsRequired(false);
 
         modelBuilder
