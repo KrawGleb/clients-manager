@@ -16,7 +16,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientsManager.Domain", "Cl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientsManager.Infrastructure", "ClientsManager.Infrastructure\ClientsManager.Infrastructure.csproj", "{1032D725-3E35-4FFF-8ABB-9B4C6357D50E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientsManager.Application", "ClientsManager.Application\ClientsManager.Application.csproj", "{E90EF004-9D01-4414-AEF5-739EB35B4921}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientsManager.Application", "ClientsManager.Application\ClientsManager.Application.csproj", "{E90EF004-9D01-4414-AEF5-739EB35B4921}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

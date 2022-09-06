@@ -3,6 +3,7 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
+	 <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <StartupObject>ClientsManager.App.Program</StartupObject>
@@ -13,6 +14,10 @@
     <EmbeddedResource Remove="Views\NewFolder\**" />
     <None Remove="Views\NewFolder\**" />
     <Page Remove="Views\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Views\icon.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +38,10 @@
     <ProjectReference Include="..\ClientsManager.Application\ClientsManager.Application.csproj" />
     <ProjectReference Include="..\ClientsManager.Domain\ClientsManager.Domain.csproj" />
     <ProjectReference Include="..\ClientsManager.Infrastructure\ClientsManager.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Views\icon.ico" />
   </ItemGroup>
 
   <ItemGroup>
