@@ -1,11 +1,11 @@
-﻿using Caliburn.Micro;
-using ClientsManager.App.Commands.TableCommands;
+﻿using ClientsManager.App.Commands.TableCommands;
+using ClientsManager.App.ViewModels.Base;
 using ClientsManager.Application.Services.Interfaces;
 using System.Windows.Input;
 
 namespace ClientsManager.App.ViewModels.Components.Table;
 
-public class PaginationComponentViewModel : Screen
+public class PaginationComponentViewModel : ViewModelBase
 {
 	private readonly IOrdersService _ordersService;
 

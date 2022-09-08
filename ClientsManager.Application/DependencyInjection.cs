@@ -1,5 +1,4 @@
-﻿using Caliburn.Micro;
-using ClientsManager.Application.Services;
+﻿using ClientsManager.Application.Services;
 using ClientsManager.Application.Services.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 

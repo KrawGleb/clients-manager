@@ -1,10 +1,9 @@
-﻿using Caliburn.Micro;
-using ClientsManager.Domain.Enums;
+﻿using ClientsManager.Domain.Enums;
 using System.Windows.Input;
 
 namespace ClientsManager.App.ViewModels.Components.Table;
 
-public class SearchComponentViewModel : Screen
+public class SearchComponentViewModel
 {
     #region Properties
 

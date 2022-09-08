@@ -1,11 +1,8 @@
-﻿using Caliburn.Micro;
-using ClientsManager.App.Commands.DataAccessCommands;
+﻿using ClientsManager.App.Commands.DataAccessCommands;
 using ClientsManager.App.Commands.FileCommands;
-using ClientsManager.App.Helpers.Models;
 using ClientsManager.App.ViewModels.Base;
 using ClientsManager.App.ViewModels.Components.Table;
 using ClientsManager.Application.Services.Interfaces;
-using System.Threading;
 using System.Windows.Input;
 
 namespace ClientsManager.App.ViewModels;

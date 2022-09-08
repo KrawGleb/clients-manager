@@ -1,5 +1,4 @@
-﻿using Caliburn.Micro;
-using ClientsManager.Infrastructure.Persistence;
+﻿using ClientsManager.Infrastructure.Persistence;
 using ClientsManager.Infrastructure.Persistence.Builders;
 using ClientsManager.Infrastructure.Persistence.Builders.Interfaces;
 using ClientsManager.Infrastructure.Persistence.Repositories;

@@ -87,8 +87,7 @@ public class TextBoxInputRegExBehavior : Behavior<TextBox>
         if (e.Key == Key.Back)
         {
             if (!TreatSelectedText(out text) &&
-                AssociatedObject.SelectionStart > 0
-                )
+                AssociatedObject.SelectionStart > 0)
             {
                 text = AssociatedObject.Text.Remove(AssociatedObject.SelectionStart - 1, 1);
 

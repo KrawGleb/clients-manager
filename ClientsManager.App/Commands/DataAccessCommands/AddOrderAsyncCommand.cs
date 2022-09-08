@@ -1,5 +1,4 @@
-﻿using ClientsManager.App.Commands.TableCommands;
-using ClientsManager.App.ViewModels;
+﻿using ClientsManager.App.ViewModels;
 using ClientsManager.App.ViewModels.Dialogs;
 using ClientsManager.Application.Services.Interfaces;
 using ClientsManager.Domain.Models;
@@ -30,6 +29,7 @@ public class AddOrderAsyncCommand : AsyncCommandBase
 
         if (dialogResult is bool boolResult && boolResult)
         {
+            // ToDo: Use Automapper here
             var order = new OrderInfo()
             {
                 FirstName = vm.FirstName,
@@ -49,7 +49,7 @@ public class AddOrderAsyncCommand : AsyncCommandBase
 
             _tableViewModel.IsLoading = false;
 
-            new InitTableAsyncCommand(_tableViewModel, _ordersService).Execute(null);
+            _tableViewModel.InitTableAsyncCommand.Execute(null);
         }
     }
 }

@@ -82,6 +82,7 @@ public class TableViewModel : ViewModelBase
     public ICommand LoadPageAsyncCommand { get; }
     public ICommand UpdateOrderAsyncCommand { get; }
     public ICommand DeleteOrderAsyncCommand { get; }
+    public ICommand ChangeTabCommand { get; }
     #endregion
 
     public TableViewModel(
@@ -97,24 +98,12 @@ public class TableViewModel : ViewModelBase
         PaginationComponent.ParentRef = this;
         SearchComponent.ParentRef = this;
 
-        // ToDo: Inject commands
         AddOrderAsyncCommand = new AddOrderAsyncCommand(this, ordersService);
         InitTableAsyncCommand = new InitTableAsyncCommand(this, ordersService);
         LoadPageAsyncCommand = new LoadPageAsyncCommand(this, ordersService);
         UpdateOrderAsyncCommand = new UpdateOrderAsyncCommand(this, ordersService);
         DeleteOrderAsyncCommand = new DeleteOrderAsyncCommand(this, ordersService);
-    }
-
-    public void ChangeTab(OrderType tabType)
-    {
-        if (tabType == SelectedTab)
-        {
-            return;
-        }
-
-        SelectedTab = tabType;
-
-        InitTableAsyncCommand.Execute(null);
+        ChangeTabCommand = new ChangeTabCommand(this);
     }
 
     public void SortTable(object sender, DataGridSortingEventArgs e)

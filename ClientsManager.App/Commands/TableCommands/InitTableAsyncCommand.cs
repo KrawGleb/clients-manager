@@ -18,9 +18,6 @@ public class InitTableAsyncCommand : TableAsyncCommandBase
 
         _tableViewModel.PaginationComponent.CurrentPageNumber = 1;
 
-        //_tableViewModel.LoadPageAsyncCommand.Execute(
-        //    _tableViewModel.PaginationComponent.CurrentPageNumber);
-
         _tableViewModel.IsLoading = false;
     }
 }

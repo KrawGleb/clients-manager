@@ -16,7 +16,6 @@ public class SearchAsyncCommand : TableAsyncCommandBase
 
         var parameters = _tableViewModel.GetItemsParameters();
 
-
         _tableViewModel.IsLoading = false;
     }
 }

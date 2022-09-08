@@ -67,7 +67,7 @@ public class UpdateOrderAsyncCommand : AsyncCommandBase
             
             _tableViewModel.IsLoading = false;
 
-            new InitTableAsyncCommand(_tableViewModel, _ordersService).Execute(null);
+            _tableViewModel.InitTableAsyncCommand.Execute(null);
         }
     }
 }

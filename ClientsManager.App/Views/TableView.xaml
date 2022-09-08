@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:enums="clr-namespace:ClientsManager.Domain.Enums;assembly=ClientsManager.Domain"
              xmlns:components="clr-namespace:ClientsManager.App.Views.Components.Table"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:spinner="clr-namespace:LoadingSpinnerControl;assembly=LoadingSpinnerControl"
@@ -40,9 +40,7 @@
                         </Button.Style>
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
-                                <cal:ActionMessage MethodName="ChangeTab">
-                                    <cal:Parameter Value="CarWash"/>
-                                </cal:ActionMessage>
+                                <i:InvokeCommandAction Command="{Binding ChangeTabCommand}" CommandParameter="{x:Static enums:OrderType.CarWash}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </Button>
@@ -62,9 +60,7 @@
                         </Button.Style>
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
-                                <cal:ActionMessage MethodName="ChangeTab">
-                                    <cal:Parameter Value="CarService"/>
-                                </cal:ActionMessage>
+                                <i:InvokeCommandAction Command="{Binding ChangeTabCommand}" CommandParameter="{x:Static enums:OrderType.CarService}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </Button>

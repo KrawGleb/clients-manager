@@ -26,8 +26,9 @@ public class ClearOrdersTableAsyncCommand : AsyncCommandBase
     {
         var vm = new WarningMessageDialogViewModel()
         {
-            Message = $"Вы собираетесь ОЧИСТИТЬ всю таблицу"
+            Message = "Вы собираетесь ОЧИСТИТЬ всю таблицу"
         };
+
         var dialogResult = await DialogHost.Show(vm, DialogIdentifier);
 
         if (dialogResult is bool boolResult && boolResult)
