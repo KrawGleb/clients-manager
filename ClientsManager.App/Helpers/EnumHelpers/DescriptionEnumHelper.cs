@@ -32,7 +32,7 @@ public static class DescriptionEnumHelper
     {
         if (!type.IsEnum)
         {
-            throw new ArgumentException(nameof(type));
+            throw new ArgumentException(null, nameof(type));
         }
 
         return Enum
