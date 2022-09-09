@@ -12,7 +12,7 @@ public sealed class NotifyTaskCompletion<TResult> : INotifyPropertyChanged
 
         if (!task.IsCompleted)
         {
-            var _ = WatchTaskAsync(task);
+            _ = WatchTaskAsync(task);
         }
     }
 
@@ -20,7 +20,7 @@ public sealed class NotifyTaskCompletion<TResult> : INotifyPropertyChanged
     {
         if (!task.IsCompleted)
         {
-            var _ = WatchTaskAsync(task);
+            _ = WatchTaskAsync(task);
         }
     }
 
@@ -33,7 +33,7 @@ public sealed class NotifyTaskCompletion<TResult> : INotifyPropertyChanged
     public bool IsFaulted { get => Task.IsFaulted; }
     public AggregateException? Exception { get => Task.Exception; }
     public Exception? InnerException { get => Exception?.InnerException; }
-    public string ErrorMessage { get => InnerException?.Message; }
+    public string? ErrorMessage { get => InnerException?.Message; }
     public TResult? Result
     {
         get => Task.Status == TaskStatus.RanToCompletion
@@ -45,11 +45,7 @@ public sealed class NotifyTaskCompletion<TResult> : INotifyPropertyChanged
 
     private async Task WatchTaskAsync(Task task)
     {
-        try
-        {
-            await task;
-        }
-        catch { }
+        await task;
 
         var propertyChanged = PropertyChanged;
         if (propertyChanged is null)

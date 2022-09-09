@@ -28,15 +28,15 @@ public static class DescriptionEnumHelper
 
     }
 
-    public static IEnumerable<ValueDescription> GetAllValuesAndDescriptions(Type t)
+    public static IEnumerable<ValueDescription> GetAllValuesAndDescriptions(Type type)
     {
-        if (!t.IsEnum)
+        if (!type.IsEnum)
         {
-            throw new ArgumentException();
+            throw new ArgumentException(nameof(type));
         }
 
         return Enum
-            .GetValues(t)
+            .GetValues(type)
             .Cast<Enum>()
             .Select(e => new ValueDescription() { Value = e, Description = e?.Description() });
     }

@@ -13,7 +13,7 @@ public class StringToPhoneConverter : IValueConverter
             return string.Empty;
 
         var phoneNo = value
-            .ToString()
+            .ToString()!
             .Replace("(", string.Empty)
             .Replace(")", string.Empty)
             .Replace(" ", string.Empty)

@@ -82,7 +82,7 @@ public class TextBoxInputRegExBehavior : Behavior<TextBox>
             return;
         }
 
-        string text = null;
+        string? text = null;
 
         if (e.Key == Key.Back)
         {
@@ -90,16 +90,12 @@ public class TextBoxInputRegExBehavior : Behavior<TextBox>
                 AssociatedObject.SelectionStart > 0)
             {
                 text = AssociatedObject.Text.Remove(AssociatedObject.SelectionStart - 1, 1);
-
             }
         }
-        else if (e.Key == Key.Delete)
-        {
-            if (!TreatSelectedText(out text) &&
+        else if (e.Key == Key.Delete && !TreatSelectedText(out text) &&
                 AssociatedObject.Text.Length > AssociatedObject.SelectionStart)
-            {
-                text = AssociatedObject.Text.Remove(AssociatedObject.SelectionStart, 1);
-            }
+        {
+            text = AssociatedObject.Text.Remove(AssociatedObject.SelectionStart, 1);
         }
 
         if (string.IsNullOrEmpty(text))
@@ -155,7 +151,7 @@ public class TextBoxInputRegExBehavior : Behavior<TextBox>
         return true;
     }
 
-    private bool ValidateText(string text)
+    private bool ValidateText(string? text)
     {
         return (new Regex(RegularExpression, RegexOptions.IgnoreCase)).IsMatch(text)
             && (MaxLength == int.MinValue || text.Length <= MaxLength);
