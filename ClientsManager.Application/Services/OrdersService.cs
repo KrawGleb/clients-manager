@@ -92,7 +92,7 @@ public class OrdersService : IOrdersService
 
 	public void Delete(int id)
 	{
-		_repository.Delete(id);
+		_repository.DeleteAsync(id);
 	}
 
 	public async Task ClearAsync()

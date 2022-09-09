@@ -35,28 +35,29 @@ public class EFRepository<T> : IEFRepository<T> where T : class, IEntity, new()
 
     public virtual async Task AddRangeAsync(IEnumerable<T> entities)
     {
-        _table.AddRange(entities);
+        await _table.AddRangeAsync(entities);
 
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
 
 
-    public virtual void Create(T entity)
+    public virtual async Task CreateAsync(T entity)
     {
-        _table.Add(entity);
+        await _table.AddAsync(entity);
 
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
 
     public virtual void Update(T entity) => _table.Update(entity);
 
-    public virtual void Delete(T entity)
+    public virtual async Task DeleteAsync(T entity)
     {
         _table.Remove(entity);
-        _context.SaveChanges();
+
+        await _context.SaveChangesAsync();
     }
 
-    public virtual void Delete(int id)
+    public virtual async Task DeleteAsync(int id)
     {
         var entity = _context
             .ChangeTracker
@@ -68,6 +69,6 @@ public class EFRepository<T> : IEFRepository<T> where T : class, IEntity, new()
 
         _table.Remove(entity);
 
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
 }

@@ -16,7 +16,7 @@ public class OrdersRepository : EFRepository<OrderInfo>, IOrdersRepository
             ? _table
             : _table.AsNoTracking();
 
-        return await _table
+        return await query
             .Where(o => o.OrderType == type)
             .ToListAsync();
     }
@@ -30,9 +30,12 @@ public class OrdersRepository : EFRepository<OrderInfo>, IOrdersRepository
             throw new InvalidOperationException();
         }
 
-        _context.Entry(oldEntity).CurrentValues.SetValues(entity);
+        _context
+            .Entry(oldEntity)
+            .CurrentValues
+            .SetValues(entity);
 
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
 
     public int GetTotalCount(OrderType type)
@@ -43,7 +46,9 @@ public class OrdersRepository : EFRepository<OrderInfo>, IOrdersRepository
     public async Task ClearAsync()
     {
         var entities = _table.ToList();
+
         _context.RemoveRange(entities);
+        
         await _context.SaveChangesAsync();
     }
 }
