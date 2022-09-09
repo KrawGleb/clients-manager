@@ -7,37 +7,18 @@ public class SearchComponentViewModel
 {
     #region Properties
 
-    #region ParentRef
-    private TableViewModel _parentRef;
-
-    public TableViewModel ParentRef
-    {
-        get => _parentRef;
-        set => _parentRef = value;
-        
-    }
-    #endregion
-
-    #region SearchValue
-    private string _searchValue;
-
-    public string SearchValue
-    {
-        get { return _searchValue; }
-        set { _searchValue = value; }
-    }
-    #endregion
-
-    #region SearchOption
+    public TableViewModel? ParentRef { get; set; }
+    
+    public string? SearchValue { get; set; }
+    
     public SearchOptions SearchOption { get; set; }
-    #endregion
-
+    
     #endregion
 
     #region Commands
     public ICommand LoadPageAsyncCommand
     {
-        get => ParentRef.LoadPageAsyncCommand;
+        get => ParentRef!.LoadPageAsyncCommand;
     }
     #endregion
 }

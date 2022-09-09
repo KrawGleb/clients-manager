@@ -7,9 +7,10 @@ public class EditOrderDialogViewModel : ViewModelBase
 {
     public int Id { get; set; }
 
-    private string _firstName;
+    #region FirstName
+    private string? _firstName;
 
-    public string FirstName
+    public string? FirstName
     {
         get => _firstName;
         set
@@ -18,8 +19,9 @@ public class EditOrderDialogViewModel : ViewModelBase
             CheckFormValidation();
         }
     }
+    #endregion
 
-    private string _lastName;
+    private string? _lastName;
 
     public string LastName
     {

@@ -29,7 +29,6 @@ public class ShellViewModel : ViewModelBase
 
     public TableViewModel Table { get; set; }
 
-
     #region IsLoading 
     private bool _isLoading = false;
     public bool IsLoading
