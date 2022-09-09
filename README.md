@@ -17,7 +17,7 @@ Stack:
 <img src="images/app5.png"/>
 
 <h2>Installer</h2>
-<p>One of main goals of the project was to use non-file db (like SQLite) and to make installer simple. I had to write self-executable archive with bat script</p>
+<p>One of main goals of the project was to use non self-contained db (like SQLite) and to make installer simple. I had to write self-executable archive with bat script</p>
 <img src="images/installer1.png">
 <img src="images/installer2.png">
 <img src="images/installer3.png">
