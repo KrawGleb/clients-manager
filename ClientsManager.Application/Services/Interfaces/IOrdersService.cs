@@ -8,7 +8,7 @@ public interface IOrdersService
     Task<IEnumerable<OrderInfo>> GetAllAsync();
     Task<IEnumerable<OrderInfo>> GetByTypeAsync(OrderType type);
     Task<OrderInfo?> GetByIdAsync(int id);
-    void Add(OrderInfo order);
+    Task AddAsync(OrderInfo order);
     Task AddRangeAsync(IEnumerable<OrderInfo> orders);
     Task UpdateAsync(OrderInfo order);
     void Delete(int id);

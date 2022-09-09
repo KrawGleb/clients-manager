@@ -12,11 +12,11 @@ public class SearchingService : ISearchingService
         {
             SearchOptions.None => (_, _) => true,
             SearchOptions.ByFullName => (order, fullName) => string.Join(" ", order.FirstName, order.LastName, order.LastName).Contains(fullName),
-            SearchOptions.ByCarModel => (order, model) => order.CarModel.StartsWith(model),
-            SearchOptions.ByCarNumber => (order, carNumber) => order.CarNumber.StartsWith(carNumber),
+            SearchOptions.ByCarModel => (order, model) => order.CarModel!.StartsWith(model),
+            SearchOptions.ByCarNumber => (order, carNumber) => order.CarNumber!.StartsWith(carNumber),
             SearchOptions.ByPhone => (order, phone) =>
                             {
-                                var targetPhone = order.PhoneNumber
+                                var targetPhone = order.PhoneNumber!
                                     .Replace(" ", "")
                                     .Replace("(", "")
                                     .Replace(")", "")
