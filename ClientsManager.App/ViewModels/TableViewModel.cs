@@ -16,7 +16,24 @@ namespace ClientsManager.App.ViewModels;
 
 public class TableViewModel : ViewModelBase
 {
-    private readonly IOrdersService _ordersService;
+    public TableViewModel(
+        IOrdersService ordersService,
+        PaginationComponentViewModel paginationComponentVM,
+        SearchComponentViewModel searchComponent)
+    {
+        PaginationComponent = paginationComponentVM;
+        SearchComponent = searchComponent;
+
+        PaginationComponent.ParentRef = this;
+        SearchComponent.ParentRef = this;
+
+        AddOrderAsyncCommand = new AddOrderAsyncCommand(this, ordersService);
+        InitTableAsyncCommand = new InitTableCommand(this, ordersService);
+        LoadPageAsyncCommand = new LoadPageAsyncCommand(this, ordersService);
+        UpdateOrderAsyncCommand = new UpdateOrderAsyncCommand(this, ordersService);
+        DeleteOrderAsyncCommand = new DeleteOrderAsyncCommand(this, ordersService);
+        ChangeTabCommand = new ChangeTabCommand(this);
+    }
 
     public PaginationComponentViewModel PaginationComponent { get; set; }
     public SearchComponentViewModel SearchComponent { get; set; }
@@ -43,7 +60,7 @@ public class TableViewModel : ViewModelBase
     #endregion
 
     #region Orders 
-    private WpfObservableRangeCollection<OrderInfo> _orders = new();
+    private readonly WpfObservableRangeCollection<OrderInfo> _orders = new();
 
     public WpfObservableRangeCollection<OrderInfo> Orders
     {
@@ -52,27 +69,16 @@ public class TableViewModel : ViewModelBase
     #endregion
 
     #region SortBy
-    private string _sortBy;
-
-    public string SortBy
-    {
-        get { return _sortBy; }
-        set { _sortBy = value; }
-    }
+    public string? SortBy { get; set; }
     #endregion
 
     #region SortOrder
-    private string _sortOrder;
-
-    public string SortOrder
-    {
-        get { return _sortOrder; }
-        set { _sortOrder = value; }
-    }
+    public string? SortOrder { get; set; }
     #endregion
 
-
-    public IEnumerable SelectedItems { get; set; }
+    #region SelectedItems
+    public IEnumerable? SelectedItems { get; set; }
+    #endregion
 
     #endregion
 
@@ -84,27 +90,6 @@ public class TableViewModel : ViewModelBase
     public ICommand DeleteOrderAsyncCommand { get; }
     public ICommand ChangeTabCommand { get; }
     #endregion
-
-    public TableViewModel(
-        IOrdersService ordersService,
-        PaginationComponentViewModel paginationComponentVM,
-        SearchComponentViewModel searchComponent)
-    {
-        _ordersService = ordersService;
-
-        PaginationComponent = paginationComponentVM;
-        SearchComponent = searchComponent;
-
-        PaginationComponent.ParentRef = this;
-        SearchComponent.ParentRef = this;
-
-        AddOrderAsyncCommand = new AddOrderAsyncCommand(this, ordersService);
-        InitTableAsyncCommand = new InitTableAsyncCommand(this, ordersService);
-        LoadPageAsyncCommand = new LoadPageAsyncCommand(this, ordersService);
-        UpdateOrderAsyncCommand = new UpdateOrderAsyncCommand(this, ordersService);
-        DeleteOrderAsyncCommand = new DeleteOrderAsyncCommand(this, ordersService);
-        ChangeTabCommand = new ChangeTabCommand(this);
-    }
 
     public void SortTable(object sender, DataGridSortingEventArgs e)
     {

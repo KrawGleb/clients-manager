@@ -1,25 +1,17 @@
 ﻿using ClientsManager.App.Commands.TableCommands;
 using ClientsManager.App.ViewModels.Base;
-using ClientsManager.Application.Services.Interfaces;
 using System.Windows.Input;
 
 namespace ClientsManager.App.ViewModels.Components.Table;
 
 public class PaginationComponentViewModel : ViewModelBase
 {
-	private readonly IOrdersService _ordersService;
-
-	public PaginationComponentViewModel(IOrdersService ordersService)
-	{
-		_ordersService = ordersService;
-	}
-
     #region Properties
 
     #region ParentRef
-    private TableViewModel _parentRef;
+    private TableViewModel? _parentRef;
 
-    public TableViewModel ParentRef
+    public TableViewModel? ParentRef
     {
         get => _parentRef;
         set
@@ -46,7 +38,7 @@ public class PaginationComponentViewModel : ViewModelBase
 
             IsFirstPage = CurrentPageNumber == 1 || CurrentPageNumber == 0;
 
-            ParentRef.LoadPageAsyncCommand.Execute(CurrentPageNumber);
+            ParentRef!.LoadPageAsyncCommand.Execute(CurrentPageNumber);
         }
     }
     #endregion
@@ -99,13 +91,13 @@ public class PaginationComponentViewModel : ViewModelBase
     #endregion
 
     #region Commands
-    public ICommand NextPageAsyncCommand { get; set; }
-	public ICommand PrevPageAsyncCommand { get; set; } 
+    public ICommand? NextPageAsyncCommand { get; set; }
+	public ICommand? PrevPageAsyncCommand { get; set; } 
 	#endregion
 
 	private void InitCommands()
 	{
-		NextPageAsyncCommand = new NextPageAsyncCommand(ParentRef, _ordersService);
-		PrevPageAsyncCommand = new PrevPageAsyncCommand(ParentRef, _ordersService);
+		NextPageAsyncCommand = new NextPageAsyncCommand(ParentRef!);
+		PrevPageAsyncCommand = new PrevPageAsyncCommand(ParentRef!);
 	}
 }

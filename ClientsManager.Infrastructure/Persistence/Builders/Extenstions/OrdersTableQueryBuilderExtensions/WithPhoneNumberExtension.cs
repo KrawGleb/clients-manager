@@ -4,7 +4,7 @@ namespace ClientsManager.Infrastructure.Persistence.Builders.Extenstions.OrdersT
 
 public static class WithPhoneNumberExtension
 {
-    public static IOrdersTableQueryBuilder WithPhoneNumber(this IOrdersTableQueryBuilder builder, string phoneNumber)
+    public static IOrdersTableQueryBuilder WithPhoneNumber(this IOrdersTableQueryBuilder builder, string? phoneNumber)
     {
         if (!string.IsNullOrEmpty(phoneNumber))
         {

@@ -24,5 +24,5 @@ public interface IOrdersService
     int GetTotalCountAsync(
         OrderType type,
         SearchOptions searchOption,
-        string searchParameter);
+        string? searchParameter);
 }

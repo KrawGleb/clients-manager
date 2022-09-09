@@ -4,7 +4,7 @@ namespace ClientsManager.Infrastructure.Persistence.Builders.Extenstions.OrdersT
 
 public static class WithFullNameExtension
 {
-    public static IOrdersTableQueryBuilder WithFullName(this IOrdersTableQueryBuilder builder, string fullName)
+    public static IOrdersTableQueryBuilder WithFullName(this IOrdersTableQueryBuilder builder, string? fullName)
     {
         if (!string.IsNullOrEmpty(fullName))
         {

@@ -66,7 +66,7 @@ public class OrdersService : IOrdersService
 	public int GetTotalCountAsync(
 		OrderType type,
 		SearchOptions searchOption,
-		string searchParameter)
+		string? searchParameter)
 	{
 		return _ordersTableQueryBuilder
 			.ClearQuery()

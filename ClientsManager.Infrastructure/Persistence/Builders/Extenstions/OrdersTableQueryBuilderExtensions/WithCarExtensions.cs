@@ -4,7 +4,7 @@ namespace ClientsManager.Infrastructure.Persistence.Builders.Extenstions.OrdersT
 
 public static class WithCarExtensions
 {
-    public static IOrdersTableQueryBuilder WithCarModel(this IOrdersTableQueryBuilder builder, string carModel)
+    public static IOrdersTableQueryBuilder WithCarModel(this IOrdersTableQueryBuilder builder, string? carModel)
     {
         if (!string.IsNullOrEmpty(carModel))
         {
@@ -14,7 +14,7 @@ public static class WithCarExtensions
         return builder;
     }
 
-    public static IOrdersTableQueryBuilder WithCarNumber(this IOrdersTableQueryBuilder builder, string carNumber)
+    public static IOrdersTableQueryBuilder WithCarNumber(this IOrdersTableQueryBuilder builder, string? carNumber)
     {
         if (!string.IsNullOrEmpty(carNumber))
         {
