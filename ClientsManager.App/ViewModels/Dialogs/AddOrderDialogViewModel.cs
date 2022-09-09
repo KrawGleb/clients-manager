@@ -5,9 +5,10 @@ namespace ClientsManager.App.ViewModels.Dialogs;
 
 public class AddOrderDialogViewModel : ViewModelBase
 {
-    private string _firstName;
+    #region FirstName
+    private string? _firstName;
 
-    public string FirstName
+    public string? FirstName
     {
         get => _firstName;
         set
@@ -16,32 +17,37 @@ public class AddOrderDialogViewModel : ViewModelBase
             CheckFormValidation();
         }
     }
+    #endregion
 
-    private string _lastName;
+    #region LastName
+    private string? _lastName;
 
-    public string LastName
+    public string? LastName
     {
-        get => _lastName; 
+        get => _lastName;
         set
         {
             Set(ref _lastName, value);
             CheckFormValidation();
         }
-    }
+    } 
+    #endregion
 
     public string? AdditionalName { get; set; }
 
-    private string _phoneNumber;
+    #region PhoneNumber
+    private string? _phoneNumber;
 
-    public string PhoneNumber
+    public string? PhoneNumber
     {
-        get => _phoneNumber; 
+        get => _phoneNumber;
         set
         {
             Set(ref _phoneNumber, value);
             CheckFormValidation();
         }
-    }
+    } 
+    #endregion
 
     public string? CarModel { get; set; }
     public string? CarNumber { get; set; }
@@ -49,13 +55,15 @@ public class AddOrderDialogViewModel : ViewModelBase
     public string? Description { get; set; }
     public OrderType OrderType { get; set; }
 
+    #region IsFormValid
     private bool _isFormValid;
 
     public bool IsFormValid
     {
         get => _isFormValid;
         set => Set(ref _isFormValid, value);
-    }
+    } 
+    #endregion
 
     private void CheckFormValidation()
     {

@@ -21,9 +21,10 @@ public class EditOrderDialogViewModel : ViewModelBase
     }
     #endregion
 
+    #region LastName
     private string? _lastName;
 
-    public string LastName
+    public string? LastName
     {
         get => _lastName;
         set
@@ -31,13 +32,15 @@ public class EditOrderDialogViewModel : ViewModelBase
             Set(ref _lastName, value);
             CheckFormValidation();
         }
-    }
+    } 
+    #endregion
 
     public string? AdditionalName { get; set; }
 
-    private string _phoneNumber;
+    #region PhoneNumber
+    private string? _phoneNumber;
 
-    public string PhoneNumber
+    public string? PhoneNumber
     {
         get => _phoneNumber;
         set
@@ -45,7 +48,8 @@ public class EditOrderDialogViewModel : ViewModelBase
             Set(ref _phoneNumber, value);
             CheckFormValidation();
         }
-    }
+    } 
+    #endregion
 
     public string? CarModel { get; set; }
     public string? CarNumber { get; set; }
@@ -53,13 +57,15 @@ public class EditOrderDialogViewModel : ViewModelBase
     public string? Description { get; set; }
     public OrderType OrderType { get; set; }
 
+    #region IsFormValid
     private bool _isFormValid;
 
     public bool IsFormValid
     {
         get => _isFormValid;
         set => Set(ref _isFormValid, value);
-    }
+    } 
+    #endregion
 
     private void CheckFormValidation()
     {
