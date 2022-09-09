@@ -5,7 +5,10 @@ namespace ClientsManager.Infrastructure.Persistence.Builders.Extenstions.OrdersT
 
 public static class WithSearchingExtension
 {
-    public static IOrdersTableQueryBuilder WithSearching(this IOrdersTableQueryBuilder builder, SearchOptions option, string? parameter)
+    public static IOrdersTableQueryBuilder WithSearching(
+        this IOrdersTableQueryBuilder builder,
+        SearchOptions option,
+        string? parameter)
     {
         return option switch
         {

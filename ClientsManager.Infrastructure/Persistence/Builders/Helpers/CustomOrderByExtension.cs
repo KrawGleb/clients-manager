@@ -10,6 +10,12 @@ public static class CustomOrderByExtension
         var type = typeof(T);
         var expression2 = Expression.Parameter(type, "t");
         var property = type.GetProperty(sortBy);
+
+        if (property is null)
+        {
+            throw new InvalidOperationException();
+        }
+
         var expression1 = Expression.MakeMemberAccess(expression2, property);
         var lambda = Expression.Lambda(expression1, expression2);
         var result = Expression.Call(

@@ -5,7 +5,10 @@ namespace ClientsManager.Infrastructure.Persistence.Builders.Extenstions.OrdersT
 
 public static class OrderByExtension
 {
-    public static IOrdersTableQueryBuilder OrderBy(this IOrdersTableQueryBuilder builder, string sortBy, string sortOrder)
+    public static IOrdersTableQueryBuilder OrderBy(
+        this IOrdersTableQueryBuilder builder,
+        string sortBy,
+        string sortOrder)
     {
         if (!string.IsNullOrEmpty(sortBy) && !string.IsNullOrEmpty(sortOrder))
         {

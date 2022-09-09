@@ -4,7 +4,10 @@ namespace ClientsManager.Infrastructure.Persistence.Builders.Extenstions.OrdersT
 
 public static class WithPaginationExtension
 {
-    public static IOrdersTableQueryBuilder WithPagination(this IOrdersTableQueryBuilder builder, int pageNumber, int pageSize)
+    public static IOrdersTableQueryBuilder WithPagination(
+        this IOrdersTableQueryBuilder builder,
+        int pageNumber,
+        int pageSize)
     {
         if (pageNumber > 0 && pageSize >= 0)
         {

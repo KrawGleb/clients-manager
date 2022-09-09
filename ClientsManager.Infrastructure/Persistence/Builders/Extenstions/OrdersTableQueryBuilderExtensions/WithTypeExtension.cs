@@ -5,7 +5,9 @@ namespace ClientsManager.Infrastructure.Persistence.Builders.Extenstions.OrdersT
 
 public static class WithTypeExtension
 {
-    public static IOrdersTableQueryBuilder WithType(this IOrdersTableQueryBuilder builder, OrderType type)
+    public static IOrdersTableQueryBuilder WithType(
+        this IOrdersTableQueryBuilder builder,
+        OrderType type)
     {
         builder.AddFilter(e => e.OrderType == type);
 

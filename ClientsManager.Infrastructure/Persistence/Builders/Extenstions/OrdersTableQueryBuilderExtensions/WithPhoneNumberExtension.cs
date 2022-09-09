@@ -4,19 +4,15 @@ namespace ClientsManager.Infrastructure.Persistence.Builders.Extenstions.OrdersT
 
 public static class WithPhoneNumberExtension
 {
-    public static IOrdersTableQueryBuilder WithPhoneNumber(this IOrdersTableQueryBuilder builder, string? phoneNumber)
+    public static IOrdersTableQueryBuilder WithPhoneNumber(
+        this IOrdersTableQueryBuilder builder,
+        string? phoneNumber)
     {
         if (!string.IsNullOrEmpty(phoneNumber))
         {
-            builder.AddFilter(e => e.PhoneNumber.StartsWith(phoneNumber));
+            builder.AddFilter(e => e.PhoneNumber!.StartsWith(phoneNumber));
         }
 
         return builder;
-    }
-
-    // ??
-    private static string CutPhoneNumber(string phoneNumber)
-    {
-        return "";
     }
 }
