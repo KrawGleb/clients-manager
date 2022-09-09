@@ -2,7 +2,6 @@
 
 namespace ClientsManager.Domain.Enums;
 
-
 public enum OrderType
 {
     [Description("Автомойка")]
