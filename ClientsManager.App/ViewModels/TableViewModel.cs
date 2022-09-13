@@ -93,20 +93,12 @@ public class TableViewModel : ViewModelBase
 
     public void SortTable(object sender, DataGridSortingEventArgs e)
     {
-        if (SortBy is not null && SortBy == e.Column.SortMemberPath)
-        {
-            SortOrder = SortOrder == ListSortDirection.Ascending.ToString()
-                ? ListSortDirection.Ascending.ToString()
-                : ListSortDirection.Descending.ToString();
-        }
-        else
-        {
-            SortBy = e.Column.SortMemberPath;
 
-            SortOrder = (e.Column.SortDirection ?? ListSortDirection.Ascending) == ListSortDirection.Ascending
+        SortBy = e.Column.SortMemberPath;
+
+        SortOrder = (e.Column.SortDirection ?? ListSortDirection.Descending) == ListSortDirection.Ascending
                 ? ListSortDirection.Descending.ToString()
                 : ListSortDirection.Ascending.ToString();
-        }
 
         InitTableAsyncCommand.Execute(null);
     }
