@@ -39,8 +39,7 @@ public class PrintAsyncCommand : ICommand
             var selectedItems = _tableViewModel.SelectedItems;
             if (selectedItems is not null)
             {
-                var document = _printService.CreatePdfDocument(selectedItems);
-                document.Save(dialog.FileName);
+                _printService.CreatePdfDocument(selectedItems, dialog.FileName);
             }
             _tableViewModel.IsLoading = false;
         }

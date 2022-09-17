@@ -4,13 +4,13 @@ namespace ClientsManager.Infrastructure.Persistence.Builders.Extenstions.OrdersT
 
 public static class WithFullNameExtension
 {
-    public static IOrdersTableQueryBuilder WithFullName(
+    public static IOrdersTableQueryBuilder WithCustomer(
         this IOrdersTableQueryBuilder builder,
-        string? fullName)
+        string? customer)
     {
-        if (!string.IsNullOrEmpty(fullName))
+        if (!string.IsNullOrEmpty(customer))
         {
-            builder.AddFilter((e) => (e.FirstName + " " + e.LastName + " " + e.AdditionalName).Contains(fullName));
+            builder.AddFilter((e) => e.Customer.Contains(customer));
         }
 
         return builder;

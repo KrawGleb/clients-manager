@@ -33,13 +33,14 @@ public class UpdateOrderAsyncCommand : AsyncCommandBase
         var vm = new EditOrderDialogViewModel()
         {
             Id = entry.Id,
-            FirstName = entry.FirstName,
-            LastName = entry.LastName,
-            AdditionalName = entry.AdditionalName,
+            Customer = entry.Customer,
             PhoneNumber = entry.PhoneNumber,
             Description = entry.Description,
             CarModel = entry.CarModel,
             CarNumber = entry.CarNumber,
+            ReleaseYear = entry.CarReleaseYear,
+            VIN = entry.VIN,
+            CreatedDate = entry.CreatedDate,
             OrderType = entry.OrderType,
             Price = entry.Price
         };
@@ -52,15 +53,16 @@ public class UpdateOrderAsyncCommand : AsyncCommandBase
             var newEntry = new OrderInfo()
             {
                 Id = vm.Id,
-                FirstName = vm.FirstName,
-                LastName = vm.LastName,
-                AdditionalName = vm.AdditionalName,
+                Customer = vm.Customer,
                 PhoneNumber = vm.PhoneNumber,
-                Description = vm.Description,
                 CarModel = vm.CarModel,
                 CarNumber = vm.CarNumber,
+                Description = vm.Description,
                 OrderType = vm.OrderType,
-                Price = vm.Price
+                Price = vm.Price ?? 0,
+                CreatedDate = vm.CreatedDate,
+                VIN = vm.VIN,
+                CarReleaseYear = vm.ReleaseYear ?? 0,
             };
 
             await _ordersService.UpdateAsync(newEntry);

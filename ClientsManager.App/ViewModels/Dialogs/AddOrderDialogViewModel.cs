@@ -1,39 +1,24 @@
 ﻿using ClientsManager.App.ViewModels.Base;
 using ClientsManager.Domain.Enums;
+using System;
 
 namespace ClientsManager.App.ViewModels.Dialogs;
 
 public class AddOrderDialogViewModel : ViewModelBase
 {
-    #region FirstName
-    private string? _firstName;
+    #region Customer
+    private string? _customer;
 
-    public string? FirstName
+    public string? Customer
     {
-        get => _firstName;
+        get => _customer;
         set
         {
-            Set(ref _firstName, value);
+            Set(ref _customer, value);
             CheckFormValidation();
         }
-    }
+    } 
     #endregion
-
-    #region LastName
-    private string? _lastName;
-
-    public string? LastName
-    {
-        get => _lastName;
-        set
-        {
-            Set(ref _lastName, value);
-            CheckFormValidation();
-        }
-    }
-    #endregion
-
-    public string? AdditionalName { get; set; }
 
     #region PhoneNumber
     private string? _phoneNumber;
@@ -74,13 +59,27 @@ public class AddOrderDialogViewModel : ViewModelBase
             Set(ref _carNumber, value);
             CheckFormValidation();
         }
+    }
+    #endregion
+
+    #region VIN
+    private string? _vin;
+
+    public string? VIN
+    {
+        get => _vin;
+        set
+        {
+            Set(ref _vin, value);
+            CheckFormValidation();
+        }
     } 
     #endregion
 
     #region Price
-    private decimal _price;
+    private decimal? _price;
 
-    public decimal Price
+    public decimal? Price
     {
         get => _price;
         set
@@ -88,12 +87,26 @@ public class AddOrderDialogViewModel : ViewModelBase
             Set(ref _price, value);
             CheckFormValidation();
         }
+    }
+    #endregion
+
+    #region ReleaseYear
+    private int? _releaseYear;
+
+    public int? ReleaseYear
+    {
+        get => _releaseYear;
+        set
+        {
+            Set(ref _releaseYear, value);
+            CheckFormValidation();
+        }
     } 
     #endregion
 
-
     public string? Description { get; set; }
     public OrderType OrderType { get; set; }
+    public DateTime CreatedDate { get; set; } = DateTime.Now;
 
     #region IsFormValid
     private bool _isFormValid;
@@ -108,11 +121,12 @@ public class AddOrderDialogViewModel : ViewModelBase
     private void CheckFormValidation()
     {
         IsFormValid =
-            !string.IsNullOrEmpty(FirstName) &&
-            !string.IsNullOrEmpty(LastName) &&
+            !string.IsNullOrEmpty(Customer) &&
             !string.IsNullOrEmpty(PhoneNumber) &&
             !string.IsNullOrEmpty(CarModel) &&
             !string.IsNullOrEmpty(CarNumber) &&
-            Price != 0;
+            !string.IsNullOrEmpty(VIN) &&
+            Price != 0 &&
+            ReleaseYear is not null && ReleaseYear != 0;
     }
 }

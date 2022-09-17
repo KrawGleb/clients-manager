@@ -14,9 +14,7 @@ public class OrdersService : IOrdersService
 	private readonly IOrdersTableQueryBuilder _ordersTableQueryBuilder;
 
 	public OrdersService(
-		ApplicationDbContext context,
 		IOrdersRepository repository,
-		ISearchingService searchingService,
 		IOrdersTableQueryBuilder ordersTableQueryBuilder)
 	{
 		_repository = repository;

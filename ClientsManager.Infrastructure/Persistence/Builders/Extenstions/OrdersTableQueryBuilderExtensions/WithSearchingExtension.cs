@@ -14,7 +14,7 @@ public static class WithSearchingExtension
         {
             SearchOptions.None => builder,
             SearchOptions.ByFullName => builder
-                                .WithFullName(parameter),
+                                .WithCustomer(parameter),
             SearchOptions.ByPhone => builder
                                 .WithPhoneNumber(parameter),
             SearchOptions.ByCarModel => builder

@@ -30,6 +30,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
@@ -40,7 +41,7 @@
                 Grid.ColumnSpan="2"
                 TextAlignment="Center"
                 FontSize="20"
-                Text="Изменение записи" />
+                Text="Добавление записи" />
 
             <!--Info message-->
             <TextBlock
@@ -51,37 +52,24 @@
                 Margin="20 10 0 0"
                 Foreground="Red"/>
 
-            <!--First name-->
-            <TextBlock 
+            <!--Created date-->
+            <TextBlock
                 Grid.Row="2"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center">
-                Имя:
-                <TextBlock 
-                    BaselineOffset="14"
-                    FontWeight="Bold"
-                    Text="*"
-                    Foreground="Red"/>
+                Grid.ColumnSpan="2"
+                TextAlignment="Left"
+                Margin="20 10 0 10"
+                Foreground="Gray">
+                Дата заполнения: 
+                <TextBlock Text="{Binding Path=CreatedDate, StringFormat=dd.MM.yyyy}"/>
             </TextBlock>
 
-            <TextBox
-                x:Name="FirstName"
-                Grid.Row="2"
-                Grid.Column="1"
-                Margin="0, 0, 0, 10"
-                MaxLength="50">
-                <TextBox.Text>
-                    <Binding Path="FirstName" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged"/>
 
-                </TextBox.Text>
-            </TextBox>
-
-            <!--Last name-->
+            <!--Customer-->
             <TextBlock 
                 Grid.Row="3"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center">
-                Фамилия:
+                Заказчик:
                 <TextBlock 
                     BaselineOffset="14"
                     FontWeight="Bold"
@@ -90,35 +78,19 @@
             </TextBlock>
 
             <TextBox
-                x:Name="LastName"
-                Grid.Row="3" 
+                x:Name="Customer"
+                Grid.Row="3"
                 Grid.Column="1"
                 Margin="0, 0, 0, 10"
-                MaxLength="100">
+                MaxLength="200">
                 <TextBox.Text>
-                    <Binding Path="LastName" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged"/>
+                    <Binding Path="Customer" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged"/>
                 </TextBox.Text>
             </TextBox>
 
-            <!--Additional name-->
-            <TextBlock 
-                Grid.Row="4"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center">
-                Отчество:
-            </TextBlock>
-
-            <TextBox
-                x:Name="AdditionalName"
-                Grid.Row="4"
-                Grid.Column="1"
-                Margin="0, 0, 0, 10"
-                MaxLength="100"
-                Text="{Binding Path=AdditionalName}"/>
-
             <!--Phone number-->
             <TextBlock 
-                Grid.Row="5"
+                Grid.Row="4"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center">
                 Номер телефона:
@@ -132,9 +104,10 @@
 
             <TextBox
                 x:Name="PhoneNumber"
-                Grid.Row="5"
+                Grid.Row="4"
                 Grid.Column="1"
-                Margin="0, 0, 0, 10">
+                Margin="0, 0, 0, 10"
+                MaxLength="20">
                 <i:Interaction.Behaviors>
                     <beh:TextBoxInputRegExBehavior RegularExpression="\d+" MaxLength="20"/>
                 </i:Interaction.Behaviors>
@@ -146,7 +119,7 @@
 
             <!--Car model-->
             <TextBlock 
-                Grid.Row="6"
+                Grid.Row="5"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center">
                 Марка машины:
@@ -156,18 +129,20 @@
                     Text="*"
                     Foreground="Red"/>
             </TextBlock>
-
             <TextBox
                 x:Name="CarModel"
-                Text="{Binding CarModel}"
-                Grid.Row="6"
+                Grid.Row="5"
                 Grid.Column="1"
                 Margin="0, 0, 0, 10"
-                MaxLength="50"/>
+                MaxLength="50">
+                <TextBox.Text>
+                    <Binding Path="CarModel" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged"/>
+                </TextBox.Text>
+            </TextBox>
 
             <!--Car number-->
             <TextBlock 
-                Grid.Row="7"
+                Grid.Row="6"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center">
                 Номер машины:
@@ -180,40 +155,104 @@
 
             <TextBox
                 x:Name="CarNumber"
-                Text="{Binding CarNumber}"
-                Grid.Row="7"
+                Grid.Row="6"
                 Grid.Column="1" 
                 Margin="0, 0, 0, 10"
-                MaxLength="20"/>
+                MaxLength="20">
+                <TextBox.Text>
+                    <Binding Path="CarNumber" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged"/>
+                </TextBox.Text>
+            </TextBox>
 
-            <!--Price-->
+            <!--Release year-->
             <TextBlock 
-                Grid.Row="8"
+                Grid.Row="7"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center">
-                Цена(BYN):
+                Год:
                 <TextBlock 
                     BaselineOffset="14"
                     FontWeight="Bold"
                     Text="*"
                     Foreground="Red"/>
             </TextBlock>
-            <TextBox 
-                x:Name="Price"
-                Text="{Binding Price}"
-                Grid.Row="8" 
+
+            <TextBox
+                x:Name="ReleaseYear"
+                Grid.Row="7"
                 Grid.Column="1" 
-                Margin="0, 0, 0, 10">
+                Margin="0, 0, 0, 10"
+                MaxLength="4"
+                Text="{Binding ReleaseYear, UpdateSourceTrigger=PropertyChanged}">
                 <i:Interaction.Behaviors>
-                    <beh:TextBoxInputRegExBehavior RegularExpression="^\d{1,5}(?:[.]\d{0,3}){0,1}$" MaxLength="15"/>
+                    <beh:TextBoxInputRegExBehavior RegularExpression="^\d{0,4}$" MaxLength="4"/>
                 </i:Interaction.Behaviors>
             </TextBox>
 
-            <!--Order type-->
+            <!--VIN-->
+            <TextBlock 
+                Grid.Row="8"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+                VIN:
+                <TextBlock 
+                    BaselineOffset="14"
+                    FontWeight="Bold"
+                    Text="*"
+                    Foreground="Red"/>
+            </TextBlock>
+
+            <TextBox
+                x:Name="VIN"
+                Grid.Row="8"
+                Grid.Column="1" 
+                Margin="0, 0, 0, 10"
+                MaxLength="20">
+                <TextBox.Text>
+                    <Binding Path="VIN" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged"/>
+                </TextBox.Text>
+            </TextBox>
+
+            <!--Price-->
             <TextBlock 
                 Grid.Row="9"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center">
+                Цена (BYN):
+                <TextBlock 
+                    BaselineOffset="14"
+                    FontWeight="Bold"
+                    Text="*"
+                    Foreground="Red"/>
+            </TextBlock>
+
+            <StackPanel 
+                Grid.Row="9" 
+                Grid.Column="1"
+                Margin="0, 0, 0, 10"
+                Orientation="Horizontal">
+                <TextBox 
+                    x:Name="Price"
+                    Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}"
+                    Width="50">
+                    <i:Interaction.Behaviors>
+                        <beh:TextBoxInputRegExBehavior RegularExpression="^\d{1,5}(?:[.]\d{0,3}){0,1}$" MaxLength="15"/>
+                    </i:Interaction.Behaviors>
+                </TextBox>
+
+                <TextBlock
+                    LineHeight="1"
+                    Margin="4 8 0 0">
+                    руб.
+                </TextBlock>
+            </StackPanel>
+
+            <!--Order type-->
+            <TextBlock 
+                Grid.Row="10"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="0 0 10 0">
                 Место обслуживания:
                 <TextBlock 
                     BaselineOffset="14"
@@ -224,7 +263,7 @@
 
             <ComboBox 
                 x:Name="OrderType"
-                Grid.Row="9" 
+                Grid.Row="10" 
                 Grid.Column="1"
                 ItemsSource="{Binding Path=OrderType, Converter={con:EnumToCollectionConverter}, Mode=OneTime}"
                 SelectedValuePath="Value"
@@ -233,7 +272,7 @@
 
             <!--Description-->
             <Label 
-                Grid.Row="10"
+                Grid.Row="11"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Content="Описание услуг:" />
@@ -241,14 +280,15 @@
                 x:Name="Description"
                 Text="{Binding Description}"
                 TextWrapping="Wrap"
-                Grid.Row="10"
+                Grid.Row="11"
                 Grid.Column="1"
                 Margin="0, 0, 0, 10"
-                MaxLength="2500"/>
+                MaxLength="2500"
+                MinHeight="50"/>
 
             <!--Buttons-->
             <StackPanel
-            Grid.Row="11"
+            Grid.Row="12"
             Grid.ColumnSpan="2"
             Orientation="Horizontal"
             HorizontalAlignment="Right"
@@ -268,22 +308,6 @@
                     <Button.CommandParameter>
                         <system:Boolean>True</system:Boolean>
                     </Button.CommandParameter>
-
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
-                            <Setter Property="IsEnabled" Value="False"/>
-                            <Style.Triggers>
-                                <MultiDataTrigger>
-                                    <MultiDataTrigger.Conditions>
-                                        <Condition Binding="{Binding ElementName=FirstName, Path=(Validation.HasError)}" Value="False" />
-                                        <Condition Binding="{Binding ElementName=LastName, Path=(Validation.HasError)}" Value="False" />
-                                        <Condition Binding="{Binding ElementName=PhoneNumber, Path=(Validation.HasError)}" Value="False" />
-                                    </MultiDataTrigger.Conditions>
-                                    <Setter Property="IsEnabled" Value="True"/>
-                                </MultiDataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
                 </Button>
 
             </StackPanel>

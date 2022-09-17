@@ -7,6 +7,7 @@
              xmlns:enums="clr-namespace:ClientsManager.Domain.Enums;assembly=ClientsManager.Domain"
              xmlns:components="clr-namespace:ClientsManager.App.Views.Components.Table"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:sysglb="clr-namespace:System.Globalization;assembly=mscorlib"
              xmlns:spinner="clr-namespace:LoadingSpinnerControl;assembly=LoadingSpinnerControl"
              mc:Ignorable="d" Background="White"
              d:DesignHeight="425" d:DesignWidth="800"
@@ -117,10 +118,10 @@
 
                         <!--Full name-->
                         <DataGridTextColumn 
-                            Header="ФИО"
-                            Width="auto"
-                            SortMemberPath="LastName"
-                            MaxWidth="250">
+                            Header="Заказчик"
+                            Binding="{Binding Path=Customer}"
+                            MinWidth="150"
+                            MaxWidth="370">
                             <DataGridTextColumn.CellStyle>
                                 <Style TargetType="DataGridCell">
                                     <Setter Property="Height" Value="70"/>
@@ -128,25 +129,17 @@
                                         <Trigger Property="IsSelected" Value="True">
                                             <Setter Property="Height" Value="auto"/>
                                             <Setter Property="Background" Value="Transparent"/>
-                                            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
                                             <Setter Property="Foreground" Value="Black"/>
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
                             </DataGridTextColumn.CellStyle>
+
                             <DataGridTextColumn.ElementStyle>
-                                <Style>
-                                    <Setter Property="TextBlock.TextWrapping" Value="Wrap"/>
-                                    <Setter Property="TextBlock.Margin" Value="5 0"/>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="TextWrapping" Value="Wrap"/>
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
-                            <DataGridTextColumn.Binding>
-                                <MultiBinding StringFormat=" {0} {1} {2}">
-                                    <Binding Path="LastName"/>
-                                    <Binding Path="FirstName"/>
-                                    <Binding Path="AdditionalName"/>
-                                </MultiBinding>
-                            </DataGridTextColumn.Binding>
                         </DataGridTextColumn>
 
                         <!--Phone number-->
@@ -171,11 +164,26 @@
 
                         <!--Car number-->
                         <DataGridTextColumn 
-                            Header="Номер машины"
+                            Header="Гос. номер"
                             Binding="{Binding Path=CarNumber}"
                             MinWidth="100"
                             Width="auto"/>
 
+                        <!--Release Year-->
+                        <DataGridTextColumn 
+                            Header="Год"
+                            Binding="{Binding Path=CarReleaseYear}"
+                            MinWidth="50"
+                            Width="auto"/>
+                        
+                        <!--VIN-->
+                        <DataGridTextColumn 
+                            Header="VIN"
+                            Binding="{Binding Path=CarNumber}"
+                            MinWidth="100"
+                            Width="auto"/>
+                        
+                        
                         <!--Description-->
                         <DataGridTextColumn 
                             Header="Описание услуг"
@@ -205,9 +213,15 @@
                         <!--Price-->
                         <DataGridTextColumn 
                             Header="Цена(BYN)"
-                            Binding="{Binding Path=Price}"
                             MinWidth="50"
-                            Width="auto"/>
+                            Width="auto">
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding StringFormat=" {0} руб." ConverterCulture="{x:Static sysglb:CultureInfo.CurrentCulture}">
+                                    <Binding Path="Price"/>
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
+
 
                         <!--Buttons-->
                         <DataGridTemplateColumn
@@ -215,17 +229,6 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
-                                        <!--Delete button-->
-                                        <Button 
-                                            Style="{StaticResource MaterialDesignIconButton}" 
-                                            Command="{Binding DataContext.DeleteOrderAsyncCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
-                                            CommandParameter="{Binding Id}">
-
-                                            <materialDesign:PackIcon 
-                                                    Kind="TrashCan"
-                                                    Foreground="Red"/>
-                                        </Button>
-
                                         <!--Edit button-->
                                         <Button 
                                             Style="{StaticResource MaterialDesignIconButton}"
@@ -235,6 +238,17 @@
                                             <materialDesign:PackIcon 
                                                 Kind="NotebookEdit"
                                                 Foreground="#4287f5"/>
+                                        </Button>
+
+                                        <!--Delete button-->
+                                        <Button 
+                                            Style="{StaticResource MaterialDesignIconButton}" 
+                                            Command="{Binding DataContext.DeleteOrderAsyncCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                            CommandParameter="{Binding Id}">
+
+                                            <materialDesign:PackIcon 
+                                                    Kind="TrashCan"
+                                                    Foreground="Red"/>
                                         </Button>
                                     </StackPanel>
                                 </DataTemplate>

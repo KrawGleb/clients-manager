@@ -8,6 +8,7 @@ public class ApplicationDbContext : DbContext
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
+        Database.EnsureDeleted();
         Database.EnsureCreated();
     }
 
@@ -15,29 +16,12 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        // ToDo: Add new fields to modelBuilder
         modelBuilder
             .Entity<OrderInfo>()
             .Property(o => o.Id)
             .UseMySqlIdentityColumn()
             .IsRequired();
-
-        modelBuilder
-            .Entity<OrderInfo>()
-            .Property(o => o.FirstName)
-            .HasColumnType("nvarchar(50)")
-            .IsRequired();
-
-        modelBuilder
-            .Entity<OrderInfo>()
-            .Property(o => o.LastName)
-            .HasColumnType("nvarchar(100)")
-            .IsRequired();
-
-        modelBuilder
-            .Entity<OrderInfo>()
-            .Property(o => o.AdditionalName)
-            .HasColumnType("nvarchar(100)")
-            .IsRequired(false);
 
         modelBuilder
             .Entity<OrderInfo>()

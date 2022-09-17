@@ -1,7 +1,6 @@
 ﻿using ClientsManager.App.Commands.DataAccessCommands;
 using ClientsManager.App.Commands.FileCommands;
 using ClientsManager.App.ViewModels.Base;
-using ClientsManager.App.ViewModels.Components.Table;
 using ClientsManager.Application.Services.Interfaces;
 using System.Windows.Input;
 
@@ -13,8 +12,6 @@ public class ShellViewModel : ViewModelBase
         IOrdersService orderService,
         ISerializationService serializationService,
         IPrintToPdfService printToPdfService,
-        PaginationComponentViewModel paginationComponent,
-        SearchComponentViewModel searchComponentVM,
         TableViewModel tableViewModel)
     {
         Table = tableViewModel;

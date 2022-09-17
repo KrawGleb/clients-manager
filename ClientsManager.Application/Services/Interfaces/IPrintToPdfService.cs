@@ -4,5 +4,5 @@ using System.Collections;
 namespace ClientsManager.Application.Services.Interfaces;
 public interface IPrintToPdfService
 {
-    Document CreatePdfDocument(IEnumerable items);
+    void CreatePdfDocument(IEnumerable items, string savePath);
 }

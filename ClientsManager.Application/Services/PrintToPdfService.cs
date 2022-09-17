@@ -1,47 +1,70 @@
 ﻿using Aspose.Pdf;
-using Aspose.Pdf.Text;
 using ClientsManager.Application.Services.Interfaces;
 using ClientsManager.Domain.Enums;
 using ClientsManager.Domain.Models;
 using System.Collections;
 using System.ComponentModel;
+using System.Text;
 
 namespace ClientsManager.Application.Services;
 
 public class PrintToPdfService : IPrintToPdfService
 {
-    public Document CreatePdfDocument(IEnumerable items)
+    private const string HtmlTemplate = @"
+        <html>
+            <body>
+                {{Content}}
+            </body>
+        </html>
+    ";
+
+    private const string CardTemplate = @"
+        <div>
+            <h2>{{Id}} {{LastName}} {{FirstName}} {{AdditionalName}}</h2>
+            <h3>{{PhoneNumber}}</h3>
+            <h3>{{OrderType}}        $: {{Price}}</h3>
+            <h3>{{CarModel}} {{CarNumber}}</h3>
+            <pre>{{Description}}</pre>
+        </div>
+    ";
+
+    public void CreatePdfDocument(IEnumerable items, string savePath)
     {
-        var document = new Document();
-        document.PageMode = PageMode.FullScreen;
-        var page = document.Pages.Add();
-
-
-        var table = new Table()
+        var options = new HtmlLoadOptions()
         {
-            ColumnAdjustment = ColumnAdjustment.AutoFitToContent,
-            DefaultCellBorder = new BorderInfo(BorderSide.Box, 0.2f, Color.Black),
-            Alignment = HorizontalAlignment.Center,
-            DefaultCellPadding = new MarginInfo()
+            PageInfo =
             {
-                Left = 2,
-                Right = 4
-            },
-            DefaultCellTextState =
-            {
-                Font = FontRepository.FindFont("Times New Roman"),
+                Width = 842,
+                Height = 1191,
+                IsLandscape = true,
             }
         };
 
-        var headerRow = table.Rows.Add();
-        headerRow.Cells.Add("№");
-        headerRow.Cells.Add("Тип");
-        headerRow.Cells.Add("ФИО");
-        headerRow.Cells.Add("Телефон");
-        headerRow.Cells.Add("Марка");
-        headerRow.Cells.Add("Номер");
-        headerRow.Cells.Add("Описание");
-        headerRow.Cells.Add("$");
+        var content = GenerateContent(items);
+        var html = HtmlTemplate.Replace("{{Content}}", content).Replace("\'", "\"");
+
+        using var htmlStream = GetHtmlStream(html);
+
+        var document = new Document(htmlStream, options);
+
+        document.Save(savePath);
+    }
+
+    private MemoryStream GetHtmlStream(string inputHtml)
+    {
+        var memoryStream = new MemoryStream();
+        var streamWriter = new StreamWriter(memoryStream, new UnicodeEncoding());
+
+        streamWriter.Write(inputHtml);
+        streamWriter.Flush();
+        memoryStream.Position = 0;
+
+        return memoryStream;
+    }
+
+    private string GenerateContent(IEnumerable items)
+    {
+        var stringBuilder = new StringBuilder();
 
         foreach (var item in items)
         {
@@ -51,21 +74,42 @@ public class PrintToPdfService : IPrintToPdfService
                 continue;
             }
 
-            var row = table.Rows.Add();
-
-            row.Cells.Add(order.Id.ToString() ?? "");
-            row.Cells.Add(GetEnumDescription(order.OrderType));
-            row.Cells.Add($"{order.LastName} {order.FirstName} {order.AdditionalName}");
-            row.Cells.Add(order.PhoneNumber);
-            row.Cells.Add(order.CarModel ?? "");
-            row.Cells.Add(order.CarNumber ?? "");
-            row.Cells.Add(order.Description ?? "");
-            row.Cells.Add(order.Price.ToString() ?? "");
+            stringBuilder.Append(ReplacePlaceholders(CardTemplate, order));
         }
 
-        page.Paragraphs.Add(table);
+        return stringBuilder
+            .ToString()
+            .Replace('\'', '\"');
+    }
 
-        return document;
+    private string ReplacePlaceholders(string template, OrderInfo order)
+    {
+        template = template
+            .Replace("{{Id}}", order.Id.ToString())
+            .Replace("{{PhoneNumber}}", order.PhoneNumber)
+            .Replace("{{Price}}", order.Price.ToString())
+            .Replace("{{CarModel}}", order.CarModel)
+            .Replace("{{CarNumber}}", order.CarNumber)
+            .Replace("{{OrderType}}", GetEnumDescription(order.OrderType))
+            .Replace("{{Description}}", WrapTextWithBreaklines(order.Description));
+
+        return template;
+    }
+
+    private string WrapTextWithBreaklines(string? text)
+    {
+        if (string.IsNullOrEmpty(text))
+        {
+            return string.Empty;
+        }
+
+        var linesCount = text.Length / 100;
+        for (int i = 1; i <= linesCount; i++)
+        {
+            text = text.Insert(100 * i, "</br>");
+        }
+
+        return text;
     }
 
     private string GetEnumDescription(OrderType value)

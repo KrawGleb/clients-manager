@@ -32,20 +32,21 @@ public class AddOrderAsyncCommand : AsyncCommandBase
             // ToDo: Use Automapper here
             var order = new OrderInfo()
             {
-                FirstName = vm.FirstName,
-                LastName = vm.LastName,
-                AdditionalName = vm.AdditionalName,
+                Customer = vm.Customer,
                 PhoneNumber = vm.PhoneNumber,
                 CarModel = vm.CarModel,
                 CarNumber = vm.CarNumber,
                 Description = vm.Description,
                 OrderType = vm.OrderType,
-                Price = vm.Price
+                Price = vm.Price ?? 0,
+                CreatedDate = vm.CreatedDate,
+                VIN = vm.VIN,
+                CarReleaseYear = vm.ReleaseYear ?? 0,
             };
 
             _tableViewModel.IsLoading = true;
 
-            _ordersService.AddAsync(order);
+            await _ordersService.AddAsync(order);
 
             _tableViewModel.IsLoading = false;
 
