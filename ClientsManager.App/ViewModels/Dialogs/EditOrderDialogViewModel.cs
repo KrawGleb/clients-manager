@@ -108,7 +108,7 @@ public class EditOrderDialogViewModel : ViewModelBase
 
     public string? Description { get; set; }
     public OrderType OrderType { get; set; }
-    public DateTime CreatedDate { get; set; } = DateTime.Now;
+    public DateTime CreatedDate { get; set; }
 
     #region IsFormValid
     private bool _isFormValid;

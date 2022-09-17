@@ -15,7 +15,6 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // ToDo: Add new fields to modelBuilder
         modelBuilder
             .Entity<OrderInfo>()
             .Property(o => o.Id)
@@ -67,7 +66,14 @@ public class ApplicationDbContext : DbContext
         modelBuilder
             .Entity<OrderInfo>()
             .Property(o => o.Price)
-            .HasColumnType("decimal(15, 2)");
+            .HasColumnType("decimal(15, 2)")
+            .IsRequired();
+
+        modelBuilder
+            .Entity<OrderInfo>()
+            .Property(o => o.CreatedDate)
+            .HasColumnType("date")
+            .IsRequired();
 
         modelBuilder
             .Entity<OrderInfo>()

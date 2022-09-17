@@ -222,6 +222,12 @@
                             </DataGridTextColumn.Binding>
                         </DataGridTextColumn>
 
+                        <!--Created date-->
+                        <DataGridTextColumn 
+                            Header="Дата заполнения"
+                            Binding="{Binding Path=CreatedDate, StringFormat=dd.MM.yyyy}"
+                            Width="auto"/>
+
 
                         <!--Buttons-->
                         <DataGridTemplateColumn
