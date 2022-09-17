@@ -8,7 +8,6 @@ public class ApplicationDbContext : DbContext
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
-        Database.EnsureDeleted();
         Database.EnsureCreated();
     }
 
@@ -21,6 +20,12 @@ public class ApplicationDbContext : DbContext
             .Entity<OrderInfo>()
             .Property(o => o.Id)
             .UseMySqlIdentityColumn()
+            .IsRequired();
+
+        modelBuilder
+            .Entity<OrderInfo>()
+            .Property(o => o.Customer)
+            .HasColumnType("nvarchar(200)")
             .IsRequired();
 
         modelBuilder
@@ -40,6 +45,18 @@ public class ApplicationDbContext : DbContext
             .Property(o => o.CarNumber)
             .HasColumnType("nvarchar(20)")
             .IsRequired(false);
+
+        modelBuilder
+            .Entity<OrderInfo>()
+            .Property(o => o.VIN)
+            .HasColumnType("nvarchar(50)")
+            .IsRequired();
+
+        modelBuilder
+            .Entity<OrderInfo>()
+            .Property(o => o.CarReleaseYear)
+            .HasColumnType("smallint")
+            .IsRequired();
 
         modelBuilder
             .Entity<OrderInfo>()

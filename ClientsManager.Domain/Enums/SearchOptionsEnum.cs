@@ -7,8 +7,8 @@ public enum SearchOptions
     [Description("---")]
     None = 0,
 
-    [Description("ФИО")]
-    ByFullName,
+    [Description("Заказчик")]
+    ByCustomer,
     
     [Description("Телефон")]
     ByPhone,

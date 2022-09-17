@@ -13,7 +13,7 @@ public static class WithSearchingExtension
         return option switch
         {
             SearchOptions.None => builder,
-            SearchOptions.ByFullName => builder
+            SearchOptions.ByCustomer => builder
                                 .WithCustomer(parameter),
             SearchOptions.ByPhone => builder
                                 .WithPhoneNumber(parameter),
