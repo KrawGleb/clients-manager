@@ -17,12 +17,13 @@ public class StringToPhoneConverter : IValueConverter
             .Replace("(", string.Empty)
             .Replace(")", string.Empty)
             .Replace(" ", string.Empty)
+            .Replace("+375", string.Empty)
             .Replace("+", string.Empty)
             .Replace("-", string.Empty);
 
         return phoneNo.Length switch
         {
-            9 => Regex.Replace(phoneNo, @"(\d{2})(\d{3})(\d{2})(\d{2})", "($1) $2-$3-$4"),
+            9 => Regex.Replace(phoneNo, @"(\d{2})(\d{3})(\d{2})(\d{2})", "+375 ($1) $2-$3-$4"),
             12 => Regex.Replace(phoneNo, @"(\d{3})(\d{2})(\d{3})(\d{2})(\d{2})", "+$1 ($2) $3-$4-$5"),
             _ => phoneNo,
         };

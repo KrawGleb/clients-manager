@@ -41,7 +41,6 @@ public class PrintAsyncCommand : ICommand
             {
                 _printService.CreatePdfDocument(selectedItems, dialog.FileName);
             }
-
             _tableViewModel.IsLoading = false;
         }
     }

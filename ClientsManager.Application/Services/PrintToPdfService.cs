@@ -1,10 +1,6 @@
 ﻿using Aspose.Pdf;
 using ClientsManager.Application.Services.Interfaces;
-using ClientsManager.Domain.Enums;
 using ClientsManager.Domain.Models;
-using System.Collections;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -27,14 +23,14 @@ public class PrintToPdfService : IPrintToPdfService
                 </div>
 
                 <div>
-                  <strong>Заказчик: {{Customer}}</strong>
+                  <strong style=""inline-size: 150px; overflow-wrap: break-word;"">Заказчик: {{Customer}}</strong>
                   <table style=""border: 1px solid black; border-collapse: collapse; margin-top: 4px;"">
                       <tr>
-                        <th style=""border: 1px solid black; border-collapse: collapse; padding: 3px;"">Телефон</th>
+                        <th style=""border: 1px solid black; border-collapse: collapse; padding: 3px; max-width: 50px;"">Телефон</th>
                         <th style=""border: 1px solid black; border-collapse: collapse; padding: 3px;"">Марка</th>
                         <th style=""border: 1px solid black; border-collapse: collapse; padding: 3px;"">Год</th>
                         <th style=""border: 1px solid black; border-collapse: collapse; padding: 3px;"">Гос. номер</th>
-                        <th style=""border: 1px solid black; border-collapse: collapse; padding: 3px;"">VIM</th>
+                        <th style=""border: 1px solid black; border-collapse: collapse; padding: 3px;"">VIN</th>
                         <th style=""border: 1px solid black; border-collapse: collapse; padding: 3px;"">Итого</th>
                       </tr>
 
@@ -103,29 +99,31 @@ public class PrintToPdfService : IPrintToPdfService
         template = template
             .Replace("{{Id}}", order.Id.ToString())
             .Replace("{{Date}}", order.CreatedDate.ToShortDateString())
-            .Replace("{{Customer}}", order.Customer)
-            .Replace("{{Phone}}", order.PhoneNumber)
+            .Replace("{{Customer}}", WrapIfTextToLong(order.Customer, 95))
+            .Replace("{{Phone}}", StringToPhoneNumber(order.PhoneNumber))
             .Replace("{{CarModel}}", order.CarModel)
             .Replace("{{Year}}", order.CarReleaseYear.ToString())
             .Replace("{{CarNumber}}", order.CarNumber)
             .Replace("{{VIN}}", order.VIN)
             .Replace("{{Price}}", order.Price.ToString())
-            .Replace("{{Description}}", order.Description);
+            .Replace("{{Description}}", WrapIfTextToLong(order.Description.Replace("\n", "</br>"), 95));
 
         return template;
     }
 
-    private string WrapTextWithBreaklines(string? text)
+    private string WrapIfTextToLong(string? text, int maxLength)
     {
         if (string.IsNullOrEmpty(text))
         {
-            return string.Empty;
+            return text;
         }
 
-        var linesCount = text.Length / 100;
-        for (int i = 1; i <= linesCount; i++)
+        if (text.Length >= maxLength)
         {
-            text = text.Insert(100 * i, "</br>");
+            for (int i = maxLength; i < text.Length; i += maxLength)
+            {
+                text = text.Insert(i, "</br>");
+            }
         }
 
         return text;
@@ -145,7 +143,7 @@ public class PrintToPdfService : IPrintToPdfService
 
         return phoneNo.Length switch
         {
-            9 => Regex.Replace(phoneNo, @"(\d{2})(\d{3})(\d{2})(\d{2})", "($1) $2-$3-$4"),
+            9 => Regex.Replace(phoneNo, @"(\d{2})(\d{3})(\d{2})(\d{2})", "+375 ($1) $2-$3-$4"),
             12 => Regex.Replace(phoneNo, @"(\d{3})(\d{2})(\d{3})(\d{2})(\d{2})", "+$1 ($2) $3-$4-$5"),
             _ => phoneNo,
         };
