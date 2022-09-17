@@ -65,10 +65,22 @@
                         </i:Interaction.Triggers>
                     </Button>
                 </StackPanel>
+                <components:SearchComponentView DataContext="{Binding SearchComponent}"/>
 
 
                 <!--Search component-->
-                <components:SearchComponentView DataContext="{Binding SearchComponent}"/>
+
+                <Button 
+                        Style="{StaticResource RoundedButton}"
+                        Command="{Binding AddOrderAsyncCommand}"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        DockPanel.Dock="Right">
+                    <materialDesign:PackIcon 
+                                Kind="Plus"
+                                Height="25"
+                                Width="25"/>
+                </Button>
             </DockPanel>
 
             <!--Table-->
@@ -94,7 +106,7 @@
                             <i:CallMethodAction TargetObject="{Binding}" MethodName="SelectedCellsChanged"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-                    
+
                     <DataGrid.Columns>
                         <!--Id-->
                         <DataGridTextColumn 
@@ -166,7 +178,7 @@
 
                         <!--Description-->
                         <DataGridTextColumn 
-                            Header="Описание"
+                            Header="Описание услуг"
                             Binding="{Binding Path=Description}"
                             MinWidth="150"
                             MaxWidth="370">
@@ -192,7 +204,7 @@
 
                         <!--Price-->
                         <DataGridTextColumn 
-                            Header="Стоимость"
+                            Header="Цена(BYN)"
                             Binding="{Binding Path=Price}"
                             MinWidth="50"
                             Width="auto"/>
@@ -208,7 +220,7 @@
                                             Style="{StaticResource MaterialDesignIconButton}" 
                                             Command="{Binding DataContext.DeleteOrderAsyncCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
                                             CommandParameter="{Binding Id}">
-                                            
+
                                             <materialDesign:PackIcon 
                                                     Kind="TrashCan"
                                                     Foreground="Red"/>
@@ -219,7 +231,7 @@
                                             Style="{StaticResource MaterialDesignIconButton}"
                                             Command="{Binding DataContext.UpdateOrderAsyncCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
                                             CommandParameter="{Binding}">
-                                            
+
                                             <materialDesign:PackIcon 
                                                 Kind="NotebookEdit"
                                                 Foreground="#4287f5"/>
@@ -235,23 +247,7 @@
 
                 <!--Pagination-->
                 <components:PaginationComponentView DataContext="{Binding PaginationComponent}"/>
-
-                <!--Add button-->
-                
-                    <Button 
-                        Style="{StaticResource RoundedButton}"
-                        Command="{Binding AddOrderAsyncCommand}"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Bottom"
-                        Margin="18">
-                        <materialDesign:PackIcon 
-                                Kind="Plus"
-                                Height="25"
-                                Width="25"/>
-                    </Button>
-
             </Grid>
-            
         </DockPanel>
 
         <!--Spinner-->

@@ -157,11 +157,14 @@
             </TextBlock>
             <TextBox
                 x:Name="CarModel"
-                Text="{Binding CarModel}"
                 Grid.Row="6"
                 Grid.Column="1"
                 Margin="0, 0, 0, 10"
-                MaxLength="50"/>
+                MaxLength="50">
+                <TextBox.Text>
+                    <Binding Path="CarModel" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged"/>
+                </TextBox.Text>
+            </TextBox>
 
             <!--Car number-->
             <TextBlock 
@@ -178,11 +181,14 @@
 
             <TextBox
                 x:Name="CarNumber"
-                Text="{Binding CarNumber}"
                 Grid.Row="7"
                 Grid.Column="1" 
                 Margin="0, 0, 0, 10"
-                MaxLength="20"/>
+                MaxLength="20">
+                <TextBox.Text>
+                    <Binding Path="CarNumber" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged"/>
+                </TextBox.Text>
+            </TextBox>
 
             <!--Price-->
             <TextBlock 
@@ -203,7 +209,7 @@
                 Grid.Column="1" 
                 Margin="0, 0, 0, 10">
                 <i:Interaction.Behaviors>
-                    <beh:TextBoxInputRegExBehavior RegularExpression="^\d{0,5}(?:[.]\d{0,3}){0,1}$" MaxLength="15"/>
+                    <beh:TextBoxInputRegExBehavior RegularExpression="^\d{1,5}(?:[.]\d{0,3}){0,1}$" MaxLength="15"/>
                 </i:Interaction.Behaviors>
             </TextBox>
 

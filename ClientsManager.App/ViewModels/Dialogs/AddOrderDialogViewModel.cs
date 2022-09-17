@@ -30,7 +30,7 @@ public class AddOrderDialogViewModel : ViewModelBase
             Set(ref _lastName, value);
             CheckFormValidation();
         }
-    } 
+    }
     #endregion
 
     public string? AdditionalName { get; set; }
@@ -46,12 +46,52 @@ public class AddOrderDialogViewModel : ViewModelBase
             Set(ref _phoneNumber, value);
             CheckFormValidation();
         }
+    }
+    #endregion
+
+    #region CarModel
+    private string? _carModel;
+
+    public string? CarModel
+    {
+        get => _carModel;
+        set
+        {
+            Set(ref _carModel, value);
+            CheckFormValidation();
+        }
     } 
     #endregion
 
-    public string? CarModel { get; set; }
-    public string? CarNumber { get; set; }
-    public decimal Price { get; set; }
+    #region CarNumber
+    private string? _carNumber;
+
+    public string? CarNumber
+    {
+        get => _carNumber;
+        set
+        {
+            Set(ref _carNumber, value);
+            CheckFormValidation();
+        }
+    } 
+    #endregion
+
+    #region Price
+    private decimal _price;
+
+    public decimal Price
+    {
+        get => _price;
+        set
+        {
+            Set(ref _price, value);
+            CheckFormValidation();
+        }
+    } 
+    #endregion
+
+
     public string? Description { get; set; }
     public OrderType OrderType { get; set; }
 
@@ -62,7 +102,7 @@ public class AddOrderDialogViewModel : ViewModelBase
     {
         get => _isFormValid;
         set => Set(ref _isFormValid, value);
-    } 
+    }
     #endregion
 
     private void CheckFormValidation()
@@ -70,6 +110,9 @@ public class AddOrderDialogViewModel : ViewModelBase
         IsFormValid =
             !string.IsNullOrEmpty(FirstName) &&
             !string.IsNullOrEmpty(LastName) &&
-            !string.IsNullOrEmpty(PhoneNumber);
+            !string.IsNullOrEmpty(PhoneNumber) &&
+            !string.IsNullOrEmpty(CarModel) &&
+            !string.IsNullOrEmpty(CarNumber) &&
+            Price != 0;
     }
 }
