@@ -148,8 +148,14 @@
             <TextBlock 
                 Grid.Row="6"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Text=" Марка машины:" />
+                VerticalAlignment="Center">
+                Марка машины:
+                <TextBlock 
+                    BaselineOffset="14"
+                    FontWeight="Bold"
+                    Text="*"
+                    Foreground="Red"/>
+            </TextBlock>
 
             <TextBox
                 x:Name="CarModel"
@@ -163,8 +169,14 @@
             <TextBlock 
                 Grid.Row="7"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Text="Номер машины:" />
+                VerticalAlignment="Center">
+                Номер машины:
+                <TextBlock 
+                    BaselineOffset="14"
+                    FontWeight="Bold"
+                    Text="*"
+                    Foreground="Red"/>
+            </TextBlock>
 
             <TextBox
                 x:Name="CarNumber"
@@ -178,8 +190,14 @@
             <TextBlock 
                 Grid.Row="8"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Text="Цена:" />
+                VerticalAlignment="Center">
+                Цена(BYN):
+                <TextBlock 
+                    BaselineOffset="14"
+                    FontWeight="Bold"
+                    Text="*"
+                    Foreground="Red"/>
+            </TextBlock>
             <TextBox 
                 x:Name="Price"
                 Text="{Binding Price}"
@@ -196,7 +214,7 @@
                 Grid.Row="9"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center">
-                Тип:
+                Место обслуживания:
                 <TextBlock 
                     BaselineOffset="14"
                     FontWeight="Bold"
@@ -218,7 +236,7 @@
                 Grid.Row="10"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Content="Описание:" />
+                Content="Описание услуг:" />
             <TextBox
                 x:Name="Description"
                 Text="{Binding Description}"
