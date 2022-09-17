@@ -128,7 +128,7 @@ public class EditOrderDialogViewModel : ViewModelBase
             !string.IsNullOrEmpty(CarModel) &&
             !string.IsNullOrEmpty(CarNumber) &&
             !string.IsNullOrEmpty(VIN) &&
-            Price != 0 &&
+            Price is not null && Price != 0 &&
             ReleaseYear is not null && ReleaseYear != 0;
     }
 }
