@@ -4,7 +4,9 @@ using ClientsManager.Domain.Enums;
 using ClientsManager.Domain.Models;
 using System.Collections;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace ClientsManager.Application.Services;
 
@@ -13,22 +15,56 @@ public class PrintToPdfService : IPrintToPdfService
     private const string HtmlTemplate = @"
         <html>
             <body>
-                {{Content}}
+                <hr style=""width: 100%;"" />
+
+                <div style=""display: flex; justify-content: space-between;"">
+                  <strong>Исполнитель: ИП Лукашик Н.И.</strong>
+                  <strong style=""margin-right: 100px;"">УНП: 291757225</strong>
+                </div>
+
+                <div style=""text-align: center"">
+                  <h2>Акт №{{Id}} от {{Date}}</h2>
+                </div>
+
+                <div>
+                  <strong>Заказчик: {{Customer}}</strong>
+                  <table style=""border: 1px solid black; border-collapse: collapse; margin-top: 4px;"">
+                      <tr>
+                        <th style=""border: 1px solid black; border-collapse: collapse; padding: 3px;"">Телефон</th>
+                        <th style=""border: 1px solid black; border-collapse: collapse; padding: 3px;"">Марка</th>
+                        <th style=""border: 1px solid black; border-collapse: collapse; padding: 3px;"">Год</th>
+                        <th style=""border: 1px solid black; border-collapse: collapse; padding: 3px;"">Гос. номер</th>
+                        <th style=""border: 1px solid black; border-collapse: collapse; padding: 3px;"">VIM</th>
+                        <th style=""border: 1px solid black; border-collapse: collapse; padding: 3px;"">Итого</th>
+                      </tr>
+
+                      <tr>
+                        <th style=""border: 1px solid black; border-collapse: collapse; padding: 3px;"">{{Phone}}</th>
+                        <th style=""border: 1px solid black; border-collapse: collapse; padding: 3px;"">{{CarModel}}</th>
+                        <th style=""border: 1px solid black; border-collapse: collapse; padding: 3px;"">{{Year}}</th>
+                        <th style=""border: 1px solid black; border-collapse: collapse; padding: 3px;"">{{CarNumber}}</th>
+                        <th style=""border: 1px solid black; border-collapse: collapse; padding: 3px;"">{{VIN}}</th>
+                        <th style=""border: 1px solid black; border-collapse: collapse; padding: 3px;"">{{Price}} руб.</th>
+                      </tr>
+                  </table>
+                </div>
+
+                <div style=""margin-top: 10px;"">
+                    <strong>Наименование работ (услуг):</strong>
+                    <div style=""border: 1px solid black; padding:3px; margin-top: 4px;"">
+                        {{Description}}
+                    </div>
+                </div>
+
+                <div style=""display: flex; justify-content: space-between; margin-top: 30px;"">
+                    <strong>Исполнитель:</strong>
+                    <strong style=""margin-right: 100px;"">Заказчик:</strong>
+                </div>
             </body>
         </html>
     ";
 
-    private const string CardTemplate = @"
-        <div>
-            <h2>{{Id}} {{LastName}} {{FirstName}} {{AdditionalName}}</h2>
-            <h3>{{PhoneNumber}}</h3>
-            <h3>{{OrderType}}        $: {{Price}}</h3>
-            <h3>{{CarModel}} {{CarNumber}}</h3>
-            <pre>{{Description}}</pre>
-        </div>
-    ";
-
-    public void CreatePdfDocument(IEnumerable items, string savePath)
+    public void CreatePdfDocument(OrderInfo item, string savePath)
     {
         var options = new HtmlLoadOptions()
         {
@@ -40,8 +76,8 @@ public class PrintToPdfService : IPrintToPdfService
             }
         };
 
-        var content = GenerateContent(items);
-        var html = HtmlTemplate.Replace("{{Content}}", content).Replace("\'", "\"");
+       
+        var html = ReplacePlaceholders(HtmlTemplate, item);
 
         using var htmlStream = GetHtmlStream(html);
 
@@ -62,36 +98,19 @@ public class PrintToPdfService : IPrintToPdfService
         return memoryStream;
     }
 
-    private string GenerateContent(IEnumerable items)
-    {
-        var stringBuilder = new StringBuilder();
-
-        foreach (var item in items)
-        {
-            var order = item as OrderInfo;
-            if (order is null)
-            {
-                continue;
-            }
-
-            stringBuilder.Append(ReplacePlaceholders(CardTemplate, order));
-        }
-
-        return stringBuilder
-            .ToString()
-            .Replace('\'', '\"');
-    }
-
     private string ReplacePlaceholders(string template, OrderInfo order)
     {
         template = template
             .Replace("{{Id}}", order.Id.ToString())
-            .Replace("{{PhoneNumber}}", order.PhoneNumber)
-            .Replace("{{Price}}", order.Price.ToString())
+            .Replace("{{Date}}", order.CreatedDate.ToShortDateString())
+            .Replace("{{Customer}}", order.Customer)
+            .Replace("{{Phone}}", order.PhoneNumber)
             .Replace("{{CarModel}}", order.CarModel)
+            .Replace("{{Year}}", order.CarReleaseYear.ToString())
             .Replace("{{CarNumber}}", order.CarNumber)
-            .Replace("{{OrderType}}", GetEnumDescription(order.OrderType))
-            .Replace("{{Description}}", WrapTextWithBreaklines(order.Description));
+            .Replace("{{VIN}}", order.VIN)
+            .Replace("{{Price}}", order.Price.ToString())
+            .Replace("{{Description}}", order.Description);
 
         return template;
     }
@@ -112,19 +131,23 @@ public class PrintToPdfService : IPrintToPdfService
         return text;
     }
 
-    private string GetEnumDescription(OrderType value)
+    private static string StringToPhoneNumber(string value)
     {
-        var attributes = value
-            .GetType()?
-            .GetField(value.ToString())?
-            .GetCustomAttributes(typeof(DescriptionAttribute), false);
+        if (string.IsNullOrEmpty(value))
+            return string.Empty;
 
-        if (attributes is not null && attributes.Any())
+        var phoneNo = value
+            .Replace("(", string.Empty)
+            .Replace(")", string.Empty)
+            .Replace(" ", string.Empty)
+            .Replace("+", string.Empty)
+            .Replace("-", string.Empty);
+
+        return phoneNo.Length switch
         {
-            var desription = (attributes.First() as DescriptionAttribute)!.Description;
-            return desription;
-        }
-
-        return string.Empty;
+            9 => Regex.Replace(phoneNo, @"(\d{2})(\d{3})(\d{2})(\d{2})", "($1) $2-$3-$4"),
+            12 => Regex.Replace(phoneNo, @"(\d{3})(\d{2})(\d{3})(\d{2})(\d{2})", "+$1 ($2) $3-$4-$5"),
+            _ => phoneNo,
+        };
     }
 }

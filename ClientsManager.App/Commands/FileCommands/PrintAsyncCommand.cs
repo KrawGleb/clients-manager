@@ -36,11 +36,12 @@ public class PrintAsyncCommand : ICommand
         {
             _tableViewModel.IsLoading = true;
 
-            var selectedItems = _tableViewModel.SelectedItems;
+            var selectedItems = _tableViewModel.SelectedItem;
             if (selectedItems is not null)
             {
                 _printService.CreatePdfDocument(selectedItems, dialog.FileName);
             }
+
             _tableViewModel.IsLoading = false;
         }
     }

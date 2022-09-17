@@ -1,8 +1,9 @@
 ﻿using Aspose.Pdf;
+using ClientsManager.Domain.Models;
 using System.Collections;
 
 namespace ClientsManager.Application.Services.Interfaces;
 public interface IPrintToPdfService
 {
-    void CreatePdfDocument(IEnumerable items, string savePath);
+    void CreatePdfDocument(OrderInfo item, string savePath);
 }

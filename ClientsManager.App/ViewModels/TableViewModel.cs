@@ -77,7 +77,7 @@ public class TableViewModel : ViewModelBase
     #endregion
 
     #region SelectedItems
-    public IEnumerable? SelectedItems { get; set; }
+    public OrderInfo? SelectedItem { get; set; }
     #endregion
 
     #endregion
@@ -119,6 +119,6 @@ public class TableViewModel : ViewModelBase
 
     public void SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
     {
-        SelectedItems = (sender as DataGrid)?.SelectedItems;
+        SelectedItem = (sender as DataGrid)?.SelectedItem as OrderInfo;
     }
 }
