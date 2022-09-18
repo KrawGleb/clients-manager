@@ -111,7 +111,7 @@ public class PrintToPdfService : IPrintToPdfService
         return template;
     }
 
-    private string WrapIfTextToLong(string? text, int maxLength)
+    private string? WrapIfTextToLong(string? text, int maxLength)
     {
         if (string.IsNullOrEmpty(text))
         {

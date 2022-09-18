@@ -45,7 +45,7 @@ public class DeleteOrderAsyncCommand : AsyncCommandBase
         {
             _tableViewModel.IsLoading = true;
 
-            _ordersService.Delete(orderId);
+            await _ordersService.DeleteAsync(orderId);
 
             _tableViewModel.IsLoading = false;
 

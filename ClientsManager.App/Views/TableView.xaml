@@ -66,10 +66,9 @@
                         </i:Interaction.Triggers>
                     </Button>
                 </StackPanel>
-                <components:SearchComponentView DataContext="{Binding SearchComponent}"/>
-
 
                 <!--Search component-->
+                <components:SearchComponentView DataContext="{Binding SearchComponent}"/>
 
                 <Button 
                         Style="{StaticResource RoundedButton}"
@@ -121,7 +120,7 @@
                             Header="Заказчик"
                             Binding="{Binding Path=Customer}"
                             MinWidth="150"
-                            MaxWidth="370">
+                            MaxWidth="220">
                             <DataGridTextColumn.CellStyle>
                                 <Style TargetType="DataGridCell">
                                     <Setter Property="Height" Value="70"/>
@@ -154,10 +153,10 @@
                             Header="Марка машины"
                             Binding="{Binding Path=CarModel}"
                             MinWidth="100"
-                            MaxWidth="230">
+                            MaxWidth="170">
                             <DataGridTextColumn.ElementStyle>
-                                <Style>
-                                    <Setter Property="TextBlock.TextWrapping" Value="Wrap"/>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="TextWrapping" Value="Wrap"/>
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
@@ -167,7 +166,14 @@
                             Header="Гос. номер"
                             Binding="{Binding Path=CarNumber}"
                             MinWidth="100"
-                            Width="auto"/>
+                            MaxWidth="130"
+                            Width="auto">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="TextWrapping" Value="Wrap"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
 
                         <!--Release Year-->
                         <DataGridTextColumn 
@@ -179,17 +185,23 @@
                         <!--VIN-->
                         <DataGridTextColumn 
                             Header="VIN"
-                            Binding="{Binding Path=CarNumber}"
-                            MinWidth="100"
-                            Width="auto"/>
-                        
-                        
+                            Binding="{Binding Path=VIN}"
+                            MinWidth="80"
+                            Width="auto">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="TextWrapping" Value="Wrap"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+
                         <!--Description-->
                         <DataGridTextColumn 
                             Header="Описание услуг"
                             Binding="{Binding Path=Description}"
                             MinWidth="150"
-                            MaxWidth="370">
+                            MaxWidth="230">
                             <DataGridTextColumn.CellStyle>
                                 <Style TargetType="DataGridCell">
                                     <Setter Property="Height" Value="70"/>
@@ -214,23 +226,32 @@
                         <DataGridTextColumn 
                             Header="Цена(BYN)"
                             MinWidth="50"
-                            Width="auto">
+                            MaxWidth="95"
+                            Width="auto"
+                            SortMemberPath="Price">
                             <DataGridTextColumn.Binding>
                                 <MultiBinding StringFormat=" {0} руб." ConverterCulture="{x:Static sysglb:CultureInfo.CurrentCulture}">
                                     <Binding Path="Price"/>
                                 </MultiBinding>
                             </DataGridTextColumn.Binding>
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="TextWrapping" Value="Wrap"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
 
                         <!--Created date-->
                         <DataGridTextColumn 
                             Header="Дата заполнения"
                             Binding="{Binding Path=CreatedDate, StringFormat=dd.MM.yyyy}"
+                            MaxWidth="100"
                             Width="auto"/>
 
 
                         <!--Buttons-->
                         <DataGridTemplateColumn
+                            MaxWidth="110"
                             Width="auto">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -239,6 +260,9 @@
                                         <Button 
                                             Style="{StaticResource MaterialDesignIconButton}"
                                             Command="{Binding DataContext.UpdateOrderAsyncCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                            Margin="0"
+                                            Width="40"
+                                            Height="40"
                                             CommandParameter="{Binding}">
 
                                             <materialDesign:PackIcon 
@@ -250,6 +274,9 @@
                                         <Button 
                                             Style="{StaticResource MaterialDesignIconButton}" 
                                             Command="{Binding DataContext.DeleteOrderAsyncCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                            Margin="0"
+                                            Width="40"
+                                            Height="40"
                                             CommandParameter="{Binding Id}">
 
                                             <materialDesign:PackIcon 

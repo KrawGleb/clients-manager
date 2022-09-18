@@ -83,9 +83,9 @@ public class OrdersService : IOrdersService
 		await _repository.UpdateAsync(order);
     }
 
-	public void Delete(int id)
+	public async Task DeleteAsync(int id)
 	{
-		_repository.DeleteAsync(id);
+		await _repository.DeleteAsync(id);
 	}
 
 	public async Task ClearAsync()
