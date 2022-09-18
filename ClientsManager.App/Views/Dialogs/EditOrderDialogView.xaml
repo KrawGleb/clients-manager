@@ -233,7 +233,7 @@
                 Orientation="Horizontal">
                 <TextBox 
                     x:Name="Price"
-                    Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}"
+                    Text="{Binding Price, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=False, Delay=750}"
                     Width="50">
                     <i:Interaction.Behaviors>
                         <beh:TextBoxInputRegExBehavior RegularExpression="^\d{1,5}(?:[.]\d{0,3}){0,1}$" MaxLength="15"/>

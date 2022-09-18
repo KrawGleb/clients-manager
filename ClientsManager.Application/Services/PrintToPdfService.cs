@@ -106,7 +106,7 @@ public class PrintToPdfService : IPrintToPdfService
             .Replace("{{CarNumber}}", order.CarNumber)
             .Replace("{{VIN}}", order.VIN)
             .Replace("{{Price}}", order.Price.ToString())
-            .Replace("{{Description}}", WrapIfTextToLong(order.Description.Replace("\n", "</br>"), 95));
+            .Replace("{{Description}}", WrapIfTextToLong(order.Description, 95));
 
         return template;
     }
@@ -118,15 +118,30 @@ public class PrintToPdfService : IPrintToPdfService
             return text;
         }
 
-        if (text.Length >= maxLength)
+        var sb = new StringBuilder();
+
+        var lines = text.Split("\n");
+        
+        foreach (var line in lines)
         {
-            for (int i = maxLength; i < text.Length; i += maxLength)
+            if (line.Length >= maxLength)
             {
-                text = text.Insert(i, "</br>");
+                var result = line;
+                for(int i = maxLength; i < line.Length; i+=maxLength)
+                {
+                    result = result.Insert(i, "</br>");
+                }
+
+                sb.Append(result);
+            }
+            else
+            {
+                sb.Append(line);
+                sb.Append("</br>");
             }
         }
 
-        return text;
+        return sb.ToString();
     }
 
     private static string StringToPhoneNumber(string value)
