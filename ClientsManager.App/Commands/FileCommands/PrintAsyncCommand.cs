@@ -32,10 +32,12 @@ public class PrintAsyncCommand : AsyncCommandBase
             return;
         }
 
-        var dialog = new VistaSaveFileDialog();
-        dialog.Filter = "PDF files (*.pdf)|*.pdf|All files (*.*)|*.*";
-        dialog.DefaultExt = ".pdf";
-        dialog.FileName = $"Акт №{selectedItem.Id}";
+        var dialog = new VistaSaveFileDialog
+        {
+            Filter = "PDF files (*.pdf)|*.pdf|All files (*.*)|*.*",
+            DefaultExt = ".pdf",
+            FileName = $"Акт №{selectedItem.Id}"
+        };
 
         var result = dialog.ShowDialog() ?? false;
 

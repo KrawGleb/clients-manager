@@ -123,7 +123,7 @@ public class PrintToPdfService : IPrintToPdfService
         return template;
     }
 
-    private static string StringToPhoneNumber(string value)
+    private static string StringToPhoneNumber(string? value)
     {
         if (string.IsNullOrEmpty(value))
             return string.Empty;
