@@ -1,5 +1,6 @@
 ﻿using Aspose.Pdf;
 using ClientsManager.Application.Services.Interfaces;
+using ClientsManager.Domain.Enums;
 using ClientsManager.Domain.Models;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -15,7 +16,7 @@ public class PrintToPdfService : IPrintToPdfService
 
                 <div style=""display: flex; justify-content: space-between;"">
                   <strong>Исполнитель: ИП Лукашик Н.И.</strong>
-                  <strong style=""margin-right: 100px;"">УНП: 291757225</strong>
+                  <strong>УНП: 291757225</strong>
                 </div>
 
                 <div style=""text-align: center"">
@@ -24,7 +25,7 @@ public class PrintToPdfService : IPrintToPdfService
 
                 <div>
                   <strong style=""inline-size: 150px; overflow-wrap: break-word;"">Заказчик: {{Customer}}</strong>
-                  <table style=""border: 1px solid black; border-collapse: collapse; margin-top: 4px;"">
+                  <table style=""border: 1px solid black; border-collapse: collapse; margin-top: 4px; width: 100%"">
                       <tr>
                         <th style=""border: 1px solid black; border-collapse: collapse; padding: 3px; max-width: 50px;"">Телефон</th>
                         <th style=""border: 1px solid black; border-collapse: collapse; padding: 3px;"">Марка</th>
@@ -46,6 +47,10 @@ public class PrintToPdfService : IPrintToPdfService
                 </div>
 
                 <div style=""margin-top: 10px;"">
+                  {{Guarantee}}
+                </div>
+
+                <div style=""margin-top: 10px;"">
                     <strong>Наименование работ (услуг):</strong>
                     <div style=""border: 1px solid black; padding:3px; margin-top: 4px;"">
                         {{Description}}
@@ -59,6 +64,10 @@ public class PrintToPdfService : IPrintToPdfService
             </body>
         </html>
     ";
+
+    private const string CarWashGuarantee = @"";
+
+    private const string CarServiceGuarantee = @"";
 
     public void CreatePdfDocument(OrderInfo item, string savePath)
     {
@@ -107,6 +116,11 @@ public class PrintToPdfService : IPrintToPdfService
             .Replace("{{VIN}}", order.VIN)
             .Replace("{{Price}}", order.Price.ToString())
             .Replace("{{Description}}", WrapIfTextToLong(order.Description, 95));
+
+        if (order.OrderType == OrderType.CarService)
+            template = template.Replace("{{Guarantee}}", CarServiceGuarantee);
+        else
+            template = template.Replace("{{Guarantee}}", CarWashGuarantee);
 
         return template;
     }
