@@ -33,6 +33,7 @@ public class ChangeTabCommand : ICommand
             return;
         }
 
+        _tableViewModel.ResetGridSorting();
         _tableViewModel.SelectedTab = selectedTab;
 
         _tableViewModel.InitTableAsyncCommand.Execute(null);

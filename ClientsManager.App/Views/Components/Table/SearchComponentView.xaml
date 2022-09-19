@@ -48,7 +48,7 @@
             <Button
                 Grid.Column="2"
                 Content="Найти"
-                Command="{Binding LoadPageAsyncCommand}"/>
+                Command="{Binding SearchOrdersAsyncCommand}"/>
 
         </Grid>
     </StackPanel>

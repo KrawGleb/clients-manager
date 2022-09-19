@@ -28,7 +28,7 @@ public class GetTotalPagesCountCommand : ICommand
         _tableViewModel.IsLoading = true;
 
         var parameters = _tableViewModel.GetItemsParameters();
-        var totalCount = _ordersService.GetTotalCountAsync(parameters.Tab, parameters.SearchOption, parameters.SearchValue);
+        var totalCount = _ordersService.GetTotalCount(parameters.Tab, parameters.SearchOption, parameters.SearchValue);
         _tableViewModel.PaginationComponent.TotalPagesCount = (int)Math.Ceiling((double)totalCount / parameters.PageSize);
 
         _tableViewModel.IsLoading = false;

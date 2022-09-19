@@ -9,7 +9,9 @@ using ClientsManager.Domain.Enums;
 using ClientsManager.Domain.Models;
 using System.Collections;
 using System.ComponentModel;
+using System.DirectoryServices;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace ClientsManager.App.ViewModels;
@@ -30,6 +32,7 @@ public class TableViewModel : ViewModelBase
         AddOrderAsyncCommand = new AddOrderAsyncCommand(this, ordersService);
         InitTableAsyncCommand = new InitTableCommand(this, ordersService);
         LoadPageAsyncCommand = new LoadPageAsyncCommand(this, ordersService);
+        SearchOrdersAsyncCommand = new SearchOrdersAsyncCommand(this, ordersService);
         UpdateOrderAsyncCommand = new UpdateOrderAsyncCommand(this, ordersService);
         DeleteOrderAsyncCommand = new DeleteOrderAsyncCommand(this, ordersService);
         ChangeTabCommand = new ChangeTabCommand(this);
@@ -80,6 +83,9 @@ public class TableViewModel : ViewModelBase
     public OrderInfo? SelectedItem { get; set; }
     #endregion
 
+    public DataGrid? GridRef { get; set; }
+
+
     #endregion
 
     #region Commands
@@ -89,10 +95,15 @@ public class TableViewModel : ViewModelBase
     public ICommand UpdateOrderAsyncCommand { get; }
     public ICommand DeleteOrderAsyncCommand { get; }
     public ICommand ChangeTabCommand { get; }
+    public ICommand SearchOrdersAsyncCommand { get; }
     #endregion
 
     public void SortTable(object sender, DataGridSortingEventArgs e)
     {
+        if (GridRef is null)
+        {
+            GridRef = (sender as DataGrid);
+        }
 
         SortBy = e.Column.SortMemberPath;
 
@@ -120,5 +131,26 @@ public class TableViewModel : ViewModelBase
     public void SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
     {
         SelectedItem = (sender as DataGrid)?.SelectedItem as OrderInfo;
+    }
+
+    public void ResetGridSorting()
+    {
+        if (GridRef is null)
+        {
+            return;
+        }
+
+        var view = CollectionViewSource.GetDefaultView(GridRef.ItemsSource);
+        if (view is not null)
+        {
+            view.SortDescriptions.Clear();
+            foreach (var column in GridRef.Columns)
+            {
+                column.SortDirection = null;
+            }
+        }
+
+        SortBy = null;
+        SortOrder = ListSortDirection.Ascending.ToString();
     }
 }

@@ -21,7 +21,7 @@ public interface IOrdersService
         string searchParameter = "",
         string sortBy = "",
         string sortOrder = "");
-    int GetTotalCountAsync(
+    int GetTotalCount(
         OrderType type,
         SearchOptions searchOption,
         string? searchParameter);

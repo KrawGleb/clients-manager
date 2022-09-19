@@ -30,7 +30,6 @@ public class LoadPageAsyncCommand : TableAsyncCommandBase
 
         new GetTotalPagesCountCommand(_tableViewModel, _ordersService).Execute(null);
         
-
         _tableViewModel.IsLoading = false;
     }
 }

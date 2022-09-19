@@ -1,7 +1,6 @@
 ﻿using ClientsManager.Application.Services.Interfaces;
 using ClientsManager.Domain.Enums;
 using ClientsManager.Domain.Models;
-using ClientsManager.Infrastructure.Persistence;
 using ClientsManager.Infrastructure.Persistence.Builders.Extenstions.OrdersTableQueryBuilderExtensions;
 using ClientsManager.Infrastructure.Persistence.Builders.Interfaces;
 using ClientsManager.Infrastructure.Persistence.Repositories.Interfaces;
@@ -56,7 +55,7 @@ public class OrdersService : IOrdersService
 		return list;
 	}
 
-	public int GetTotalCountAsync(
+	public int GetTotalCount(
 		OrderType type,
 		SearchOptions searchOption,
 		string? searchParameter)

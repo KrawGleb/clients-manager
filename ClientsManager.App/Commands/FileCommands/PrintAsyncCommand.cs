@@ -3,11 +3,10 @@ using ClientsManager.Application.Services.Interfaces;
 using Ookii.Dialogs.Wpf;
 using System;
 using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace ClientsManager.App.Commands.FileCommands;
 
-public class PrintAsyncCommand : ICommand
+public class PrintAsyncCommand : AsyncCommandBase
 {
     private readonly TableViewModel _tableViewModel;
     private readonly IPrintToPdfService _printService;
@@ -25,7 +24,7 @@ public class PrintAsyncCommand : ICommand
     public bool CanExecute(object? parameter)
         => true;
 
-    public void Execute(object? parameter)
+    public override async Task ExecuteAsync(object? parameter)
     {
         var dialog = new VistaSaveFileDialog();
         dialog.Filter = "PDF files (*.pdf)|*.pdf|All files (*.*)|*.*";
@@ -39,8 +38,9 @@ public class PrintAsyncCommand : ICommand
             var selectedItems = _tableViewModel.SelectedItem;
             if (selectedItems is not null)
             {
-                _printService.CreatePdfDocument(selectedItems, dialog.FileName);
+                await Task.Run(() => _printService.CreatePdfDocument(selectedItems, dialog.FileName));
             }
+
             _tableViewModel.IsLoading = false;
         }
     }

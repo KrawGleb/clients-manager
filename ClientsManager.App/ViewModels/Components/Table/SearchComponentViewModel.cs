@@ -1,4 +1,6 @@
-﻿using ClientsManager.Domain.Enums;
+﻿using ClientsManager.App.Commands.TableCommands;
+using ClientsManager.Application.Services.Interfaces;
+using ClientsManager.Domain.Enums;
 using System.Windows.Input;
 
 namespace ClientsManager.App.ViewModels.Components.Table;
@@ -16,9 +18,9 @@ public class SearchComponentViewModel
     #endregion
 
     #region Commands
-    public ICommand LoadPageAsyncCommand
-    {
-        get => ParentRef!.LoadPageAsyncCommand;
-    }
+    public ICommand LoadPageAsyncCommand { get => ParentRef!.LoadPageAsyncCommand; }
+
+    public ICommand SearchOrdersAsyncCommand { get => ParentRef!.SearchOrdersAsyncCommand; }
+
     #endregion
 }
