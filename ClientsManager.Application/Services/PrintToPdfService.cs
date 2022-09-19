@@ -23,8 +23,8 @@ public class PrintToPdfService : IPrintToPdfService
                   <h2>Акт №{{Id}} от {{Date}}</h2>
                 </div>
 
-                <div>
-                  <strong style=""inline-size: 150px; overflow-wrap: break-word;"">Заказчик: {{Customer}}</strong>
+                <strong>Заказчик: {{Customer}}</strong>
+                <div style=""margin-bottom: 10px; margin-top: 10px;"">
                   <table style=""border: 1px solid black; border-collapse: collapse; margin-top: 4px; width: 100%"">
                       <tr>
                         <th style=""border: 1px solid black; border-collapse: collapse; padding: 3px; max-width: 50px;"">Телефон</th>
@@ -46,15 +46,13 @@ public class PrintToPdfService : IPrintToPdfService
                   </table>
                 </div>
 
-                <div style=""margin-top: 10px;"">
-                  {{Guarantee}}
+                <strong style=""margin-top: 10px;"">Наименование работ (услуг):</strong>
+                <div style=""border: 1px solid black; padding:3px; margin-top: 4px;"">
+                    {{Description}}
                 </div>
 
                 <div style=""margin-top: 10px;"">
-                    <strong>Наименование работ (услуг):</strong>
-                    <div style=""border: 1px solid black; padding:3px; margin-top: 4px;"">
-                        {{Description}}
-                    </div>
+                    {{Guarantee}}
                 </div>
 
                 <div style=""display: flex; justify-content: space-between; margin-top: 30px;"">
@@ -65,9 +63,9 @@ public class PrintToPdfService : IPrintToPdfService
         </html>
     ";
 
-    private const string CarWashGuarantee = @"";
+    private const string CarWashGuarantee = @"Вышеперечисленные услуги выполнены полностью и в срок. Заказчик претензий по качеству и срокам выполнения услуг не имеет.";
 
-    private const string CarServiceGuarantee = @"";
+    private const string CarServiceGuarantee = @"Гарантия: 20 дней или пробег не более 2000 км со дня приемки механического транспортного средства потребителем в зависимости от того, какой из этих моментов наступит раньше.";
 
     public void CreatePdfDocument(OrderInfo item, string savePath)
     {
@@ -108,14 +106,14 @@ public class PrintToPdfService : IPrintToPdfService
         template = template
             .Replace("{{Id}}", order.Id.ToString())
             .Replace("{{Date}}", order.CreatedDate.ToShortDateString())
-            .Replace("{{Customer}}", WrapIfTextToLong(order.Customer, 95))
+            .Replace("{{Customer}}", order.Customer)
             .Replace("{{Phone}}", StringToPhoneNumber(order.PhoneNumber))
             .Replace("{{CarModel}}", order.CarModel)
             .Replace("{{Year}}", order.CarReleaseYear.ToString())
             .Replace("{{CarNumber}}", order.CarNumber)
             .Replace("{{VIN}}", order.VIN)
             .Replace("{{Price}}", order.Price.ToString())
-            .Replace("{{Description}}", WrapIfTextToLong(order.Description, 95));
+            .Replace("{{Description}}", order.Description);
 
         if (order.OrderType == OrderType.CarService)
             template = template.Replace("{{Guarantee}}", CarServiceGuarantee);
@@ -123,39 +121,6 @@ public class PrintToPdfService : IPrintToPdfService
             template = template.Replace("{{Guarantee}}", CarWashGuarantee);
 
         return template;
-    }
-
-    private string? WrapIfTextToLong(string? text, int maxLength)
-    {
-        if (string.IsNullOrEmpty(text))
-        {
-            return text;
-        }
-
-        var sb = new StringBuilder();
-
-        var lines = text.Split("\n");
-        
-        foreach (var line in lines)
-        {
-            if (line.Length >= maxLength)
-            {
-                var result = line;
-                for(int i = maxLength; i < line.Length; i+=maxLength)
-                {
-                    result = result.Insert(i, "</br>");
-                }
-
-                sb.Append(result);
-            }
-            else
-            {
-                sb.Append(line);
-                sb.Append("</br>");
-            }
-        }
-
-        return sb.ToString();
     }
 
     private static string StringToPhoneNumber(string value)
