@@ -26,20 +26,24 @@ public class PrintAsyncCommand : AsyncCommandBase
 
     public override async Task ExecuteAsync(object? parameter)
     {
+        var selectedItem = _tableViewModel.SelectedItem;
+        if (selectedItem is null)
+        {
+            return;
+        }
+
         var dialog = new VistaSaveFileDialog();
         dialog.Filter = "PDF files (*.pdf)|*.pdf|All files (*.*)|*.*";
         dialog.DefaultExt = ".pdf";
+        dialog.FileName = $"Акт №{selectedItem.Id}";
+
         var result = dialog.ShowDialog() ?? false;
 
         if (result)
         {
             _tableViewModel.IsLoading = true;
 
-            var selectedItems = _tableViewModel.SelectedItem;
-            if (selectedItems is not null)
-            {
-                await Task.Run(() => _printService.CreatePdfDocument(selectedItems, dialog.FileName));
-            }
+            await Task.Run(() => _printService.CreatePdfDocument(selectedItem, dialog.FileName));
 
             _tableViewModel.IsLoading = false;
         }
