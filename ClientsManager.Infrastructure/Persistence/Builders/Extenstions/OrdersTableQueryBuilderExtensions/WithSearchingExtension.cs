@@ -21,6 +21,8 @@ public static class WithSearchingExtension
                                 .WithCarModel(parameter),
             SearchOptions.ByCarNumber => builder
                                 .WithCarNumber(parameter),
+            SearchOptions.ByVIN => builder
+                                .WithVIN(parameter),
             _ => throw new InvalidOperationException(),
         };
     }

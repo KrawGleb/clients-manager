@@ -113,7 +113,7 @@ public class PrintToPdfService : IPrintToPdfService
             .Replace("{{CarNumber}}", order.CarNumber)
             .Replace("{{VIN}}", order.VIN)
             .Replace("{{Price}}", order.Price.ToString())
-            .Replace("{{Description}}", order.Description);
+            .Replace("{{Description}}", order.Description?.Replace("\n", "</br>"));
 
         if (order.OrderType == OrderType.CarService)
             template = template.Replace("{{Guarantee}}", CarServiceGuarantee);

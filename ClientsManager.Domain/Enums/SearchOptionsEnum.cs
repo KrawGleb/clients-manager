@@ -17,5 +17,8 @@ public enum SearchOptions
     ByCarModel,
 
     [Description("Номер машины")]
-    ByCarNumber
+    ByCarNumber,
+
+    [Description("VIN")]
+    ByVIN
 }
