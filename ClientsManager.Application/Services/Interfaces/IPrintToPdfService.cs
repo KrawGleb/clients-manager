@@ -1,6 +1,4 @@
-﻿using Aspose.Pdf;
-using ClientsManager.Domain.Models;
-using System.Collections;
+﻿using ClientsManager.Domain.Models;
 
 namespace ClientsManager.Application.Services.Interfaces;
 public interface IPrintToPdfService
