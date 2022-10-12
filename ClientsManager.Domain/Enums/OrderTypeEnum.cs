@@ -7,6 +7,6 @@ public enum OrderType
     [Description("Автомойка")]
     CarWash = 0,
 
-    [Description("Шиномонтаж")]
+    [Description("СТО")]
     CarService = 1
 }

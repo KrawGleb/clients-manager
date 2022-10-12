@@ -46,7 +46,7 @@
                         </i:Interaction.Triggers>
                     </Button>
 
-                    <Button Content="Шиномонтаж">
+                    <Button Content="СТО">
                         <Button.Style>
                             <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatMidBgButton}">
                                 <Setter Property="BorderBrush" Value="Violet" />
